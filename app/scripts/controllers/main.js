@@ -10,17 +10,6 @@ angular.module('barterApp')
       latitude: 37.7833,
       longitude: -122.4167
     };
-    $scope.markers = [];
-    $scope.markerLat = null;
-    $scope.markerLng = null;
-    $scope.addMarker = function () {
-      $scope.markers.push({
-        latitude: parseFloat($scope.markerLat),
-        longitude: parseFloat($scope.markerLng)
-      });
-      $scope.markerLat = null;
-      $scope.markerLng = null;
-    };
     $scope.findMe = function () {
       if ($scope.geolocationAvailable) {
         navigator.geolocation.getCurrentPosition(function (position) {
