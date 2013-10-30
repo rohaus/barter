@@ -12,7 +12,7 @@ body {
     line-height: 30px;
     background-color: #eee;
     border-radius: 6px;
-    padding: 60px;
+    padding: 50px;
     text-align: center;
 }
 
@@ -20,4 +20,5 @@ body {
     font-size: 60px;
     line-height: 1;
     letter-spacing: -1px;
+    margin: auto;
 }
