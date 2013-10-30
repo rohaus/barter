@@ -6,13 +6,14 @@ body {
 
 .hero-unit {
     margin: 50px auto 0 auto;
-    width: 300px;
+    width: 600px;
     font-size: 18px;
     font-weight: 200;
     line-height: 30px;
     background-color: #eee;
     border-radius: 6px;
     padding: 60px;
+    text-align: center;
 }
 
 .hero-unit h1 {
