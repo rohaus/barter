@@ -15,23 +15,36 @@ angular.module('barterApp')
       };
       $scope.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
       $scope.updateLocation();
+      $scope.addMarkers();
     };
 
     $scope.updateLocation = function(){
       navigator.geolocation.getCurrentPosition(function (position) {
         $scope.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-
-        // var infowindow = new google.maps.InfoWindow({
-        //   map: $scope.map,
-        //   position: $scope.center,
-        //   content:
-        //       '<h1>Location pinned from HTML5 Geolocation!</h1>' +
-        //       '<h2>Latitude: ' + position.coords.latitude + '</h2>' +
-        //       '<h2>Longitude: ' + position.coords.longitude + '</h2>'
-        // });
-
         $scope.map.zoom = 16;
         $scope.map.setCenter($scope.center);
       });
-    }
+    };
+
+    $scope.addMarkers = function(){
+      var barterItems = [];
+
+      var infowindow = new google.maps.InfoWindow();
+
+      var marker, i;
+
+      for (i = 0; i < barterItems.length; i++) {
+        marker = new google.maps.Marker({
+          position: new google.maps.LatLng(barterItems[i][1], barterItems[i][2]),
+          map: $scope.map
+        });
+
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+          return function() {
+            infowindow.setContent(barterItems[i][0]);
+            infowindow.open($scope.map, marker);
+          }
+        })(marker, i));
+      }
+    };
   });
