@@ -22,3 +22,7 @@ body {
     letter-spacing: -1px;
     margin: auto;
 }
+
+.google-map {
+    height: 400px
+}
