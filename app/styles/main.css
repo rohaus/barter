@@ -23,6 +23,6 @@ body {
     margin: auto;
 }
 
-.google-map {
+#map-canvas {
     height: 400px
 }

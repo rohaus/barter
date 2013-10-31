@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('barterApp', ['google-maps'])
+angular.module('barterApp', [])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
