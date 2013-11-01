@@ -6,6 +6,7 @@
     "Ryan Roxas <ryanaroxas@gmail.com>"
   ],
   "dependencies": {
-    "angular": "~1.0.8"
+    "angular": "~1.0.8",
+    "angularjs-imageupload-directive": "*"
   }
 }

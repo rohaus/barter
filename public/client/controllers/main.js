@@ -1,9 +1,8 @@
 angular.module('barterApp')
-  .controller('MapCtrl', function ($scope) {
+  .controller('MapCtrl', function ($scope, $location) {
     $scope.zoom = 11;
     $scope.center = new google.maps.LatLng(37.7837749,-122.4167);
     $scope.mapTypeId = google.maps.MapTypeId.ROADMAP;
-
     $scope.initialize = function(){
       google.maps.visualRefresh = true;
       var mapOptions = {
@@ -44,5 +43,27 @@ angular.module('barterApp')
           };
         })(marker, i));
       }
+    };
+
+    $scope.postRedirect = function(){
+      $location.path('/post');
+    };
+  })
+  .controller('PostCtrl', function ($scope, $location, $http){
+    $scope.postImage = function(){
+      $scope.data = {
+        value: $scope.value,
+        description: $scope.description,
+        image: $scope.image
+      };
+
+      $http.post('/post', $scope.data)
+      .success(function(data, status, headers, config){
+        console.log("SUCCESS!");
+        $location.path('/');
+      })
+      .error(function(data, status){
+        console.log("ERROR :(");
+      });
     };
   });

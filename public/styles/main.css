@@ -26,3 +26,8 @@ body {
 #map-canvas {
     height: 400px
 }
+
+input[type='text']{
+    margin: auto;
+    display: block;
+}

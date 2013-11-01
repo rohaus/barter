@@ -6,10 +6,20 @@ var express = require('express'),
 var app = express();
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);
+
+// Sets the public directory as static
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.bodyParser());
+// Routes
 app.get('/', function (req, res, next) {
   res.render('index');
 });
+app.post('/post', function (req, res, next) {
+  console.log("It made it to the server!");
+  res.send(201);
+});
+
+//Start server
 app.listen(9000);
 
 // require('http').createServer(app).listen(app.get('port'), function () {

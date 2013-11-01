@@ -1,0 +1,20 @@
+<div class="box">
+  <form ng-submit="postImage()">
+    <div>
+      What's the value?
+      <input type="text" ng-model="value"></input>
+    </div>
+    <div>
+      Tell us about it
+      <input type="text" ng-model="description"></input>
+    </div>
+    <div>
+      Upload an image!
+      <input type="file" accept="image/*" ng-model="image" image="image2"
+    resize-max-height="300"
+    resize-max-width="250"
+    resize-quality="0.7" />
+    <div>
+    <button>Submit</button>
+  </form>
+<div>
