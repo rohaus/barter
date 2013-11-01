@@ -52,7 +52,7 @@ module.exports = function (grunt) {
     },
     express: {
       options: {
-        port: 3000,
+        port: 9000,
         hostname: '*'
       },
       livereload: {

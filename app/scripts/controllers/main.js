@@ -21,7 +21,7 @@ angular.module('barterApp')
     $scope.updateLocation = function(){
       navigator.geolocation.getCurrentPosition(function (position) {
         $scope.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        $scope.map.zoom = 16;
+        $scope.map.setZoom(16);
         $scope.map.setCenter($scope.center);
       });
     };
