@@ -13,7 +13,7 @@ var postSchema = mongoose.Schema({
   'messages' : [{
     'description' : String,
     'value': String,
-    'geo': {type: [Number], index: '2d'}
+    'geo': {lat: Number, lng: Number}
     // 'image' : String
   }]
 });
@@ -42,11 +42,10 @@ app.post('/post', function (req, res, next) {
     'messages': [{
       'description': req.body.description,
       'value': req.body.value,
-      'geo': {type: [req.body.location.type[0], req.body.location.type[1]]}
+      'geo': {lat: req.body.location.lat, lng: req.body.location.lng}
       // 'image': req.body.image.dataURL
     }]
   });
-  console.log("the post to save is: ", post);
   post.save(function(err, post){
     console.log('the post is',post);
     if(err){

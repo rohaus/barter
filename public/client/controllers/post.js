@@ -1,6 +1,6 @@
 angular.module('barterApp')
   .controller('PostCtrl', function ($scope, $location, $http){
-    $scope.postImage = function(){
+    $scope.postImage = function(image){
       // var formData = new FormData();
       //   formData.append('image', image, image.name);
 
@@ -17,7 +17,7 @@ angular.module('barterApp')
         $scope.data = {
           value: $scope.value,
           description: $scope.description,
-          location: {type: [location.lat, location.lng]}
+          location: location
           // image: $scope.image
         };
         $http.post('/post', $scope.data)
