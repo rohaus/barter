@@ -11,13 +11,24 @@ angular.module('barterApp')
       //       $scope.uploadedImgSrc = result.src;
       //       $scope.sizeInBytes = result.size;
       //   });
+      // var location = {};
+      // navigator.geolocation.getCurrentPosition(function (position) {
+      //   location = {
+      //     lat: position.coords.latitude,
+      //     lng: position.coords.longitude
+      //   };
+      //   console.log("this stuff is getting called");
+      // });
+      // console.log("location is:",location);
       $scope.data = {
         value: $scope.value,
         description: $scope.description,
+        location: {lat:37.7833, lng:-122.4167},
         image: $scope.image
       };
       $http.post('/post', $scope.data)
       .success(function(data, status, headers, config){
+        console.log("The scope data being sent is:", $scope.data);
         console.log("SUCCESS!");
         $location.path('/');
       })

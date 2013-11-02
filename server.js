@@ -8,6 +8,16 @@ var app = express();
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);
 
+var postSchema = mongoose.Schema({
+  'username' : String,
+  'password' : String,
+  'messages' : [{
+    'description' : String,
+    'geo': {lat: Number, lng: Number},
+    'image' : String
+  }]
+});
+
 // Sets the public directory as static
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.bodyParser());
@@ -16,22 +26,33 @@ app.get('/', function (req, res, next) {
   res.render('index');
 });
 
+app.get('/items', function (req, res, next){
+  var Post = mongoose.model('Post', postSchema);
+  var response = Post.find({}, function(err, posts){
+    console.log("Posts are found!");
+    res.send(201, posts);
+  });
+});
+
 app.post('/post', function (req, res, next) {
   console.log("It made it to the server!");
-  var postSchema = mongoose.Schema({
-    'username' : String,
-    'password' : String,
-    'messages' : [{
-      'description' : String,
-      'image' : String
+  console.log({
+    'username': 'rohaus',
+    'value': req.body.value,
+    'messages': [{
+      'description': req.body.description,
+      'geo': {lat: req.body.location.lat, lng: req.body.location.lng},
+      'image': req.body.image.dataURL
     }]
   });
+  // TODO: Change geolocation to use mongo indexing
   var Post = mongoose.model('Post', postSchema);
   var post = new Post({
     'username': 'rohaus',
     'value': req.body.value,
     'messages': [{
       'description': req.body.description,
+      'geo': {lat: req.body.location.lat, lng: req.body.location.lng},
       'image': req.body.image.dataURL
     }]
   });
