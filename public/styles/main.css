@@ -23,6 +23,10 @@ body {
     margin: auto;
 }
 
+.post {
+    width: 300px;
+}
+
 #map-canvas {
     height: 400px
 }

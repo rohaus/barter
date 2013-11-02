@@ -48,22 +48,4 @@ angular.module('barterApp')
     $scope.postRedirect = function(){
       $location.path('/post');
     };
-  })
-  .controller('PostCtrl', function ($scope, $location, $http){
-    $scope.postImage = function(){
-      $scope.data = {
-        value: $scope.value,
-        description: $scope.description,
-        image: $scope.image
-      };
-
-      $http.post('/post', $scope.data)
-      .success(function(data, status, headers, config){
-        console.log("SUCCESS!");
-        $location.path('/');
-      })
-      .error(function(data, status){
-        console.log("ERROR :(");
-      });
-    };
   });

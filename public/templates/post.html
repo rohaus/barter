@@ -1,4 +1,5 @@
-<div class="box">
+<div class="box post">
+  <h3>Have something to Barter?</h3>
   <form ng-submit="postImage()">
     <div>
       What's the value?
@@ -10,11 +11,11 @@
     </div>
     <div>
       Upload an image!
-      <input type="file" accept="image/*" ng-model="image" image="image2"
-    resize-max-height="300"
-    resize-max-width="250"
-    resize-quality="0.7" />
+      <input type="file" accept="image/*" image="image" resize-max-height="300" resize-max-width="250" resize-quality="0.7"/>
+      <p ng-show="image">Is this correct?</p>
+      <img ng-show="image" ng-src="{{image.resized.dataURL}}"/>
     <div>
     <button>Submit</button>
+    <button type="reset">Clear</button>
   </form>
 <div>
