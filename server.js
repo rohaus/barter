@@ -10,11 +10,11 @@ app.engine('html', hbs.__express);
 
 var postSchema = mongoose.Schema({
   'username' : String,
-  'password' : String,
   'messages' : [{
     'description' : String,
-    'geo': {lat: Number, lng: Number},
-    'image' : String
+    'value': String,
+    'geo': {type: [Number], index: '2d'}
+    // 'image' : String
   }]
 });
 
@@ -35,27 +35,18 @@ app.get('/items', function (req, res, next){
 });
 
 app.post('/post', function (req, res, next) {
-  console.log("It made it to the server!");
-  console.log({
-    'username': 'rohaus',
-    'value': req.body.value,
-    'messages': [{
-      'description': req.body.description,
-      'geo': {lat: req.body.location.lat, lng: req.body.location.lng},
-      'image': req.body.image.dataURL
-    }]
-  });
   // TODO: Change geolocation to use mongo indexing
   var Post = mongoose.model('Post', postSchema);
   var post = new Post({
     'username': 'rohaus',
-    'value': req.body.value,
     'messages': [{
       'description': req.body.description,
-      'geo': {lat: req.body.location.lat, lng: req.body.location.lng},
-      'image': req.body.image.dataURL
+      'value': req.body.value,
+      'geo': {type: [req.body.location.type[0], req.body.location.type[1]]}
+      // 'image': req.body.image.dataURL
     }]
   });
+  console.log("the post to save is: ", post);
   post.save(function(err, post){
     console.log('the post is',post);
     if(err){

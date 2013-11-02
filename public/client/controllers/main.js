@@ -45,7 +45,7 @@ angular.module('barterApp')
 
               google.maps.event.addListener(marker, 'click', (function(marker, j) {
                 return function() {
-                  infowindow.setContent('<h1>'+post.description+'</h1>'+'<img src="'+post.img+'"/>');
+                  infowindow.setContent('<h1>'+post.description+'</h1>'+'<h3>Costs: '+ post.value+'</h3>');
                   infowindow.open($scope.map, marker);
                 };
               })(marker, j));
