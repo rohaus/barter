@@ -28,10 +28,18 @@ body {
 }
 
 #map-canvas {
-    height: 400px
+    height: 500px
 }
 
 input[type='text']{
     margin: auto;
     display: block;
+}
+
+.infoWindow{
+    margin:auto;
+}
+
+img {
+    width: 200px;
 }

@@ -17,8 +17,8 @@ angular.module('barterApp')
         $scope.data = {
           value: $scope.value,
           description: $scope.description,
-          location: location
-          // image: $scope.image
+          location: location,
+          image: $scope.image
         };
         $http.post('/post', $scope.data)
         .success(function(data, status, headers, config){

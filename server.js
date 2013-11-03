@@ -13,8 +13,8 @@ var postSchema = mongoose.Schema({
   'messages' : [{
     'description' : String,
     'value': String,
-    'geo': {lat: Number, lng: Number}
-    // 'image' : String
+    'geo': {lat: Number, lng: Number},
+    'image' : String
   }]
 });
 
@@ -35,6 +35,16 @@ app.get('/items', function (req, res, next){
 });
 
 app.post('/post', function (req, res, next) {
+  console.log("It made it to the server!");
+  console.log({
+    'username': 'rohaus',
+    'messages': [{
+      'description': req.body.description,
+      'value': req.body.value,
+      'geo': {lat: req.body.location.lat, lng: req.body.location.lng},
+      'image': req.body.image.dataURL
+    }]
+  });
   // TODO: Change geolocation to use mongo indexing
   var Post = mongoose.model('Post', postSchema);
   var post = new Post({
@@ -42,8 +52,8 @@ app.post('/post', function (req, res, next) {
     'messages': [{
       'description': req.body.description,
       'value': req.body.value,
-      'geo': {lat: req.body.location.lat, lng: req.body.location.lng}
-      // 'image': req.body.image.dataURL
+      'geo': {lat: req.body.location.lat, lng: req.body.location.lng},
+      'image': req.body.image.dataURL
     }]
   });
   post.save(function(err, post){
