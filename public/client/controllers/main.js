@@ -34,24 +34,19 @@ angular.module('barterApp')
 
           var marker, i, j;
           for(i = 0; i < barterItems.length; i++){
-            var posts = barterItems[i].messages;
-            for (j = 0; j < posts.length; j++) {
-              var post = posts[j];
-              console.log(post, "message from one user");
-              marker = new google.maps.Marker({
-                position: new google.maps.LatLng(post.geo.lat, post.geo.lng),
-                map: $scope.map
-              });
-
-              google.maps.event.addListener(marker, 'click', (function(marker, j) {
-                return function() {
-                  infowindow.setContent('<div class="infoWindow"><h2>'+post.description+'</h2>'+
-                    '<h3>Costs: '+ post.value+'</h3>'+
-                    '<img src="'+post.image+'"/></div>');
-                  infowindow.open($scope.map, marker);
-                };
-              })(marker, j));
-            }
+            var post = barterItems[i];
+            marker = new google.maps.Marker({
+              position: new google.maps.LatLng(post.loc.coordinates[0], post.loc.coordinates[1]),
+              map: $scope.map
+            });
+            google.maps.event.addListener(marker, 'click', (function(marker, j) {
+              return function() {
+                infowindow.setContent('<div class="infoWindow"><img src="'+post.image+'"/>'+
+                  '<h2>'+post.description+'</h2>'+
+                  '<h3>Costs: '+ post.value+'</h3></div>');
+                infowindow.open($scope.map, marker);
+              };
+            })(marker, j));
           }
         })
         .error(function(data, status, headers, config){

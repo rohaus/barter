@@ -10,12 +10,13 @@ app.engine('html', hbs.__express);
 
 var postSchema = mongoose.Schema({
   'username' : String,
-  'messages' : [{
-    'description' : String,
-    'value': String,
-    'geo': {lat: Number, lng: Number},
-    'image' : String
-  }]
+  'description' : String,
+  'value': String,
+  'loc': {
+    type: {type: String},
+    coordinates:[]
+  },
+  'image' : String
 });
 
 // Sets the public directory as static
@@ -36,26 +37,17 @@ app.get('/items', function (req, res, next){
 
 app.post('/post', function (req, res, next) {
   console.log("It made it to the server!");
-  console.log({
-    'username': 'rohaus',
-    'messages': [{
-      'description': req.body.description,
-      'value': req.body.value,
-      'geo': {lat: req.body.location.lat, lng: req.body.location.lng},
-      'image': req.body.image.dataURL
-    }]
-  });
-  // TODO: Change geolocation to use mongo indexing
+
+  // TODO: Use user authentication
   var Post = mongoose.model('Post', postSchema);
   var post = new Post({
     'username': 'rohaus',
-    'messages': [{
-      'description': req.body.description,
-      'value': req.body.value,
-      'geo': {lat: req.body.location.lat, lng: req.body.location.lng},
-      'image': req.body.image.dataURL
-    }]
+    'description': req.body.description,
+    'value': req.body.value,
+    'loc': { type: 'Point', coordinates: [req.body.location[0], req.body.location[1]]},
+    'image': req.body.image.dataURL
   });
+
   post.save(function(err, post){
     console.log('the post is',post);
     if(err){
