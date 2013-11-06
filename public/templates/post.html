@@ -3,16 +3,16 @@
   <form ng-submit="postImage()">
     <div>
       What's the value?
-      <input type="text" ng-model="value"></input>
+      <input type="text" ng-model="value" ng-required="true"></input>
     </div>
     <div>
       Tell us about it
-      <input type="text" ng-model="description"></input>
+      <input type="text" ng-model="description" ng-required="true"></input>
     </div>
     <div>
       Upload an image!
       <!-- <input type="file" /> -->
-      <input type="file" accept="image/*" image="image" resize-max-height="300" resize-max-width="250" resize-quality="0.7"/>
+      <input type="file" accept="image/*" image="image" resize-max-height="300" resize-max-width="250" resize-quality="0.7" ng-required="true"/>
       <p ng-show="image">Is this correct?</p>
       <img ng-show="image" ng-src="{{image.resized.dataURL}}"/>
     <div>

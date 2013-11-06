@@ -1,4 +1,4 @@
-angular.module('barterApp', ['imageupload'])
+angular.module('barterApp', ['imageupload', 'ngRoute'])
 .config(function($routeProvider){
   $routeProvider
     .when('/', {
