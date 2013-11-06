@@ -22,6 +22,15 @@ var postSchema = mongoose.Schema({
 // Sets the public directory as static
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.bodyParser());
+
+var auth = function(req, res, next){
+  if (!req.isAuthenticateda()){
+    res.send(401);
+  }else{
+    next();
+  }
+};
+
 // Routes
 app.get('/', function (req, res, next) {
   res.render('index');

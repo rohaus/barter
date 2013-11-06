@@ -12,6 +12,7 @@
     "express": "~3.4.0",
     "gridfs-stream": "~0.4.0",
     "mongoose": "~3.8.0",
-    "hbs": "~2.4.0"
+    "hbs": "~2.4.0",
+    "passport": "~0.1.17"
   }
 }

@@ -9,6 +9,10 @@ angular.module('barterApp', ['imageupload', 'ngRoute'])
       templateUrl: '/templates/post.html',
       controller: 'PostCtrl'
     })
+    .when('/login', {
+      templateUrl: '/templates/login.html',
+      controller: 'LoginCtrl'
+    })
     .otherwise({
       redirectTo: '/'
     });

@@ -23,7 +23,7 @@ body {
     margin: auto;
 }
 
-.post {
+.post, .login {
     width: 300px;
 }
 
@@ -31,7 +31,7 @@ body {
     height: 500px
 }
 
-input[type='text']{
+.post input[type='text']{
     margin: auto;
     display: block;
 }
