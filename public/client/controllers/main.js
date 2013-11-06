@@ -29,24 +29,23 @@ angular.module('barterApp')
         .success(function(data, status, headers, config){
           console.log("The items have been retrieved from the database", data);
           var barterItems = data;
-
+          var length = barterItems.length;
           var infowindow = new google.maps.InfoWindow();
 
-          var marker, i, j;
-          for(i = 0; i < barterItems.length; i++){
-            var post = barterItems[i];
+          var marker, i;
+          for(i = 0; i < length; i++){
             marker = new google.maps.Marker({
-              position: new google.maps.LatLng(post.loc.coordinates[0], post.loc.coordinates[1]),
+              position: new google.maps.LatLng(barterItems[i].loc.coordinates[0], barterItems[i].loc.coordinates[1]),
               map: $scope.map
             });
-            google.maps.event.addListener(marker, 'click', (function(marker, j) {
+            google.maps.event.addListener(marker, 'click', (function(marker, i) {
               return function() {
-                infowindow.setContent('<div class="infoWindow"><img src="'+post.image+'"/>'+
-                  '<h2>'+post.description+'</h2>'+
-                  '<h3>Costs: '+ post.value+'</h3></div>');
+                infowindow.setContent('<div class="infoWindow"><img src="'+barterItems[i].image+'"/>'+
+                  '<h2>'+barterItems[i].description+'</h2>'+
+                  '<h3>Costs: '+ barterItems[i].value+'</h3></div>');
                 infowindow.open($scope.map, marker);
               };
-            })(marker, j));
+            })(marker, i));
           }
         })
         .error(function(data, status, headers, config){
