@@ -1,5 +1,5 @@
 angular.module('barterApp')
-  .controller('PostCtrl', function ($scope, $location, $http){
+  .controller('PostCtrl', function($scope, $location, $http){
     $scope.postImage = function(image){
       var postToDatabase = function(location){
         console.log("postToDatabase running");
@@ -18,7 +18,7 @@ angular.module('barterApp')
           console.log("ERROR :(");
         });
       };
-      navigator.geolocation.getCurrentPosition(function (position) {
+      navigator.geolocation.getCurrentPosition(function(position) {
         console.log("location is:",position);
         var location = {
           lat: position.coords.latitude,

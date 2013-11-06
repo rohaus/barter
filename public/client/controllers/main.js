@@ -49,7 +49,7 @@ angular.module('barterApp')
           }
         })
         .error(function(data, status, headers, config){
-          console.log("it failed");
+          console.log("adding markers failed");
         });
     };
 

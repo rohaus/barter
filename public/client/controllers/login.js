@@ -1,30 +1,21 @@
 angular.module('barterApp')
-  .controller('LoginCtrl', function ($scope, $http){
+  .controller('LoginCtrl', function($scope, $http, $rootScope, $location){
     $scope.login = function(){
-      // var postToDatabase = function(location){
-      //   console.log("postToDatabase running");
-      //   $scope.data = {
-      //     value: $scope.value,
-      //     description: $scope.description,
-      //     location: [location.lat, location.lng],
-      //     image: $scope.image
-      //   };
-      //   $http.post('/post', $scope.data)
-      //   .success(function(data, status, headers, config){
-      //     console.log("SUCCESS!");
-      //     $location.path('/');
-      //   })
-      //   .error(function(data, status){
-      //     console.log("ERROR :(");
-      //   });
-      // };
-      // navigator.geolocation.getCurrentPosition(function (position) {
-      //   console.log("location is:",position);
-      //   var location = {
-      //     lat: position.coords.latitude,
-      //     lng: position.coords.longitude
-      //   };
-      //   postToDatabase(location);
-      // });
+      $http.post('/login', {
+        username: $scope.user.username,
+        password: $scope.user.password,
+      })
+      .success(function(user){
+        // No error: authentication OK
+        console.log("success cb for post to /login. The login attempt succeeded");
+        $rootScope.message = 'Authentication successful!';
+        $location.path('/');
+      })
+      .error(function(){
+        // Error: authentication failed
+        console.log("error cb for post to /login. The login attempt failed");
+        $rootScope.message = 'Authentication failed.';
+        $location.path('/login');
+      });
     };
   });

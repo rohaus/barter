@@ -1,19 +1,73 @@
 angular.module('barterApp', ['imageupload', 'ngRoute'])
-.config(function($routeProvider){
-  $routeProvider
-    .when('/', {
-      templateUrl: '/templates/main.html',
-      controller: 'MapCtrl'
-    })
-    .when('/post', {
-      templateUrl: '/templates/post.html',
-      controller: 'PostCtrl'
-    })
-    .when('/login', {
-      templateUrl: '/templates/login.html',
-      controller: 'LoginCtrl'
-    })
-    .otherwise({
-      redirectTo: '/'
+  .config(function($httpProvider, $locationProvider, $routeProvider){
+    var checkLoggedin = function($q, $timeout, $http, $location, $rootScope){
+      // Initialize a new promise
+      var deferred = $q.defer();
+      // Make an AJAX call to check if the user is logged in
+      $http.get('/loggedin').success(function(user){
+        // Authenticated
+        console.log("(in app.js checkLoggedin) checking log in");
+        if (user !== '0'){
+          console.log("(in app.js checkLoggedin) login success");
+          $timeout(deferred.resolve, 0);
+        }
+        // Not Authenticated
+        else {
+          console.log("(in app.js checkLoggedin) login failed");
+          $rootScope.message = 'You need to log in.';
+          $timeout(function(){deferred.reject();}, 0);
+          $location.path('/login');
+        }
+      });
+      return deferred.promise;
+    };
+    $httpProvider.responseInterceptors.push(function($q, $location){
+      return function(promise){
+        return promise.then(
+          // Success: just return the response
+          function(response){
+            return response;
+          },
+          // Error: check the error status to get only the 401
+          function(response){
+            if (response.status === 401) {
+              console.log("it was intercepted and there was a 401 status");
+              $location.path('/login');
+            return $q.reject(response);
+            }
+          }
+        );
+      };
     });
-});
+    $routeProvider
+      .when('/', {
+        templateUrl: '/templates/main.html',
+        controller: 'MapCtrl',
+        resolve: {
+          loggedin: checkLoggedin
+        }
+      })
+      .when('/post', {
+        templateUrl: '/templates/post.html',
+        controller: 'PostCtrl',
+        resolve: {
+          loggedin: checkLoggedin
+        }
+      })
+      .when('/login', {
+        templateUrl: '/templates/login.html',
+        controller: 'LoginCtrl'
+      })
+      .otherwise({
+        redirectTo: '/'
+      });
+  })
+  .run(function($rootScope, $http){
+      $rootScope.message = '';
+
+      // Logout function is available in any pages
+      $rootScope.logout = function(){
+        $rootScope.message = 'Logged out.';
+        $http.post('/logout');
+      };
+    });
