@@ -1,9 +1,10 @@
 angular.module('barterApp')
-  .controller('PostCtrl', function($scope, $location, $http){
+  .controller('PostCtrl', function($scope, $location, $http, $rootScope){
     $scope.postImage = function(image){
       var postToDatabase = function(location){
-        console.log("postToDatabase running");
         $scope.data = {
+          fbId: $rootScope.fbId,
+          name: $rootScope.name,
           value: $scope.value,
           description: $scope.description,
           location: [location.lat, location.lng],
@@ -19,7 +20,6 @@ angular.module('barterApp')
         });
       };
       navigator.geolocation.getCurrentPosition(function(position) {
-        console.log("location is:",position);
         var location = {
           lat: position.coords.latitude,
           lng: position.coords.longitude

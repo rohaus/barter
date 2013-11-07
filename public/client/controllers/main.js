@@ -41,6 +41,7 @@ angular.module('barterApp')
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
               return function() {
                 infowindow.setContent('<div class="infoWindow"><img src="'+barterItems[i].image+'"/>'+
+                  '<h2>'+barterItems[i].name+'</h2>'+
                   '<h2>'+barterItems[i].description+'</h2>'+
                   '<h3>Costs: '+ barterItems[i].value+'</h3></div>');
                 infowindow.open($scope.map, marker);
@@ -55,5 +56,12 @@ angular.module('barterApp')
 
     $scope.postRedirect = function(){
       $location.path('/post');
+    };
+
+    $scope.logout = function(){
+      $http.post('/logout')
+        .success(function(data, status, headers, config){
+          console.log("Attempting to logout");
+        });
     };
   });

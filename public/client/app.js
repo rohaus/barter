@@ -6,15 +6,13 @@ angular.module('barterApp', ['imageupload', 'ngRoute'])
       // Make an AJAX call to check if the user is logged in
       $http.get('/loggedin').success(function(user){
         // Authenticated
-        console.log("(in app.js checkLoggedin) checking log in");
         if (user !== '0'){
-          console.log("(in app.js checkLoggedin) login success");
+          $rootScope.name = user.name;
+          $rootScope.fbId = user.fbId;
           $timeout(deferred.resolve, 0);
         }
         // Not Authenticated
         else {
-          console.log("(in app.js checkLoggedin) login failed");
-          $rootScope.message = 'You need to log in.';
           $timeout(function(){deferred.reject();}, 0);
           $location.path('/login');
         }
@@ -63,11 +61,7 @@ angular.module('barterApp', ['imageupload', 'ngRoute'])
       });
   })
   .run(function($rootScope, $http){
-      $rootScope.message = '';
-
-      // Logout function is available in any pages
       $rootScope.logout = function(){
-        $rootScope.message = 'Logged out.';
-        $http.post('/logout');
+        $http.post('/auth/facebook');
       };
     });

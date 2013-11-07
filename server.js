@@ -5,36 +5,42 @@ var express = require('express'),
     db = require('./database'),
     passport = require('passport'),
     FacebookStrategy = require('passport-facebook').Strategy,
-    LocalStrategy = require('passport-local').Strategy;
-
-var postSchema = mongoose.Schema({
-  'username' : String,
-  'description' : String,
-  'value': String,
-  'loc': {
-    type: {type: String},
-    coordinates:[]
-  },
-  'image' : String
-});
+    keys = require('./keys');
 
 // Config
 var app = express();
 app.set('view engine', 'html');
 app.engine('html', hbs.__express);
-
-// Sets the public directory as static
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.cookieParser());
-app.use(express.session({ secret: 'keyboard cat' }));
+app.use(express.session({ secret: keys.secret }));
 app.use(express.bodyParser());
 app.use(express.logger('dev'));
 app.use(passport.initialize()); // Add passport initialization
 app.use(passport.session());
 
+// MongoSchema
+var postSchema = mongoose.Schema({
+  'fbId': String,
+  'name': String,
+  'description' : String,
+  'value': String,
+  'loc': {
+    'type': {'type': String},
+    'coordinates':[]
+  },
+  'image' : String
+});
+
+var FacebookUserSchema = new mongoose.Schema({
+    'fbId': String,
+    // 'email': { 'type' : String , 'lowercase' : true},
+    'name': String
+});
+
+var FbUsers = mongoose.model('fbs',FacebookUserSchema);
 
 var auth = function(req, res, next){
-  console.log("checking authorization");
   if (!req.isAuthenticated()){
     res.send(401);
   }else{
@@ -42,12 +48,27 @@ var auth = function(req, res, next){
   }
 };
 
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    if (username === "admin" && password === "admin") // stupid example
-      return done(null, {name: "admin"});
-
-    return done(null, false, { message: 'Incorrect username.' });
+// Authentication Strategy
+passport.use(new FacebookStrategy({
+    clientID: keys.clientID,
+    clientSecret: keys.clientSecret,
+    callbackURL: "http://localhost:9000/auth/facebook/callback"
+  },
+  function(accessToken, refreshToken, profile, done){
+    FbUsers.findOne({fbId : profile.id}, function(err, oldUser){
+      if(oldUser){
+          done(null,oldUser);
+      }else{
+          var newUser = new FbUsers({
+              fbId : profile.id ,
+              // email : profile.emails.value,
+              name : profile.displayName
+          }).save(function(err,newUser){
+              if(err) throw err;
+              done(null, newUser);
+          });
+      }
+    });
   }
 ));
 
@@ -59,69 +80,41 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
     done(null, user);
 });
-// passport.use(new FacebookStrategy({
-//     clientID: FACEBOOK_APP_ID,
-//     clientSecret: FACEBOOK_APP_SECRET,
-//     callbackURL: "http://www.example.com/auth/facebook/callback"
-//   },
-//   function(accessToken, refreshToken, profile, done){
-//     User.findOrCreate(..., function(err, user){
-//       if (err) { return done(err); }
-//       done(null, user);
-//     });
-//   }
-// ));
 
 // Login Routes
-
-// route to test if the user is logged in or not
 app.get('/loggedin', function(req, res) {
-  console.log("get to /loggedin req.isAuthenticated is:", req.isAuthenticated());
-  console.log("req.user is:",req.user);
-  req.isAuthenticated() ? console.log("req.user is authenticated!",req.user) : console.log("req.user is not authenticated. it is sending",0);
-  console.log("/loggedin req is:",req);
   res.send(req.isAuthenticated() ? req.user : '0');
 });
 
-// route to log in
-
-app.post('/login', passport.authenticate('local'), function(req, res){
-  console.log("post request to /login:", passport.authenticate('local'));
-  console.log("req is:",req);
-  res.send(req.user);
-});
-
-// route to log out
 app.post('/logout', function(req, res){
-  console.log('post request made to /logout');
   req.logOut();
-  res.send(200);
+  res.redirect('index');
 });
 
+app.get('/auth/facebook', passport.authenticate('facebook'));
+
+app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  successRedirect: '/',
+  failureRedirect: '/'
+}));
 
 // Routes
 app.get('/', function(req, res, next) {
-  console.log("get request made to /");
   res.render('index');
 });
 
-app.get('/items', function(req, res, next){
-  console.log("get request made to /items");
+app.get('/items', auth, function(req, res, next){
   var Post = mongoose.model('Post', postSchema);
   var response = Post.find({}, function(err, posts){
-    console.log("Posts are found!");
     res.send(201, posts);
   });
 });
 
-app.post('/post', function (req, res, next) {
-  console.log('post request made to /post');
-  console.log("It made it to the server!");
-
-  // TODO: Use user authentication
+app.post('/post', auth, function (req, res, next) {
   var Post = mongoose.model('Post', postSchema);
   var post = new Post({
-    'username': 'rohaus',
+    'fbId': req.body.fbId,
+    'name': req.body.name,
     'description': req.body.description,
     'value': req.body.value,
     'loc': { type: 'Point', coordinates: [req.body.location[0], req.body.location[1]]},
@@ -129,7 +122,6 @@ app.post('/post', function (req, res, next) {
   });
 
   post.save(function(err, post){
-    console.log('the post is',post);
     if(err){
       console.log('error is:', err);
     }
