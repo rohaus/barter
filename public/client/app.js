@@ -53,6 +53,13 @@ angular.module('barterApp', ['imageupload', 'ngRoute'])
           loggedin: checkLoggedin
         }
       })
+      .when('/conversations', {
+        templateUrl: '/templates/conversations.html',
+        controller: 'ConvCtrl',
+        resolve: {
+          loggedin: checkLoggedin
+        }
+      })
       .when('/login', {
         templateUrl: '/templates/login.html',
         controller: 'LoginCtrl'

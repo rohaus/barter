@@ -1,0 +1,15 @@
+<div class="box conversations" data-ng-init="renderMessages()">
+  <h1>Barter</h1>
+  <div class="conversation" ng-repeat="conversation in conversations">
+    <div ng-click="expand(conversation)">
+      <h4>Topic: {{conversation.topic}}</h4>
+      <p>Name: {{conversation.name}}</p>
+      <p>Message: {{conversation.message}}</p>
+      <p>Sent: {{conversation.sent}}</p>
+    </div>
+    <form ng-show="conversation.expand" ng-submit="sendMessage()">
+      <input type="text" placeholder="Type a message!"></input>
+      <button>Send</button>
+    </form>
+  </div>
+<div>

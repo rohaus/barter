@@ -59,6 +59,10 @@ angular.module('barterApp')
       $location.path('/post');
     };
 
+    $scope.convRedirect = function(){
+      $location.path('/conversations');
+    };
+
     $scope.logout = function(){
       $http.post('/logout')
         .success(function(data, status, headers, config){
