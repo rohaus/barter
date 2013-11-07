@@ -25,6 +25,8 @@ app.engine('html', hbs.__express);
 
 // Sets the public directory as static
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.cookieParser());
+app.use(express.session({ secret: 'keyboard cat' }));
 app.use(express.bodyParser());
 app.use(express.logger('dev'));
 app.use(passport.initialize()); // Add passport initialization
@@ -77,6 +79,7 @@ app.get('/loggedin', function(req, res) {
   console.log("get to /loggedin req.isAuthenticated is:", req.isAuthenticated());
   console.log("req.user is:",req.user);
   req.isAuthenticated() ? console.log("req.user is authenticated!",req.user) : console.log("req.user is not authenticated. it is sending",0);
+  console.log("/loggedin req is:",req);
   res.send(req.isAuthenticated() ? req.user : '0');
 });
 
@@ -84,7 +87,7 @@ app.get('/loggedin', function(req, res) {
 
 app.post('/login', passport.authenticate('local'), function(req, res){
   console.log("post request to /login:", passport.authenticate('local'));
-  console.log("req.user is:",req.user);
+  console.log("req is:",req);
   res.send(req.user);
 });
 
@@ -109,11 +112,6 @@ app.get('/items', function(req, res, next){
     console.log("Posts are found!");
     res.send(201, posts);
   });
-});
-
-app.get('/users', function(req, res){
-  console.log("get request made to /user");
-  res.send([{name: "user1"}, {name: "user2"}]);
 });
 
 app.post('/post', function (req, res, next) {
