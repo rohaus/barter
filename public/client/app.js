@@ -9,6 +9,7 @@ angular.module('barterApp', ['imageupload', 'ngRoute'])
         if (user !== '0'){
           $rootScope.name = user.name;
           $rootScope.fbId = user.fbId;
+          // $rootScope.email = user.email;
           $timeout(deferred.resolve, 0);
         }
         // Not Authenticated

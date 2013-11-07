@@ -41,9 +41,10 @@ angular.module('barterApp')
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
               return function() {
                 infowindow.setContent('<div class="infoWindow"><img src="'+barterItems[i].image+'"/>'+
-                  '<h2>'+barterItems[i].name+'</h2>'+
-                  '<h2>'+barterItems[i].description+'</h2>'+
-                  '<h3>Costs: '+ barterItems[i].value+'</h3></div>');
+                  '<h2>Description: '+barterItems[i].description+'</h2>'+
+                  '<h3>Value: '+ barterItems[i].value+'</h3></div>'+
+                  '<h2>Contact: '+barterItems[i].name+'</h2>');
+                  // '<h2>Email:'+barterItems[i].email+'</h2>'
                 infowindow.open($scope.map, marker);
               };
             })(marker, i));

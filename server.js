@@ -33,9 +33,9 @@ var postSchema = mongoose.Schema({
 });
 
 var FacebookUserSchema = new mongoose.Schema({
-    'fbId': String,
-    // 'email': { 'type' : String , 'lowercase' : true},
-    'name': String
+  'fbId': String,
+  // 'email': { 'type' : String , 'lowercase' : true},
+  'name': String
 });
 
 var FbUsers = mongoose.model('fbs',FacebookUserSchema);
@@ -57,16 +57,16 @@ passport.use(new FacebookStrategy({
   function(accessToken, refreshToken, profile, done){
     FbUsers.findOne({fbId : profile.id}, function(err, oldUser){
       if(oldUser){
-          done(null,oldUser);
+        done(null,oldUser);
       }else{
-          var newUser = new FbUsers({
-              fbId : profile.id ,
-              // email : profile.emails.value,
-              name : profile.displayName
-          }).save(function(err,newUser){
-              if(err) throw err;
-              done(null, newUser);
-          });
+        var newUser = new FbUsers({
+          fbId : profile.id ,
+          // email : profile.emails[0].value,
+          name : profile.displayName
+        }).save(function(err,newUser){
+          if(err) throw err;
+          done(null, newUser);
+        });
       }
     });
   }
@@ -74,11 +74,11 @@ passport.use(new FacebookStrategy({
 
 // Serialized and deserialized methods when got from session
 passport.serializeUser(function(user, done) {
-    done(null, user);
+  done(null, user);
 });
 
 passport.deserializeUser(function(user, done) {
-    done(null, user);
+  done(null, user);
 });
 
 // Login Routes
@@ -91,7 +91,7 @@ app.post('/logout', function(req, res){
   res.redirect('index');
 });
 
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
 
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/',
@@ -115,6 +115,7 @@ app.post('/post', auth, function (req, res, next) {
   var post = new Post({
     'fbId': req.body.fbId,
     'name': req.body.name,
+    // 'email': req.body.email,
     'description': req.body.description,
     'value': req.body.value,
     'loc': { type: 'Point', coordinates: [req.body.location[0], req.body.location[1]]},

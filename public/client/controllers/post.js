@@ -5,6 +5,7 @@ angular.module('barterApp')
         $scope.data = {
           fbId: $rootScope.fbId,
           name: $rootScope.name,
+          // email: $rootScope.email,
           value: $scope.value,
           description: $scope.description,
           location: [location.lat, location.lng],
