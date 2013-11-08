@@ -1,5 +1,5 @@
 angular.module('barterApp')
-  .controller('MapCtrl', function ($scope, $location, $http) {
+  .controller('MapCtrl', function ($scope, $location, $http, $rootScope) {
     $scope.zoom = 11;
     $scope.center = new google.maps.LatLng(37.7837749,-122.4167);
     $scope.mapTypeId = google.maps.MapTypeId.ROADMAP;
@@ -43,7 +43,8 @@ angular.module('barterApp')
                 infowindow.setContent('<div class="infoWindow"><img src="'+barterItems[i].image+'"/>'+
                   '<h2>Description: '+barterItems[i].description+'</h2>'+
                   '<h3>Value: '+ barterItems[i].value+'</h3></div>'+
-                  '<h2>Contact: '+barterItems[i].name+'</h2>');
+                  '<h2>Contact: '+barterItems[i].name+'</h2>'+
+                  '<button ng-click="displayNewMessage()">Reply</button>');
                   // '<h2>Email:'+barterItems[i].email+'</h2>'
                 infowindow.open($scope.map, marker);
               };
@@ -69,4 +70,36 @@ angular.module('barterApp')
           console.log("Attempting to logout");
         });
     };
+
+    $scope.newMessageDisplay = false;
+
+    $scope.displayNewMessage = function(){
+      console.log("it's being clicked");
+      $scope.newMessageDisplay = !$scope.newMessageDisplay;
+    };
+
+    $scope.sendNewMessage = function(recipient){
+      console.log("recipient being sent in is: ", recipient);
+      $scope.data = {
+        'participants': [{
+          'fbId': $rootScope.fbId,
+          'name': $rootScope.name
+        },{
+          'name': $scope.recipient
+        }],
+        'topic': $scope.newTopic,
+        'message': $scope.newMessage,
+        'from': $rootScope.name
+      };
+
+      $http.post('/sendNewMessage', $scope.data)
+      .success(function(data, status, headers, config){
+        console.log("SUCCESS!");
+        $scope.newTopic = $scope.newMessage = $scope.recipient = '';
+      })
+      .error(function(data, status){
+        console.log("ERROR :(");
+      });
+    };
+
   });

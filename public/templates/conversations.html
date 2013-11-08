@@ -1,17 +1,5 @@
 <div class="box conversations" data-ng-init="renderMessages()">
   <h1>Barter</h1>
-  <button ng-click="displayNewMessage()">New Message</button>
-  <div class="newMessage" ng-show="newMessageDisplay">
-    <form ng-submit="sendNewMessage()">
-      <p>To:</p>
-      <input type="text" ng-model="recipient" placeholder="Who do you want to send this to?"></input>
-      <p>Topic:</p>
-      <input type="text" ng-model="newTopic" placeholder="What was the barter about?"></input>
-      <p>Message:</p>
-      <input type="text" ng-model="newMessage" placeholder="What did you want to say?"></input>
-      <button>Send Message</button>
-    </form>
-  </div>
   <div class="conversation" ng-repeat="conversation in conversations">
     <div ng-click="expand(conversation)">
       <h4>Topic: {{conversation.topic}}</h4>

@@ -1,34 +1,5 @@
 angular.module('barterApp')
   .controller('ConvCtrl', function($scope, $location, $http, $rootScope){
-    $scope.newMessageDisplay = false;
-
-    $scope.displayNewMessage = function(){
-      $scope.newMessageDisplay = !$scope.newMessageDisplay;
-    };
-
-    $scope.sendNewMessage = function(){
-      $scope.data = {
-        'participants': [{
-          'fbId': $rootScope.fbId,
-          'name': $rootScope.name
-        },{
-          'name': $scope.recipient
-        }],
-        'topic': $scope.newTopic,
-        'message': $scope.newMessage,
-        'from': $rootScope.name
-      };
-      debugger;
-      $http.post('/sendNewMessage', $scope.data)
-      .success(function(data, status, headers, config){
-        console.log("SUCCESS!");
-        $scope.newTopic = $scope.newMessage = $scope.recipient = '';
-      })
-      .error(function(data, status){
-        console.log("ERROR :(");
-      });
-    };
-
     $scope.sendMessage = function(){
       // $scope.data = {
       //   'participants': [{
