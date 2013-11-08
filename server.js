@@ -16,11 +16,11 @@ app.use(express.cookieParser());
 app.use(express.session({ secret: keys.secret }));
 app.use(express.bodyParser());
 app.use(express.logger('dev'));
-app.use(passport.initialize()); // Add passport initialization
+app.use(passport.initialize());
 app.use(passport.session());
 
 // MongoSchema
-var postSchema = mongoose.Schema({
+var postSchema = new mongoose.Schema({
   'fbId': String,
   'name': String,
   'description' : String,
@@ -32,15 +32,30 @@ var postSchema = mongoose.Schema({
   'image' : String
 });
 
-var FacebookUserSchema = new mongoose.Schema({
+var messageSchema = new mongoose.Schema({
+  'participants': [{
+    'fbId': Number,
+    'name': String
+  }],
+  'topic': String,
+  'messages': [{
+    'message': String,
+    'from': String,
+    'date': { 'type': Date, 'default': Date.now }
+  }]
+});
+
+var facebookUserSchema = new mongoose.Schema({
   'fbId': String,
   // 'email': { 'type' : String , 'lowercase' : true},
   'name': String
 });
 
-var FbUsers = mongoose.model('fbs',FacebookUserSchema);
+var Post = mongoose.model('Post', postSchema);
+var Message = mongoose.model('Message', messageSchema);
+var FbUsers = mongoose.model('fbs', facebookUserSchema);
 
-var auth = function(req, res, next){
+var auth = function (req, res, next){
   if (!req.isAuthenticated()){
     res.send(401);
   }else{
@@ -54,8 +69,8 @@ passport.use(new FacebookStrategy({
     clientSecret: keys.clientSecret,
     callbackURL: "http://localhost:9000/auth/facebook/callback"
   },
-  function(accessToken, refreshToken, profile, done){
-    FbUsers.findOne({fbId : profile.id}, function(err, oldUser){
+  function (accessToken, refreshToken, profile, done){
+    FbUsers.findOne({fbId : profile.id}, function (err, oldUser){
       if(oldUser){
         done(null,oldUser);
       }else{
@@ -63,7 +78,7 @@ passport.use(new FacebookStrategy({
           fbId : profile.id ,
           // email : profile.emails[0].value,
           name : profile.displayName
-        }).save(function(err,newUser){
+        }).save(function (err,newUser){
           if(err) throw err;
           done(null, newUser);
         });
@@ -73,20 +88,20 @@ passport.use(new FacebookStrategy({
 ));
 
 // Serialized and deserialized methods when got from session
-passport.serializeUser(function(user, done) {
+passport.serializeUser(function (user, done) {
   done(null, user);
 });
 
-passport.deserializeUser(function(user, done) {
+passport.deserializeUser(function (user, done) {
   done(null, user);
 });
 
 // Login Routes
-app.get('/loggedin', function(req, res) {
+app.get('/loggedin', function (req, res) {
   res.send(req.isAuthenticated() ? req.user : '0');
 });
 
-app.post('/logout', function(req, res){
+app.post('/logout', function (req, res){
   req.logOut();
   res.redirect('index');
 });
@@ -99,19 +114,17 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 }));
 
 // Routes
-app.get('/', function(req, res, next) {
+app.get('/', function (req, res, next) {
   res.render('index');
 });
 
-app.get('/items', auth, function(req, res, next){
-  var Post = mongoose.model('Post', postSchema);
+app.get('/items', auth, function (req, res, next){
   var response = Post.find({}, function(err, posts){
     res.send(201, posts);
   });
 });
 
-app.post('/post', auth, function (req, res, next) {
-  var Post = mongoose.model('Post', postSchema);
+app.post('/post', auth, function (req, res, next){
   var post = new Post({
     'fbId': req.body.fbId,
     'name': req.body.name,
@@ -122,7 +135,7 @@ app.post('/post', auth, function (req, res, next) {
     'image': req.body.image.dataURL
   });
 
-  post.save(function(err, post){
+  post.save(function (err, post){
     if(err){
       console.log('error is:', err);
     }
@@ -130,5 +143,32 @@ app.post('/post', auth, function (req, res, next) {
   res.send(201);
 });
 
+app.post('/sendNewMessage', function (req, res, next){
+  console.log("req.body.participants is", req.body.participants);
+  FbUsers.findOne({'name': req.body.participants[1].name},function(err, user){
+    console.log("User is: ", user);
+    var message = new Message({
+      // TODO: Get correct fbId for the recipient
+      'participants': [{
+        'fbId': req.body.participants[0].fbId,
+        'name': req.body.participants[0].name
+      },{
+        'fbId': user.fbId,
+        'name': user.name
+      }],
+      'topic': req.body.topic,
+      'messages': [{
+        'message': req.body.message,
+        'from': req.body.from
+      }]
+    });
+    message.save(function (err, post){
+      if(err){
+        console.log('error is:', err);
+      }
+    });
+    res.send(201);
+  });
+});
 //Start server
 app.listen(9000);
