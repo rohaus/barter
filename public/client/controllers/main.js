@@ -30,7 +30,21 @@ angular.module('barterApp')
           console.log("The items have been retrieved from the database", data);
           var barterItems = data;
           var length = barterItems.length;
-          var infowindow = new google.maps.InfoWindow();
+          var infobox = new InfoBox({
+            content: '<h1>Hello!</h1>',
+            disableAutoPan: false,
+            maxWidth: 150,
+            pixelOffset: new google.maps.Size(-140, 0),
+            zIndex: null,
+            boxStyle: {
+              background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
+              opacity: 0.8,
+              width: "280px"
+            },
+            closeBoxMargin: "12px 4px 2px 2px",
+            closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+            infoBoxClearance: new google.maps.Size(1, 1)
+          });
 
           var marker, i;
           for(i = 0; i < length; i++){
@@ -40,13 +54,13 @@ angular.module('barterApp')
             });
             google.maps.event.addListener(marker, 'click', (function(marker, i) {
               return function() {
-                infowindow.setContent('<div class="infoWindow"><img src="'+barterItems[i].image+'"/>'+
+                infobox.setContent('<div class="infobox"><img src="'+barterItems[i].image+'"/>'+
                   '<h2>Description: '+barterItems[i].description+'</h2>'+
-                  '<h3>Value: '+ barterItems[i].value+'</h3></div>'+
+                  '<h3>Value: '+ barterItems[i].value+'</h3>'+
                   '<h2>Contact: '+barterItems[i].name+'</h2>'+
-                  '<button ng-click="displayNewMessage()">Reply</button>');
+                  '<button ng-click="displayNewMessage()">Reply</button></div>');
                   // '<h2>Email:'+barterItems[i].email+'</h2>'
-                infowindow.open($scope.map, marker);
+                infobox.open($scope.map, marker);
               };
             })(marker, i));
           }
