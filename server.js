@@ -106,7 +106,7 @@ app.get('/loggedin', function (req, res) {
 
 app.post('/logout', function (req, res){
   req.logOut();
-  res.redirect('index');
+  res.redirect('/');
 });
 
 app.get('/auth/facebook', passport.authenticate('facebook', {scope: 'email'}));
@@ -129,7 +129,7 @@ app.get('/items', auth, function (req, res, next){
 
 app.get('/messages', auth, function (req, res, next){
   console.log("req.user.fbId is:",req.user.fbId);
-  var response = Message.find({"participants.fbId": req.user.fbId}, function(err, messages){
+  Message.find({"participants.fbId": req.user.fbId}, function(err, messages){
     console.log("messages are:",messages);
     res.send(201, messages);
   });
@@ -155,7 +155,7 @@ app.post('/post', auth, function (req, res, next){
   res.send(201);
 });
 
-app.post('/sendNewMessage', function (req, res, next){
+app.post('/sendNewMessage', auth, function (req, res, next){
   console.log("req.body.participants is", req.body.participants);
   var message = new Message({
     'participants': [{
@@ -177,6 +177,22 @@ app.post('/sendNewMessage', function (req, res, next){
     if(err){
       console.log('error is:', err);
     }
+  });
+  res.send(201);
+});
+
+app.post('/sendMessage', auth, function (req, res, next){
+  console.log("req.body.participants is", req.body.participants);
+  Message.update({'_id': req.body._id},
+    {$push: {'messages': {
+        'message': req.body.message,
+        'from': req.body.from
+      }
+    }},
+    function(err, data){
+      if(err){
+        console.log('error is:', err);
+      }
   });
   res.send(201);
 });

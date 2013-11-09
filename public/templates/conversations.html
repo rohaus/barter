@@ -1,5 +1,5 @@
 <div class="box conversations" data-ng-init="renderMessages()">
-  <h1>Barter</h1>
+  <h1><a href="#">Barter</a></h1>
   <div class="conversation" ng-repeat="conversation in conversations">
     <div ng-click="expand(conversation)">
       <h4>Topic: {{conversation.itemName}}</h4>
@@ -8,9 +8,10 @@
         <p>Sent: {{message.date | date:'MM/dd/yyyy @ h:mma'}}</p>
       </div>
     </div>
-    <form ng-show="conversation.expand" ng-submit="sendMessage()">
-      <input type="text" placeholder="Type a message!"></input>
+    <form ng-show="conversation.expand" ng-submit="sendMessage(conversation)">
+      <input type="text" ng-model="conversation.reply" placeholder="Type a message!"></input>
       <button>Send</button>
+      {{replyMessage}}
     </form>
   </div>
 <div>

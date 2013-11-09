@@ -83,6 +83,7 @@ angular.module('barterApp')
             $scope.recipient.fbId = document.getElementById("fbId").textContent;
             console.log($scope.recipient);
             $scope.$digest();
+
           });
         });
       });
