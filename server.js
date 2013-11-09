@@ -38,6 +38,7 @@ var messageSchema = new mongoose.Schema({
     'fbId': Number,
     'name': String
   }],
+  'createdAt': { 'type': Date, 'default': Date.now },
   'itemName': String,
   'description': String,
   'condition': String,

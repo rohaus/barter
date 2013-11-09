@@ -1,11 +1,13 @@
 <div class="box conversations" data-ng-init="renderMessages()">
   <h1><a href="#">Barter</a></h1>
-  <div class="conversation" ng-repeat="conversation in conversations">
-    <div ng-click="expand(conversation)">
-      <h4>Topic: {{conversation.itemName}}</h4>
-      <div class="messages" ng-repeat="message in conversation.messages" ng-show="conversation.expand">
-        <p>{{message.from}}: {{message.message}}</p>
-        <p>Sent: {{message.date | date:'MM/dd/yyyy @ h:mma'}}</p>
+  <div class="conversation" ng-repeat="conversation in conversations | orderBy:'createdAt':reverse">
+    <div>
+      <h4 ng-click="expand(conversation)">Topic: {{conversation.itemName}}</h4>
+      <div class="messageContainer">
+        <div class="messages" ng-repeat="message in conversation.messages" ng-show="conversation.expand">
+          <p>{{message.from}}: {{message.message}}</p>
+          <p>Sent: {{message.date | date:'MM/dd/yyyy @ h:mma'}}</p>
+        </div>
       </div>
     </div>
     <form ng-show="conversation.expand" ng-submit="sendMessage(conversation)">

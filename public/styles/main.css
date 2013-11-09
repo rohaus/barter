@@ -63,3 +63,9 @@ body {
 #fbId, .gm-style-cc, img[src*="https://maps.gstatic.com/mapfiles/api-3/images/google_white2_hdpi.png"] {
     display:none;
 }
+
+.messageContainer {
+/*    background-color: white;
+    overflow: auto;
+    height: 150px;
+*/}
