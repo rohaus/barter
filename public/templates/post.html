@@ -2,12 +2,16 @@
   <h3>Have something to Barter?</h3>
   <form ng-submit="postImage()">
     <div>
-      What's the value?
-      <input type="text" ng-model="value" ng-required="true" autofocus="autofocus"></input>
+      What's it called?
+      <input type="text" ng-model="itemName" ng-required="true" autofocus="autofocus"></input>
     </div>
     <div>
-      Tell us about it
+      Tell us about it.
       <input type="text" ng-model="description" ng-required="true"></input>
+    </div>
+    <div>
+      What's the condition?
+      <input type="text" ng-model="condition" ng-required="true"></input>
     </div>
     <div>
       Upload an image!

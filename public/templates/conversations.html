@@ -2,7 +2,7 @@
   <h1>Barter</h1>
   <div class="conversation" ng-repeat="conversation in conversations">
     <div ng-click="expand(conversation)">
-      <h4>Topic: {{conversation.topic}}</h4>
+      <h4>Topic: {{conversation.itemName}}</h4>
       <div class="messages" ng-repeat="message in conversation.messages" ng-show="conversation.expand">
         <p>{{message.from}}: {{message.message}}</p>
         <p>Sent: {{message.date | date:'MM/dd/yyyy @ h:mma'}}</p>

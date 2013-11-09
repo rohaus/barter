@@ -23,8 +23,9 @@ app.use(passport.session());
 var postSchema = new mongoose.Schema({
   'fbId': String,
   'name': String,
+  'itemName': String,
   'description' : String,
-  'value': String,
+  'condition': String,
   'loc': {
     'type': {'type': String},
     'coordinates':[]
@@ -37,7 +38,9 @@ var messageSchema = new mongoose.Schema({
     'fbId': Number,
     'name': String
   }],
-  'topic': String,
+  'itemName': String,
+  'description': String,
+  'condition': String,
   'messages': [{
     'message': String,
     'from': String,
@@ -136,9 +139,10 @@ app.post('/post', auth, function (req, res, next){
   var post = new Post({
     'fbId': req.body.fbId,
     'name': req.body.name,
+    'itemName': req.body.itemName,
     // 'email': req.body.email,
     'description': req.body.description,
-    'value': req.body.value,
+    'condition': req.body.condition,
     'loc': { type: 'Point', coordinates: [req.body.location[0], req.body.location[1]]},
     'image': req.body.image.dataURL
   });
@@ -161,7 +165,9 @@ app.post('/sendNewMessage', function (req, res, next){
       'fbId': req.body.participants[1].fbId,
       'name': req.body.participants[1].name
     }],
-    'topic': req.body.topic,
+    'itemName': req.body.itemName,
+    'description': req.body.description,
+    'condition': req.body.condition,
     'messages': [{
       'message': req.body.message,
       'from': req.body.from

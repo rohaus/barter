@@ -63,8 +63,9 @@ angular.module('barterApp')
     $scope.addInfoBox = function(marker, i, barterItems, infobox){
       google.maps.event.addListener(marker, 'click', function() {
         var content = '<div class="infobox"><img src="'+barterItems[i].image+'"/>'+
+          '<h2 id="itemName">Item Name: '+barterItems[i].itemName+'</h2>'+
           '<h2 id="description">Description: '+barterItems[i].description+'</h2>'+
-          '<h3 id="value">Value: '+ barterItems[i].value+'</h3>'+
+          '<h3 id="condition">Condition: '+ barterItems[i].condition+'</h3>'+
           '<h2 id="name">Contact: '+barterItems[i].name+'</h2>'+
           '<h2 id="fbId">'+barterItems[i].fbId+'</h2>'+
           '<button id="barterButton">Barter</button></div>';
@@ -75,9 +76,11 @@ angular.module('barterApp')
           document.getElementById("barterButton").addEventListener("click", function(e) {
             $scope.displayNewMessage();
             $scope.recipient = {};
-            $scope.recipient.fbId = document.getElementById("fbId").textContent;
-            $scope.recipient.name = document.getElementById("name").textContent.split(": ")[1];
+            $scope.recipient.itemName = document.getElementById("itemName").textContent.split(": ")[1];
             $scope.recipient.description = document.getElementById("description").textContent.split(": ")[1];
+            $scope.recipient.condition = document.getElementById("condition").textContent.split(": ")[1];
+            $scope.recipient.name = document.getElementById("name").textContent.split(": ")[1];
+            $scope.recipient.fbId = document.getElementById("fbId").textContent;
             console.log($scope.recipient);
             $scope.$digest();
           });
@@ -116,15 +119,17 @@ angular.module('barterApp')
           'fbId': $scope.recipient.fbId,
           'name': $scope.recipient.name
         }],
-        'topic': $scope.recipient.topic,
-        'message': $scope.newMessage,
-        'from': $rootScope.name
+        'itemName': $scope.recipient.itemName,
+        'description': $scope.recipient.description,
+        'condition': $scope.recipient.condition,
+        'from': $rootScope.name,
+        'message': $scope.newMessage
       };
 
       $http.post('/sendNewMessage', $scope.data)
       .success(function(data, status, headers, config){
         console.log("SUCCESS!");
-        $scope.newTopic = $scope.newMessage = $scope.recipient = '';
+        $scope.newMessage = '';
       })
       .error(function(data, status){
         console.log("ERROR :(");

@@ -8,10 +8,8 @@
   <button ng-click="convRedirect()">View messages!</button>
   <div class="newMessage" ng-show="newMessageDisplay">
     <form ng-submit="sendNewMessage(recipient)">
-      <p>To:</p>
-      <p>{{recipient.name}}</p>
-      <p>Topic:</p>
-      <input type="text" ng-model="recipient.description" placeholder="What was the barter about?"></input>
+      <p>To: {{recipient.name}}</p>
+      <p>Item Name: {{recipient.itemName}}</p>
       <p>Message:</p>
       <input type="text" ng-model="newMessage" placeholder="What did you want to say?"></input>
       <button>Send Message</button>
