@@ -21,8 +21,8 @@ angular.module('barterApp')
       // });
     };
 
-    $scope.expand = function(message){
-      message.expand = !message.expand;
+    $scope.expand = function(element){
+      element.expand = !element.expand;
     };
 
     $scope.renderMessages = function(){

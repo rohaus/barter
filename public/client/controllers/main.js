@@ -76,7 +76,7 @@ angular.module('barterApp')
             $scope.displayNewMessage();
             $scope.recipient = {};
             $scope.recipient.fbId = document.getElementById("fbId").textContent;
-            $scope.recipient.name = document.getElementById("name").textContent.split(" ")[1];
+            $scope.recipient.name = document.getElementById("name").textContent.split(": ")[1];
             $scope.recipient.description = document.getElementById("description").textContent.split(": ")[1];
             console.log($scope.recipient);
             $scope.$digest();
