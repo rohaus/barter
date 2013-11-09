@@ -21,23 +21,19 @@ angular.module('barterApp')
       // });
     };
 
-    $scope.expand = function(conversation){
-      conversation.expand = !conversation.expand;
+    $scope.expand = function(message){
+      message.expand = !message.expand;
     };
 
     $scope.renderMessages = function(){
-      $scope.conversations = [{
-        'topic': "test topic",
-        'name': "test name",
-        'message': "test message",
-        'sent': "test sent time",
-        'expand': false
-      },{
-        'topic': "test topic 2",
-        'name': "test name 2",
-        'message': "test message 2",
-        'sent': "test sent time 2",
-        'expand': false
-      }];
-    };
+      $http.get('/messages')
+        .success(function(data, status, headers, config){
+          console.log("success fetching messages!");
+          $scope.conversations = data;
+          console.log(data);
+        })
+        .error(function(data, status, headers, config){
+          console.log("error fetching messages");
+        });
+      };
   });

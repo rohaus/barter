@@ -124,6 +124,14 @@ app.get('/items', auth, function (req, res, next){
   });
 });
 
+app.get('/messages', auth, function (req, res, next){
+  console.log("req.user.fbId is:",req.user.fbId);
+  var response = Message.find({"participants.fbId": req.user.fbId}, function(err, messages){
+    console.log("messages are:",messages);
+    res.send(201, messages);
+  });
+});
+
 app.post('/post', auth, function (req, res, next){
   var post = new Post({
     'fbId': req.body.fbId,

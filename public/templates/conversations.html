@@ -3,9 +3,11 @@
   <div class="conversation" ng-repeat="conversation in conversations">
     <div ng-click="expand(conversation)">
       <h4>Topic: {{conversation.topic}}</h4>
-      <p>Name: {{conversation.name}}</p>
-      <p>Message: {{conversation.message}}</p>
-      <p>Sent: {{conversation.sent}}</p>
+      <div class="messages" ng-repeat="message in conversation.messages">
+        <p>Name: {{message.from}}</p>
+        <p>Message: {{message.message}}</p>
+        <p>Sent: {{message.date}}</p>
+      </div>
     </div>
     <form ng-show="conversation.expand" ng-submit="sendMessage()">
       <input type="text" placeholder="Type a message!"></input>
