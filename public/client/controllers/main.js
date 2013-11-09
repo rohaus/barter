@@ -30,8 +30,8 @@ angular.module('barterApp')
           console.log("The items have been retrieved from the database", data);
           var barterItems = data;
           var length = barterItems.length;
+
           var infobox = new InfoBox({
-            content: '<h1>Hello!</h1>',
             disableAutoPan: false,
             maxWidth: 150,
             pixelOffset: new google.maps.Size(-140, 0),
@@ -52,23 +52,37 @@ angular.module('barterApp')
               position: new google.maps.LatLng(barterItems[i].loc.coordinates[0], barterItems[i].loc.coordinates[1]),
               map: $scope.map
             });
-            google.maps.event.addListener(marker, 'click', (function(marker, i) {
-              return function() {
-                var content = '<div class="infobox"><img src="'+barterItems[i].image+'"/>'+
-                  '<h2>Description: '+barterItems[i].description+'</h2>'+
-                  '<h3>Value: '+ barterItems[i].value+'</h3>'+
-                  '<h2>Contact: '+barterItems[i].name+'</h2>'+
-                  '<button ng-click="displayNewMessage()">Barter</button></div>';
-                  // '<h2>Email:'+barterItems[i].email+'</h2>'
-                infobox.setContent(content);
-                infobox.open($scope.map, marker);
-              };
-            })(marker, i));
+            $scope.addInfoBox(marker, i, barterItems, infobox);
           }
         })
         .error(function(data, status, headers, config){
           console.log("adding markers failed");
         });
+    };
+
+    $scope.addInfoBox = function(marker, i, barterItems, infobox){
+      google.maps.event.addListener(marker, 'click', function() {
+        var content = '<div class="infobox"><img src="'+barterItems[i].image+'"/>'+
+          '<h2 id="description">Description: '+barterItems[i].description+'</h2>'+
+          '<h3 id="value">Value: '+ barterItems[i].value+'</h3>'+
+          '<h2 id="name">Contact: '+barterItems[i].name+'</h2>'+
+          '<h2 id="fbId">'+barterItems[i].fbId+'</h2>'+
+          '<button id="barterButton">Barter</button></div>';
+          // '<h2>Email:'+barterItems[i].email+'</h2>'
+        infobox.open($scope.map, marker);
+        infobox.setContent(content);
+        google.maps.event.addListener(infobox, 'domready', function() {
+          document.getElementById("barterButton").addEventListener("click", function(e) {
+            $scope.displayNewMessage();
+            $scope.recipient = {};
+            $scope.recipient.fbId = document.getElementById("fbId").textContent;
+            $scope.recipient.name = document.getElementById("name").textContent.split(" ")[1];
+            $scope.recipient.description = document.getElementById("description").textContent.split(": ")[1];
+            console.log($scope.recipient);
+            $scope.$digest();
+          });
+        });
+      });
     };
 
     $scope.postRedirect = function(){
@@ -89,7 +103,6 @@ angular.module('barterApp')
     $scope.newMessageDisplay = false;
 
     $scope.displayNewMessage = function(){
-      console.log("it's being clicked");
       $scope.newMessageDisplay = !$scope.newMessageDisplay;
     };
 
@@ -100,9 +113,10 @@ angular.module('barterApp')
           'fbId': $rootScope.fbId,
           'name': $rootScope.name
         },{
-          'name': $scope.recipient
+          'fbId': $scope.recipient.fbId,
+          'name': $scope.recipient.name
         }],
-        'topic': $scope.newTopic,
+        'topic': $scope.recipient.topic,
         'message': $scope.newMessage,
         'from': $rootScope.name
       };

@@ -145,30 +145,26 @@ app.post('/post', auth, function (req, res, next){
 
 app.post('/sendNewMessage', function (req, res, next){
   console.log("req.body.participants is", req.body.participants);
-  FbUsers.findOne({'name': req.body.participants[1].name},function(err, user){
-    console.log("User is: ", user);
-    var message = new Message({
-      // TODO: Get correct fbId for the recipient
-      'participants': [{
-        'fbId': req.body.participants[0].fbId,
-        'name': req.body.participants[0].name
-      },{
-        'fbId': user.fbId,
-        'name': user.name
-      }],
-      'topic': req.body.topic,
-      'messages': [{
-        'message': req.body.message,
-        'from': req.body.from
-      }]
-    });
-    message.save(function (err, post){
-      if(err){
-        console.log('error is:', err);
-      }
-    });
-    res.send(201);
+  var message = new Message({
+    'participants': [{
+      'fbId': req.body.participants[0].fbId,
+      'name': req.body.participants[0].name
+    },{
+      'fbId': req.body.participants[1].fbId,
+      'name': req.body.participants[1].name
+    }],
+    'topic': req.body.topic,
+    'messages': [{
+      'message': req.body.message,
+      'from': req.body.from
+    }]
   });
+  message.save(function (err, post){
+    if(err){
+      console.log('error is:', err);
+    }
+  });
+  res.send(201);
 });
 //Start server
 app.listen(9000);

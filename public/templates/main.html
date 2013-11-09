@@ -9,13 +9,12 @@
   <div class="newMessage" ng-show="newMessageDisplay">
     <form ng-submit="sendNewMessage(recipient)">
       <p>To:</p>
-      <input type="text" ng-model="recipient" placeholder="Who do you want to send this to?"></input>
+      <input type="text" ng-model="recipient.name" placeholder="Who do you want to send this to?"></input>
       <p>Topic:</p>
-      <input type="text" ng-model="newTopic" placeholder="What was the barter about?"></input>
+      <input type="text" ng-model="recipient.description" placeholder="What was the barter about?"></input>
       <p>Message:</p>
       <input type="text" ng-model="newMessage" placeholder="What did you want to say?"></input>
       <button>Send Message</button>
     </form>
   </div>
-  <button ng-click="displayNewMessage()">Barter</button>
 </div>
