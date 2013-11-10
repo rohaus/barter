@@ -28,7 +28,7 @@ var messageSchema = new mongoose.Schema({
 
 var conversationSchema = new mongoose.Schema({
   'requestingUser': { 'fbId': Number, 'name': String },
-  'accepted': { 'type': Boolean, 'default': false },
+  'accepted': { 'type': Boolean, 'default': null },
   'createdAt': { 'type': Date, 'default': Date.now },
   'messages': [messageSchema]
 });
@@ -251,13 +251,22 @@ app.post('/acceptBarter', auth, function (req, res, next){
 });
 
 app.post('/rejectBarter', auth, function (req, res, next){
-  Post.update({'conversations._id': req.body._id}, {$set: {'completed': true}}, function(err){
-    if(err){
-      console.log(err);
-      res.send(500);
-    }
-    res.send(201);
-  });
+  Post.findOne({'conversations._id': req.body._id}, function(err, post){
+      if(err){
+        console.log(err);
+        res.send(500);
+      }
+      for(var i = 0; i < post.conversations.length; i++){
+        var conversation = post.conversations[i];
+        if(conversation._id.equals(req.body._id)){
+          post.conversations[i].accepted = false;
+          break;
+        }
+      }
+      post.save(function(){
+        res.send(201);
+      });
+    });
 });
 
 app.post('/deletePost', auth, function (req, res, next){

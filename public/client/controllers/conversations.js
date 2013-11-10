@@ -104,13 +104,20 @@ angular.module('barterApp')
       });
     };
 
-    $scope.deletePost = function(post){
+    $scope.deletePost = function(post, posts){
       $scope.data = {
         _id: post._id
       };
       $http.post('/deletePost', $scope.data)
       .success(function(data, status, headers, config){
         console.log("post deleted!");
+        var length = posts.length;
+        for(var i = 0; i < length; i++){
+          if (posts[i]._id === $scope.data._id){
+            posts.splice(i,1);
+            break;
+          }
+        }
       })
       .error(function(data, status, headers, config){
         console.log("error deleting post");
