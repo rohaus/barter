@@ -184,8 +184,6 @@ app.post('/sendMessage', auth, function (req, res, next){
     }
     for(var i = 0; i < post.conversations.length; i++){
       var conversation = post.conversations[i];
-      console.log("conversation._id is:", conversation._id);
-      console.log("req.body._id is:", req.body._id);
       if(conversation._id.equals(req.body._id)){
         post.conversations[i].messages.push(message);
         break;
@@ -207,8 +205,6 @@ app.post('/sendMessage', auth, function (req, res, next){
 // });
 
 app.post('/deleteConversation', auth, function (req, res, next){
-  var post = new Post;
-  console.log("convo id is",req.body._id);
   Post.findOne({"conversations._id": req.body._id}, function(err, post){
     var conversation = post.conversations.id(req.body._id).remove();
     post.save(function (err) {
@@ -228,5 +224,51 @@ app.post('/deleteConversation', auth, function (req, res, next){
   //   res.send(201);
   // });
 });
+
+app.post('/acceptBarter', auth, function (req, res, next){
+  Post.update({'conversations._id': req.body._id}, {$set: {'completed': true}}, function(err){
+    if(err){
+      console.log(err);
+      res.send(500);
+    }
+    Post.findOne({'conversations._id': req.body._id}, function(err, post){
+      if(err){
+        console.log(err);
+        res.send(500);
+      }
+      for(var i = 0; i < post.conversations.length; i++){
+        var conversation = post.conversations[i];
+        if(conversation._id.equals(req.body._id)){
+          post.conversations[i].accepted = true;
+          break;
+        }
+      }
+      post.save(function(){
+        res.send(201);
+      });
+    });
+  });
+});
+
+app.post('/rejectBarter', auth, function (req, res, next){
+  Post.update({'conversations._id': req.body._id}, {$set: {'completed': true}}, function(err){
+    if(err){
+      console.log(err);
+      res.send(500);
+    }
+    res.send(201);
+  });
+});
+
+app.post('/deletePost', auth, function (req, res, next){
+  Post.findByIdAndRemove(req.body._id, function(err){
+    if(err){
+      console.log(err);
+      res.send(500);
+    }
+    res.send(201);
+  });
+});
+
 //Start server
 app.listen(9000);

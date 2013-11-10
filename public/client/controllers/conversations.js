@@ -64,7 +64,6 @@ angular.module('barterApp')
       };
       $http.post('/deleteConversation', $scope.data)
       .success(function(data, status, headers, config){
-        debugger;
         console.log("success deleting conversation!");
         var length = post.conversations.length;
         for(var i = 0; i < length; i++){
@@ -76,6 +75,45 @@ angular.module('barterApp')
       })
       .error(function(data, status, headers, config){
         console.log("error deleting conversation");
+      });
+    };
+
+    $scope.acceptBarter = function(conversation){
+      $scope.data = {
+        _id: conversation._id
+      };
+      $http.post('/acceptBarter', $scope.data)
+      .success(function(data, status, headers, config){
+        console.log("barter accepted!");
+      })
+      .error(function(data, status, headers, config){
+        console.log("error accepting barter");
+      });
+    };
+
+    $scope.rejectBarter = function(conversation){
+      $scope.data = {
+        _id: conversation._id
+      };
+      $http.post('/rejectBarter', $scope.data)
+      .success(function(data, status, headers, config){
+        console.log("barter rejected!");
+      })
+      .error(function(data, status, headers, config){
+        console.log("error rejecting barter");
+      });
+    };
+
+    $scope.deletePost = function(post){
+      $scope.data = {
+        _id: post._id
+      };
+      $http.post('/deletePost', $scope.data)
+      .success(function(data, status, headers, config){
+        console.log("post deleted!");
+      })
+      .error(function(data, status, headers, config){
+        console.log("error deleting post");
       });
     };
   });
