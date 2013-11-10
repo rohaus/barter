@@ -58,17 +58,18 @@ angular.module('barterApp')
     //   });
     // };
 
-    $scope.deleteConversation = function(conversation){
+    $scope.deleteConversation = function(conversation, post){
       $scope.data = {
         _id: conversation._id
       };
       $http.post('/deleteConversation', $scope.data)
       .success(function(data, status, headers, config){
+        debugger;
         console.log("success deleting conversation!");
-        var length = $scope.conversations.length;
+        var length = post.conversations.length;
         for(var i = 0; i < length; i++){
-          if ($scope.conversations[i]._id === $scope.data._id){
-            $scope.conversations.splice(i,1);
+          if (post.conversations[i]._id === $scope.data._id){
+            post.conversations.splice(i,1);
             break;
           }
         }

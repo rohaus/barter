@@ -51,7 +51,6 @@ var postSchema = new mongoose.Schema({
 
 var facebookUserSchema = new mongoose.Schema({
   'fbId': String,
-  // 'email': { 'type' : String , 'lowercase' : true},
   'name': String
 });
 
@@ -172,29 +171,6 @@ app.post('/sendNewConversation', auth, function (req, res, next){
     }
     res.send(201);
   });
-  // Post.findOne({'_id': req.body._id}, function(err, post){
-  //   if(err){
-  //     console.log(err);
-  //   }
-  //   var message = new Message({
-  //     'message': req.body.message,
-  //     'from': req.body.from
-  //   });
-  //   var conversation = new Conversation({
-  //     'requestingUser': {
-  //       'fbId': req.body.requestingUser.fbId,
-  //       'name': req.body.requestingUser.name
-  //     },
-  //     'messages': [message]
-  //   });
-  //   post.conversations.push(conversation);
-  //   post.save(function(err){
-  //     if(err){
-  //       console.log(err);
-  //     }
-  //     res.send(201);
-  //   });
-  // });
 });
 
 app.post('/sendMessage', auth, function (req, res, next){
@@ -223,24 +199,6 @@ app.post('/sendMessage', auth, function (req, res, next){
       res.send(201);
     });
   });
-
-  // var conversation = Post.conversations.id(req.body._id);
-  // console.log("conversation is:",conversation);
-  // conversation.messages.push(message);
-  // Post.save(function(err){
-  //   if(err){
-  //     console.log(err);
-  //   }
-  //   res.send(201);
-  // });
-
-  // Post.update({'conversations._id': req.body._id}, {$push: {'completed': false}}, function(err, second){
-  //   if(err){
-  //     console.log(err);
-  //     res.send(500);
-  //   }
-  //   res.send(201);
-  // });
 });
 
 // app.post('/deleteMessage', auth, function (req, res, next){
@@ -249,14 +207,26 @@ app.post('/sendMessage', auth, function (req, res, next){
 // });
 
 app.post('/deleteConversation', auth, function (req, res, next){
-  Conversation.findByIdAndRemove(req.body._id, function(err, data){
-    if (err){
-      console.log(err);
-    }
-    console.log("Conversation was deleted!");
+  var post = new Post;
+  console.log("convo id is",req.body._id);
+  Post.findOne({"conversations._id": req.body._id}, function(err, post){
+    var conversation = post.conversations.id(req.body._id).remove();
+    post.save(function (err) {
+      if(err){
+        console.log(err);
+        res.send(500);
+      }
+      console.log('the sub-doc was removed');
+      res.send(201);
+    });
   });
-  res.send(201);
+  // Post.findOneAndRemove({'conversations._id': req.body._id}, function(err){
+  //   if (err){
+  //     console.log(err);
+  //   }
+  //   console.log("Conversation was deleted!");
+  //   res.send(201);
+  // });
 });
-
 //Start server
 app.listen(9000);

@@ -4,7 +4,7 @@
     <div class="conversation" ng-repeat="conversation in post.conversations | orderBy:'createdAt':true">
       <div>
         <h4 ng-click="expand(conversation)">Topic: {{post.itemName}}</h4>
-        <button ng-show="conversation.expand" ng-click="deleteConversation(conversation)">Delete Conversation</button>
+        <button ng-show="conversation.expand" ng-click="deleteConversation(conversation, post)">Delete Conversation</button>
         <div class="messageContainer">
           <div class="messages" ng-repeat="message in conversation.messages | orderBy:'sentAt':false" ng-show="conversation.expand">
             <!-- <button ng-click="deleteMessage(message)">Delete Message</button> -->
