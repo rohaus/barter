@@ -65,25 +65,26 @@ angular.module('barterApp')
         var content = '<div class="infobox"><img src="'+barterItems[i].image+'"/>'+
           '<h2 id="itemName">Item Name: '+barterItems[i].itemName+'</h2>'+
           '<h2 id="description">Description: '+barterItems[i].description+'</h2>'+
-          '<h3 id="condition">Condition: '+ barterItems[i].condition+'</h3>'+
+          '<h2 id="condition">Condition: '+ barterItems[i].condition+'</h2>'+
           '<h2 id="name">Contact: '+barterItems[i].name+'</h2>'+
           '<h2 id="fbId">'+barterItems[i].fbId+'</h2>'+
+          '<h2 id="_id">'+barterItems[i]._id+'</h2>'+
           '<button id="barterButton">Barter</button></div>';
           // '<h2>Email:'+barterItems[i].email+'</h2>'
         infobox.open($scope.map, marker);
         infobox.setContent(content);
         google.maps.event.addListener(infobox, 'domready', function() {
           document.getElementById("barterButton").addEventListener("click", function(e) {
-            $scope.displayNewMessage();
+            $scope.displayNewConversation();
             $scope.recipient = {};
             $scope.recipient.itemName = document.getElementById("itemName").textContent.split(": ")[1];
             $scope.recipient.description = document.getElementById("description").textContent.split(": ")[1];
             $scope.recipient.condition = document.getElementById("condition").textContent.split(": ")[1];
             $scope.recipient.name = document.getElementById("name").textContent.split(": ")[1];
             $scope.recipient.fbId = document.getElementById("fbId").textContent;
+            $scope.recipient._id = document.getElementById("_id").textContent;
             console.log($scope.recipient);
             $scope.$digest();
-
           });
         });
       });
@@ -104,33 +105,26 @@ angular.module('barterApp')
         });
     };
 
-    $scope.newMessageDisplay = false;
+    $scope.newConversationDisplay = false;
 
-    $scope.displayNewMessage = function(){
-      $scope.newMessageDisplay = !$scope.newMessageDisplay;
+    $scope.displayNewConversation = function(){
+      $scope.newConversationDisplay = !$scope.newConversationDisplay;
     };
 
-    $scope.sendNewMessage = function(recipient){
-      console.log("recipient being sent in is: ", recipient);
+    $scope.sendNewConversation = function(recipient){
       $scope.data = {
-        'participants': [{
+        'requestingUser': {
           'fbId': $rootScope.fbId,
           'name': $rootScope.name
-        },{
-          'fbId': $scope.recipient.fbId,
-          'name': $scope.recipient.name
-        }],
-        'itemName': $scope.recipient.itemName,
-        'description': $scope.recipient.description,
-        'condition': $scope.recipient.condition,
+        },
+        'message': $scope.newConversation,
         'from': $rootScope.name,
-        'message': $scope.newMessage
+        '_id': recipient._id
       };
-
-      $http.post('/sendNewMessage', $scope.data)
+      $http.post('/sendNewConversation', $scope.data)
       .success(function(data, status, headers, config){
         console.log("SUCCESS!");
-        $scope.newMessage = '';
+        $scope.newConversation = '';
       })
       .error(function(data, status){
         console.log("ERROR :(");

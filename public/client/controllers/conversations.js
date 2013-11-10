@@ -14,7 +14,7 @@ angular.module('barterApp')
         conversation.messages.push({
           'message': $scope.data.message,
           'from': $scope.data.from,
-          'date': time
+          'sentAt': time
         });
       })
       .error(function(data, status){
@@ -31,10 +31,50 @@ angular.module('barterApp')
       $http.get('/messages')
         .success(function(data, status, headers, config){
           console.log("success fetching messages!");
-          $scope.conversations = data;
+          $scope.posts = data;
         })
         .error(function(data, status, headers, config){
           console.log("error fetching messages");
         });
+    };
+
+    // $scope.deleteMessage = function(message){
+    //   $scope.data = {
+    //     _id: message._id
+    //   };
+    //   $http.post('/deleteMessage', $scope.data)
+    //   .success(function(data, status, headers, config){
+    //     console.log("success deleting message!");
+    //     // var length = $scope.conversations.length;
+    //     // for(var i = 0; i < length; i++){
+    //     //   if ($scope.conversations[i]._id === $scope.data._id){
+    //     //     $scope.conversations.splice(i,1);
+    //     //     break;
+    //     //   }
+    //     // }
+    //   })
+    //   .error(function(data, status, headers, config){
+    //     console.log("error deleting message");
+    //   });
+    // };
+
+    $scope.deleteConversation = function(conversation){
+      $scope.data = {
+        _id: conversation._id
       };
+      $http.post('/deleteConversation', $scope.data)
+      .success(function(data, status, headers, config){
+        console.log("success deleting conversation!");
+        var length = $scope.conversations.length;
+        for(var i = 0; i < length; i++){
+          if ($scope.conversations[i]._id === $scope.data._id){
+            $scope.conversations.splice(i,1);
+            break;
+          }
+        }
+      })
+      .error(function(data, status, headers, config){
+        console.log("error deleting conversation");
+      });
+    };
   });

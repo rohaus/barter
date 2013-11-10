@@ -20,33 +20,33 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // MongoSchema
+var messageSchema = new mongoose.Schema({
+    'message': String,
+    'from': String,
+    'sentAt': { 'type': Date, 'default': Date.now }
+});
+
+var conversationSchema = new mongoose.Schema({
+  'requestingUser': { 'fbId': Number, 'name': String },
+  'accepted': { 'type': Boolean, 'default': false },
+  'createdAt': { 'type': Date, 'default': Date.now },
+  'messages': [messageSchema]
+});
+
 var postSchema = new mongoose.Schema({
   'fbId': String,
   'name': String,
   'itemName': String,
-  'description' : String,
+  'description': String,
   'condition': String,
+  'completed': { 'type': Boolean, 'default': false },
   'loc': {
     'type': {'type': String},
     'coordinates':[]
   },
-  'image' : String
-});
-
-var messageSchema = new mongoose.Schema({
-  'participants': [{
-    'fbId': Number,
-    'name': String
-  }],
   'createdAt': { 'type': Date, 'default': Date.now },
-  'itemName': String,
-  'description': String,
-  'condition': String,
-  'messages': [{
-    'message': String,
-    'from': String,
-    'date': { 'type': Date, 'default': Date.now }
-  }]
+  'image': String,
+  'conversations': [conversationSchema]
 });
 
 var facebookUserSchema = new mongoose.Schema({
@@ -56,8 +56,9 @@ var facebookUserSchema = new mongoose.Schema({
 });
 
 var Post = mongoose.model('Post', postSchema);
-var Message = mongoose.model('Message', messageSchema);
+var Conversation = mongoose.model('Conversation', conversationSchema);
 var FbUsers = mongoose.model('fbs', facebookUserSchema);
+var Message = mongoose.model('Message', messageSchema);
 
 var auth = function (req, res, next){
   if (!req.isAuthenticated()){
@@ -129,9 +130,7 @@ app.get('/items', auth, function (req, res, next){
 });
 
 app.get('/messages', auth, function (req, res, next){
-  console.log("req.user.fbId is:",req.user.fbId);
-  Message.find({"participants.fbId": req.user.fbId}, function(err, messages){
-    console.log("messages are:",messages);
+  Post.find({}, function(err, messages){
     res.send(201, messages);
   });
 });
@@ -141,7 +140,6 @@ app.post('/post', auth, function (req, res, next){
     'fbId': req.body.fbId,
     'name': req.body.name,
     'itemName': req.body.itemName,
-    // 'email': req.body.email,
     'description': req.body.description,
     'condition': req.body.condition,
     'loc': { type: 'Point', coordinates: [req.body.location[0], req.body.location[1]]},
@@ -156,46 +154,109 @@ app.post('/post', auth, function (req, res, next){
   res.send(201);
 });
 
-app.post('/sendNewMessage', auth, function (req, res, next){
-  console.log("req.body.participants is", req.body.participants);
+app.post('/sendNewConversation', auth, function (req, res, next){
   var message = new Message({
-    'participants': [{
-      'fbId': req.body.participants[0].fbId,
-      'name': req.body.participants[0].name
-    },{
-      'fbId': req.body.participants[1].fbId,
-      'name': req.body.participants[1].name
-    }],
-    'itemName': req.body.itemName,
-    'description': req.body.description,
-    'condition': req.body.condition,
-    'messages': [{
-      'message': req.body.message,
-      'from': req.body.from
-    }]
+    'message': req.body.message,
+    'from': req.body.from
   });
-  message.save(function (err, post){
+  var conversation = new Conversation({
+    'requestingUser': {
+      'fbId': req.body.requestingUser.fbId,
+      'name': req.body.requestingUser.name
+    },
+    'messages': [message]
+  });
+  Post.update({'_id': req.body._id}, {$push: {'conversations': conversation}}, function(err){
     if(err){
-      console.log('error is:', err);
+      console.log(err);
     }
+    res.send(201);
+  });
+  // Post.findOne({'_id': req.body._id}, function(err, post){
+  //   if(err){
+  //     console.log(err);
+  //   }
+  //   var message = new Message({
+  //     'message': req.body.message,
+  //     'from': req.body.from
+  //   });
+  //   var conversation = new Conversation({
+  //     'requestingUser': {
+  //       'fbId': req.body.requestingUser.fbId,
+  //       'name': req.body.requestingUser.name
+  //     },
+  //     'messages': [message]
+  //   });
+  //   post.conversations.push(conversation);
+  //   post.save(function(err){
+  //     if(err){
+  //       console.log(err);
+  //     }
+  //     res.send(201);
+  //   });
+  // });
+});
+
+app.post('/sendMessage', auth, function (req, res, next){
+  var message = new Message({
+    'message': req.body.message,
+    'from': req.body.from
+  });
+  Post.findOne({'conversations._id': req.body._id}, function(err, post){
+    if(err){
+      console.log(err);
+    }
+    for(var i = 0; i < post.conversations.length; i++){
+      var conversation = post.conversations[i];
+      console.log("conversation._id is:", conversation._id);
+      console.log("req.body._id is:", req.body._id);
+      if(conversation._id.equals(req.body._id)){
+        post.conversations[i].messages.push(message);
+        break;
+      }
+    }
+    post.save(function(err){
+      if(err){
+        console.log(err);
+        res.send(500);
+      }
+      res.send(201);
+    });
+  });
+
+  // var conversation = Post.conversations.id(req.body._id);
+  // console.log("conversation is:",conversation);
+  // conversation.messages.push(message);
+  // Post.save(function(err){
+  //   if(err){
+  //     console.log(err);
+  //   }
+  //   res.send(201);
+  // });
+
+  // Post.update({'conversations._id': req.body._id}, {$push: {'completed': false}}, function(err, second){
+  //   if(err){
+  //     console.log(err);
+  //     res.send(500);
+  //   }
+  //   res.send(201);
+  // });
+});
+
+// app.post('/deleteMessage', auth, function (req, res, next){
+//   Conversation.messages.id(req.body._id);
+//   res.send(201);
+// });
+
+app.post('/deleteConversation', auth, function (req, res, next){
+  Conversation.findByIdAndRemove(req.body._id, function(err, data){
+    if (err){
+      console.log(err);
+    }
+    console.log("Conversation was deleted!");
   });
   res.send(201);
 });
 
-app.post('/sendMessage', auth, function (req, res, next){
-  console.log("req.body.participants is", req.body.participants);
-  Message.update({'_id': req.body._id},
-    {$push: {'messages': {
-        'message': req.body.message,
-        'from': req.body.from
-      }
-    }},
-    function(err, data){
-      if(err){
-        console.log('error is:', err);
-      }
-  });
-  res.send(201);
-});
 //Start server
 app.listen(9000);
