@@ -1,5 +1,9 @@
 angular.module('barterApp')
   .controller('ConvCtrl', function($scope, $location, $http, $rootScope){
+    $scope.msgShow = true;
+    $scope.convShow = true;
+    $scope.postShow = true;
+
     $scope.sendMessage = function(conversation){
       $scope.data = {
         '_id': conversation._id,
@@ -32,6 +36,7 @@ angular.module('barterApp')
         .success(function(data, status, headers, config){
           console.log("success fetching messages!");
           $scope.posts = data;
+          $scope.all();
         })
         .error(function(data, status, headers, config){
           console.log("error fetching messages");
@@ -112,7 +117,7 @@ angular.module('barterApp')
       .success(function(data, status, headers, config){
         console.log("post deleted!");
         var length = posts.length;
-        for(var i = 0; i < length; i++){
+        for (var i = 0; i < length; i++){
           if (posts[i]._id === $scope.data._id){
             posts.splice(i,1);
             break;
@@ -123,4 +128,96 @@ angular.module('barterApp')
         console.log("error deleting post");
       });
     };
+
+    $scope.all = function(){
+      for (var i = 0; i < $scope.posts.length; i++){
+        var post = $scope.posts[i];
+        post.show = true;
+        for (var j = 0; j < post.conversations.length; j++){
+          var conversation = post.conversations[j];
+          conversation.show = true;
+        }
+      }
+    };
+
+    $scope.accepted = function(){
+      for (var i = 0; i < $scope.posts.length; i++){
+        var post = $scope.posts[i];
+        if (post.completed){
+          post.show = true;
+        }else{
+          post.show = false;
+        }
+        for (var j = 0; j < post.conversations.length; j++){
+          var conversation = post.conversations[j];
+          if(conversation.accepted){
+            conversation.show = true;
+          }else{
+            conversation.show = false;
+          }
+        }
+      }
+    };
+
+    $scope.pending = function(){
+      for (var i = 0; i < $scope.posts.length; i++){
+        var post = $scope.posts[i];
+        if (post.completed){
+          post.show = false;
+        }else{
+          post.show = true;
+        }
+        for (var j = 0; j < post.conversations.length; j++){
+          var conversation = post.conversations[j];
+          if(conversation.accepted === null){
+            conversation.show = true;
+          }else{
+            conversation.show = false;
+          }
+        }
+      }
+    };
+
+    $scope.completed = function(){
+      for (var i = 0; i < $scope.posts.length; i++){
+        var post = $scope.posts[i];
+        if (post.completed){
+          post.show = true;
+        }else{
+          post.show = false;
+        }
+        for (var j = 0; j < post.conversations.length; j++){
+          var conversation = post.conversations[j];
+          if(conversation.accepted !== null){
+            conversation.show = true;
+          }else{
+            conversation.show = false;
+          }
+        }
+      }
+    };
+
+    $scope.yourPosts = function(){
+      for (var i = 0; i < $scope.posts.length; i++){
+        var post = $scope.posts[i];
+        if (post.fbId === $rootScope.fbId){
+          post.show = true;
+        }else{
+          post.show = false;
+        }
+      }
+    };
+
+    $scope.yourRequests = function(){
+      for (var i = 0; i < $scope.posts.length; i++){
+        var post = $scope.posts[i];
+        if (post.fbId === $rootScope.fbId){
+          post.show = false;
+        }else{
+          post.show = true;
+        }
+      }
+    };
+
+
   });

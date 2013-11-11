@@ -36,7 +36,7 @@ body {
     display: block;
 }
 
-.infobox img {
+.infobox img, .posts img {
     width: 200px;
 }
 

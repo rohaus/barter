@@ -45,15 +45,18 @@ angular.module('barterApp')
             closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
             infoBoxClearance: new google.maps.Size(1, 1)
           });
-
+          $scope.markers = [];
           var marker, i;
           for(i = 0; i < length; i++){
             marker = new google.maps.Marker({
               position: new google.maps.LatLng(barterItems[i].loc.coordinates[0], barterItems[i].loc.coordinates[1]),
               map: $scope.map
             });
+            $scope.markers.push(marker);
             $scope.addInfoBox(marker, i, barterItems, infobox);
           }
+          var mcOptions = {gridSize: 5, maxZoom: 15};
+          var mc = new MarkerClusterer($scope.map, $scope.markers, mcOptions);
         })
         .error(function(data, status, headers, config){
           console.log("adding markers failed");

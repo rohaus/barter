@@ -1,8 +1,16 @@
 <div class="box conversations" data-ng-init="renderMessages()">
   <h1><a href="#">Barter</a></h1>
-  <div class="posts" ng-repeat="post in posts | orderBy:'createdAt':true">
+  <button ng-click="all()">All Trades</button>
+  <button ng-click="pending()">Pending</button>
+  <button ng-click="accepted()">Accepted</button>
+  <button ng-click="completed()">Completed</button>
+  <button ng-click="yourPosts()">Your Posts</button>
+  <button ng-click="yourRequests()">Your Requests</button>
+  <div class="posts" ng-repeat="post in posts | orderBy:'createdAt':true" ng-show="post.show">
+    {{post.itemName}}
+    <img src={{post.image}}></img>
     <button ng-click="deletePost(post, posts)">Delete Post</button>
-    <div class="conversation" ng-repeat="conversation in post.conversations | orderBy:'createdAt':true">
+    <div class="conversation" ng-repeat="conversation in post.conversations | orderBy:'createdAt':true" ng-show="conversation.show">
       <div>
         <h4 ng-click="expand(conversation)">Topic: {{post.itemName}}</h4>
         <button ng-show="conversation.expand" ng-click="deleteConversation(conversation, post)">Delete Conversation</button>
