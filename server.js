@@ -123,7 +123,22 @@ app.get('/', function (req, res, next) {
 });
 
 app.get('/items', auth, function (req, res, next){
-  var response = Post.find({}, function(err, posts){
+  // var coords = req.params.coords.split(",");
+  // var geojsonPoly = {
+  //   type: 'Polygon',
+  //   coordinates:
+  //     [[[coords[1], coords[0]],
+  //      [coords[1], coords[2]],
+  //      [coords[3], coords[2]],
+  //      [coords[3], coords[0]]]]
+  //    };
+// var options = { near: [-122.4167, 37.7837749], maxDistance: 500000 };
+// Post.geoSearch({ type : "Point" }, options, function(err, posts){
+  Post.find({}, function(err, posts){
+    if(err){
+      console.log(err);
+    }
+    console.log("posts are:", posts);
     res.send(201, posts);
   });
 });
@@ -141,7 +156,7 @@ app.post('/post', auth, function (req, res, next){
     'itemName': req.body.itemName,
     'description': req.body.description,
     'condition': req.body.condition,
-    'loc': { type: 'Point', coordinates: [req.body.location[0], req.body.location[1]]},
+    'loc': { type: 'Point', coordinates: [req.body.location[1], req.body.location[0]]},
     'image': req.body.image.dataURL
   });
 

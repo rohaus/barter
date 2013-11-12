@@ -15,4 +15,13 @@
       <button>Send Message</button>
     </form>
   </div>
+  <input type="text" placeholder="Search posts!" autofocus="autofocus" ng-model="searchText"></input>
+  <div class="searchPosts" ng-repeat="post in posts | filter:searchText">
+    <img src="{{post.image}}"/>
+    <h2 id="itemName">Item Name: {{post.itemName}}</h2>
+    <h2 id="description">Description: {{post.description}}</h2>
+    <h2 id="condition">Condition:  {{post.condition}}</h2>
+    <h2 id="name">Contact: {{post.name}}</h2>
+    <button id="barterButton">Barter</button>
+  </div>
 </div>

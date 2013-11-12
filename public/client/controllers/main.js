@@ -6,7 +6,8 @@ angular.module('barterApp')
 
     $scope.initialize = function(){
       google.maps.visualRefresh = true;
-      var mapOptions = {
+      var timeout,
+      mapOptions = {
         zoom: $scope.zoom,
         center: $scope.center,
         mapTypeId: $scope.mapTypeId
@@ -14,7 +15,21 @@ angular.module('barterApp')
       $scope.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
       $scope.oms = new OverlappingMarkerSpiderfier($scope.map);
       $scope.updateLocation();
-      $scope.addMarkers();
+      $scope.bounds = $scope.map.getBounds();
+      google.maps.event.addListener($scope.map,'bounds_changed', function(){
+        clearTimeout(timeout);
+        timeout = setTimeout(function () {
+          $scope.bounds = $scope.map.getBounds();
+          $scope.addMarkers($scope.bounds.toUrlValue());
+        }, 500);
+      });
+      // $scope.addMarkers($scope.bounds.toUrlValue());
+    };
+
+    $scope.clearMarkers = function(){
+      for (var i = 0; i < $scope.markers.length; i++) {
+        $scope.markers[i].setMap(null);
+      }
     };
 
     $scope.updateLocation = function(){
@@ -25,12 +40,17 @@ angular.module('barterApp')
       });
     };
 
-    $scope.addMarkers = function(){
+    $scope.addMarkers = function(coords){
+      if($scope.markers){
+        $scope.clearMarkers();
+      }
       $http.get('/items')
         .success(function(data, status, headers, config){
           console.log("The items have been retrieved from the database", data);
-          var barterItems = data;
-          var length = barterItems.length;
+          var barterItems = data,
+          length = barterItems.length;
+
+          $scope.posts = data;
 
           var infobox = new InfoBox({
             disableAutoPan: false,
@@ -50,7 +70,7 @@ angular.module('barterApp')
           var marker, i;
           for(i = 0; i < length; i++){
             marker = new google.maps.Marker({
-              position: new google.maps.LatLng(barterItems[i].loc.coordinates[0], barterItems[i].loc.coordinates[1]),
+              position: new google.maps.LatLng(barterItems[i].loc.coordinates[1], barterItems[i].loc.coordinates[0]),
               map: $scope.map
             });
             $scope.markers.push(marker);
@@ -134,6 +154,16 @@ angular.module('barterApp')
       .error(function(data, status){
         console.log("ERROR :(");
       });
+    };
+
+    $scope.search = function (post){
+      if (post.itemName.indexOf($scope.searchText)!=-1 ||
+          post.description.indexOf($scope.searchText)!=-1 ||
+          post.condition.indexOf($scope.searchText)!=-1 ||
+          post.name.indexOf($scope.searchText)!=-1) {
+        return true;
+      }
+      return false;
     };
 
   });
