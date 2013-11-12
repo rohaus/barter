@@ -12,6 +12,7 @@ angular.module('barterApp')
         mapTypeId: $scope.mapTypeId
       };
       $scope.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+      $scope.oms = new OverlappingMarkerSpiderfier($scope.map);
       $scope.updateLocation();
       $scope.addMarkers();
     };
@@ -53,6 +54,7 @@ angular.module('barterApp')
               map: $scope.map
             });
             $scope.markers.push(marker);
+            $scope.oms.addMarker(marker);
             $scope.addInfoBox(marker, i, barterItems, infobox);
           }
           var mcOptions = {gridSize: 5, maxZoom: 15};
