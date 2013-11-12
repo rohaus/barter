@@ -2,10 +2,14 @@ var express = require('express'),
     path = require('path'),
     hbs = require('hbs'),
     mongoose = require('mongoose'),
-    db = require('./database'),
+    db = require('./database/database.js'),
     passport = require('passport'),
     FacebookStrategy = require('passport-facebook').Strategy,
-    keys = require('./keys');
+    keys = require('./keys'),
+    Post = require('./database/schema/post'),
+    Conversation = require('./database/schema/conversation'),
+    Message = require('./database/schema/message'),
+    FbUsers = require('./database/schema/facebook');
 
 // Config
 var app = express();
@@ -18,46 +22,6 @@ app.use(express.bodyParser());
 app.use(express.logger('dev'));
 app.use(passport.initialize());
 app.use(passport.session());
-
-// MongoSchema
-var messageSchema = new mongoose.Schema({
-    'message': String,
-    'from': String,
-    'sentAt': { 'type': Date, 'default': Date.now }
-});
-
-var conversationSchema = new mongoose.Schema({
-  'requestingUser': { 'fbId': Number, 'name': String },
-  'accepted': { 'type': Boolean, 'default': null },
-  'createdAt': { 'type': Date, 'default': Date.now },
-  'messages': [messageSchema]
-});
-
-var postSchema = new mongoose.Schema({
-  'fbId': String,
-  'name': String,
-  'itemName': String,
-  'description': String,
-  'condition': String,
-  'completed': { 'type': Boolean, 'default': false },
-  'loc': {
-    'type': {'type': String, index: true },
-    'coordinates':[]
-  },
-  'createdAt': { 'type': Date, 'default': Date.now },
-  'image': String,
-  'conversations': [conversationSchema]
-});
-
-var facebookUserSchema = new mongoose.Schema({
-  'fbId': String,
-  'name': String
-});
-
-var Post = mongoose.model('Post', postSchema);
-var Conversation = mongoose.model('Conversation', conversationSchema);
-var FbUsers = mongoose.model('fbs', facebookUserSchema);
-var Message = mongoose.model('Message', messageSchema);
 
 var auth = function (req, res, next){
   if (!req.isAuthenticated()){
