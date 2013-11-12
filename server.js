@@ -41,7 +41,7 @@ var postSchema = new mongoose.Schema({
   'condition': String,
   'completed': { 'type': Boolean, 'default': false },
   'loc': {
-    'type': {'type': String},
+    'type': {'type': String, index: true },
     'coordinates':[]
   },
   'createdAt': { 'type': Date, 'default': Date.now },
@@ -132,8 +132,8 @@ app.get('/items', auth, function (req, res, next){
   //      [coords[3], coords[2]],
   //      [coords[3], coords[0]]]]
   //    };
-// var options = { near: [-122.4167, 37.7837749], maxDistance: 500000 };
-// Post.geoSearch({ type : "Point" }, options, function(err, posts){
+  // var options = { near: [-122.4167, 37.7837749], maxDistance: 500000 };
+  // Post.geoSearch({ type : "Point" }, options, function(err, posts){
   Post.find({}, function(err, posts){
     if(err){
       console.log(err);

@@ -16,14 +16,14 @@ angular.module('barterApp')
       $scope.oms = new OverlappingMarkerSpiderfier($scope.map);
       $scope.updateLocation();
       $scope.bounds = $scope.map.getBounds();
-      google.maps.event.addListener($scope.map,'bounds_changed', function(){
-        clearTimeout(timeout);
-        timeout = setTimeout(function () {
-          $scope.bounds = $scope.map.getBounds();
-          $scope.addMarkers($scope.bounds.toUrlValue());
-        }, 500);
-      });
-      // $scope.addMarkers($scope.bounds.toUrlValue());
+      // google.maps.event.addListener($scope.map,'bounds_changed', function(){
+      //   clearTimeout(timeout);
+      //   timeout = setTimeout(function () {
+      //     $scope.bounds = $scope.map.getBounds();
+      //     $scope.addMarkers($scope.bounds.toUrlValue());
+      //   }, 500);
+      // });
+      $scope.addMarkers();
     };
 
     $scope.clearMarkers = function(){
@@ -86,7 +86,12 @@ angular.module('barterApp')
     };
 
     $scope.addInfoBox = function(marker, i, barterItems, infobox){
-      google.maps.event.addListener(marker, 'click', function() {
+      google.maps.event.addListener(marker, 'mouseover', function() {
+        if( marker._omsData === undefined ){
+          google.maps.event.trigger(marker,'click');
+        }
+      });
+      google.maps.event.addListener(marker, 'mouseup', function() {
         var content = '<div class="infobox"><img src="'+barterItems[i].image+'"/>'+
           '<h2 id="itemName">Item Name: '+barterItems[i].itemName+'</h2>'+
           '<h2 id="description">Description: '+barterItems[i].description+'</h2>'+
