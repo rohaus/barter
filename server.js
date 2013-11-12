@@ -138,7 +138,6 @@ app.get('/items', auth, function (req, res, next){
     if(err){
       console.log(err);
     }
-    console.log("posts are:", posts);
     res.send(201, posts);
   });
 });

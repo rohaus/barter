@@ -16,7 +16,7 @@
     </form>
   </div>
   <input type="text" placeholder="Search posts!" autofocus="autofocus" ng-model="searchText"></input>
-  <div class="searchPosts" ng-repeat="post in posts | filter:searchText">
+  <div class="searchPosts" ng-repeat="post in posts | filter:search">
     <img src="{{post.image}}"/>
     <h2 id="itemName">Item Name: {{post.itemName}}</h2>
     <h2 id="description">Description: {{post.description}}</h2>

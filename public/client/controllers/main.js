@@ -15,7 +15,10 @@ angular.module('barterApp')
       $scope.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
       $scope.oms = new OverlappingMarkerSpiderfier($scope.map);
       $scope.updateLocation();
-      $scope.bounds = $scope.map.getBounds();
+      $scope.addMarkers();
+
+      // Rerenders markers on bound change
+      // $scope.bounds = $scope.map.getBounds();
       // google.maps.event.addListener($scope.map,'bounds_changed', function(){
       //   clearTimeout(timeout);
       //   timeout = setTimeout(function () {
@@ -23,7 +26,6 @@ angular.module('barterApp')
       //     $scope.addMarkers($scope.bounds.toUrlValue());
       //   }, 500);
       // });
-      $scope.addMarkers();
     };
 
     $scope.clearMarkers = function(){
@@ -100,9 +102,10 @@ angular.module('barterApp')
           '<h2 id="fbId">'+barterItems[i].fbId+'</h2>'+
           '<h2 id="_id">'+barterItems[i]._id+'</h2>'+
           '<button id="barterButton">Barter</button></div>';
-          // '<h2>Email:'+barterItems[i].email+'</h2>'
+
         infobox.open($scope.map, marker);
         infobox.setContent(content);
+
         google.maps.event.addListener(infobox, 'domready', function() {
           document.getElementById("barterButton").addEventListener("click", function(e) {
             $scope.displayNewConversation();
@@ -162,13 +165,17 @@ angular.module('barterApp')
     };
 
     $scope.search = function (post){
-      if (post.itemName.indexOf($scope.searchText)!=-1 ||
-          post.description.indexOf($scope.searchText)!=-1 ||
-          post.condition.indexOf($scope.searchText)!=-1 ||
-          post.name.indexOf($scope.searchText)!=-1) {
+      if($scope.searchText){
+        var searchText = $scope.searchText.toLowerCase();
+        if (post.itemName.toLowerCase().indexOf(searchText)!=-1 ||
+          post.description.toLowerCase().indexOf(searchText)!=-1 ||
+          post.condition.toLowerCase().indexOf(searchText)!=-1 ||
+          post.name.toLowerCase().indexOf(searchText)!=-1) {
         return true;
+        }
+        return false;
       }
-      return false;
+      return true;
     };
 
   });

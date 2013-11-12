@@ -69,3 +69,7 @@ body {
     overflow: auto;
     height: 150px;
 */}
+
+.searchPosts img{
+    width: 100px;
+}
