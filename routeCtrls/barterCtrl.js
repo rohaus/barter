@@ -19,7 +19,8 @@ var acceptBarter = function(req, res, next){
           break;
         }
       }
-      post.save(function(){
+      post.save(function(err){
+        if (err) { handleError(500); }
         res.send(201);
       });
     });
@@ -36,7 +37,8 @@ var rejectBarter = function(req, res, next){
         break;
       }
     }
-    post.save(function(){
+    post.save(function(err){
+      if (err) { handleError(500); }
       res.send(201);
     });
   });
