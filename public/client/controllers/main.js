@@ -132,7 +132,7 @@ angular.module('barterApp')
     };
 
     $scope.logout = function(){
-      $http.post('/logout')
+      $http.get('/logout')
         .success(function(data, status, headers, config){
           console.log("Attempting to logout");
         });

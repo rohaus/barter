@@ -7,5 +7,5 @@ var db = require('./database/database'),
 
 require('./passport')(passport, FacebookStrategy, FbUsers);
 require('./routes')(app, passport, db);
-//Start server
+
 app.listen(9000);

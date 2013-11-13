@@ -1,10 +1,10 @@
 angular.module('barterApp', ['imageupload', 'ngRoute'])
   .config(function($httpProvider, $locationProvider, $routeProvider){
-    var checkLoggedin = function($q, $timeout, $http, $location, $rootScope){
+    var checkLoggedIn = function($q, $timeout, $http, $location, $rootScope){
       // Initialize a new promise
       var deferred = $q.defer();
       // Make an AJAX call to check if the user is logged in
-      $http.get('/loggedin').success(function(user){
+      $http.get('/loggedIn').success(function(user){
         // Authenticated
         if (user !== '0'){
           $rootScope.name = user.name;
@@ -42,26 +42,25 @@ angular.module('barterApp', ['imageupload', 'ngRoute'])
         templateUrl: '/templates/main.html',
         controller: 'MapCtrl',
         resolve: {
-          loggedin: checkLoggedin
+          loggedin: checkLoggedIn
         }
       })
       .when('/post', {
         templateUrl: '/templates/post.html',
         controller: 'PostCtrl',
         resolve: {
-          loggedin: checkLoggedin
+          loggedin: checkLoggedIn
         }
       })
       .when('/conversations', {
         templateUrl: '/templates/conversations.html',
         controller: 'ConvCtrl',
         resolve: {
-          loggedin: checkLoggedin
+          loggedin: checkLoggedIn
         }
       })
       .when('/login', {
-        templateUrl: '/templates/login.html',
-        controller: 'LoginCtrl'
+        templateUrl: '/templates/login.html'
       })
       .otherwise({
         redirectTo: '/'
