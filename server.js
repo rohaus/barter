@@ -20,39 +20,9 @@ app.use(express.logger('dev'));
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Authentication Strategy
-passport.use(new FacebookStrategy({
-    clientID: keys.clientID,
-    clientSecret: keys.clientSecret,
-    callbackURL: "http://localhost:9000/auth/facebook/callback"
-  },
-  function (accessToken, refreshToken, profile, done){
-    FbUsers.findOne({fbId : profile.id}, function (err, oldUser){
-      if(oldUser){
-        done(null,oldUser);
-      }else{
-        var newUser = new FbUsers({
-          fbId : profile.id ,
-          // email : profile.emails[0].value,
-          name : profile.displayName
-        }).save(function (err,newUser){
-          if(err) throw err;
-          done(null, newUser);
-        });
-      }
-    });
-  }
-));
 
-// Serialized and deserialized methods when got from session
-passport.serializeUser(function (user, done) {
-  done(null, user);
-});
 
-passport.deserializeUser(function (user, done) {
-  done(null, user);
-});
-
+require('./passport')(passport, FacebookStrategy, FbUsers);
 require('./routes')(app, passport, db);
 //Start server
 app.listen(9000);
