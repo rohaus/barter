@@ -1,4 +1,4 @@
-var messageSchema = require('./message'),
+var messageSchema = require('./message').messageSchema,
 mongoose = require('mongoose');
 
 var conversationSchema = new mongoose.Schema({
@@ -7,5 +7,9 @@ var conversationSchema = new mongoose.Schema({
   'createdAt': { 'type': Date, 'default': Date.now },
   'messages': [messageSchema]
 });
+var Conversation = mongoose.model('Conversation', conversationSchema);
 
-module.exports = mongoose.model('Conversation', conversationSchema);
+module.exports = {
+  Conversation: Conversation,
+  conversationSchema: conversationSchema
+};

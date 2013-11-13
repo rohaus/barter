@@ -4,5 +4,9 @@ var messageSchema = new mongoose.Schema({
   'from': String,
   'sentAt': { 'type': Date, 'default': Date.now }
 });
+var Message = mongoose.model('Message', messageSchema);
 
-module.exports = mongoose.model('Message', messageSchema);
+module.exports = {
+  Message: Message,
+  messageSchema: messageSchema
+};

@@ -1,4 +1,4 @@
-var conversationSchema = require('./conversation'),
+var conversationSchema = require('./conversation').conversationSchema,
 mongoose = require('mongoose');
 
 var postSchema = new mongoose.Schema({
@@ -17,4 +17,9 @@ var postSchema = new mongoose.Schema({
   'conversations': [conversationSchema]
 });
 
-module.exports = mongoose.model('Post', postSchema);
+var Post = mongoose.model('Post', postSchema);
+
+module.exports = {
+  Post: Post,
+  postSchema: postSchema
+};
