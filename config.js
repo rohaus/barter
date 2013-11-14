@@ -2,12 +2,19 @@ module.exports = function(passport){
   var express = require('express'),
   path = require('path'),
   hbs = require('hbs'),
+  stylus = require('stylus'),
   keys = require('./keys');
+
+  var compile = function(str, path) {
+    return stylus(str)
+      .set('filename', path);
+  };
 
   // Config
   var app = express();
   app.set('view engine', 'html');
   app.engine('html', hbs.__express);
+  app.use(stylus.middleware({ src: __dirname + '/public', compile: compile }));
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.cookieParser());
   app.use(express.session({ secret: keys.secret }));
