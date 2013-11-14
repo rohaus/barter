@@ -1,7 +1,6 @@
 angular.module('barterApp', ['imageupload', 'ngRoute'])
 .config(function($httpProvider, $locationProvider, $routeProvider){
   var checkLoggedIn = function($q, $timeout, $http, $location, $rootScope){
-    // Initialize a new promise
     var deferred = $q.defer();
     // Make an AJAX call to check if the user is logged in
     $http.get('/loggedIn').success(function(user){

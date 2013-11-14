@@ -11,6 +11,7 @@ angular.module('barterApp')
         location: [location.lat, location.lng],
         image: $scope.image
       };
+
       $http.post('/post', $scope.data)
       .success(function(data, status, headers, config){
         console.log("SUCCESS!");
@@ -20,6 +21,7 @@ angular.module('barterApp')
         console.log("ERROR :(");
       });
     };
+
     navigator.geolocation.getCurrentPosition(function(position) {
       var location = {
         lat: position.coords.latitude,

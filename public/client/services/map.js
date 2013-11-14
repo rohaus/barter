@@ -2,7 +2,6 @@ angular.module('barterApp')
 .factory('MapService', function($http, $rootScope) {
   var service = {};
 
-
   service.initialize = function(){
     service.zoom = 11;
     service.center = new google.maps.LatLng(37.7837749,-122.4167);
@@ -51,7 +50,7 @@ angular.module('barterApp')
     return new google.maps.Marker({
       position: new google.maps.LatLng($rootScope.posts[i].loc.coordinates[1], $rootScope.posts[i].loc.coordinates[0]),
       map: service.map
-    })
+    });
   };
 
   service.addMarkers = function(coords){
