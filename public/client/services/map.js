@@ -2,112 +2,81 @@ angular.module('barterApp')
 .factory('MapService', function($http, $rootScope) {
   var service = {};
 
-  service.zoom = 11;
-  service.center = new google.maps.LatLng(37.7837749,-122.4167);
-  service.mapTypeId = google.maps.MapTypeId.ROADMAP;
 
   service.initialize = function(){
+    service.zoom = 11;
+    service.center = new google.maps.LatLng(37.7837749,-122.4167);
+    service.mapTypeId = google.maps.MapTypeId.ROADMAP;
     google.maps.visualRefresh = true;
-    var timeout,
-    mapOptions = {
+
+    var mapOptions = {
       zoom: service.zoom,
       center: service.center,
       mapTypeId: service.mapTypeId
     };
+
     service.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
     service.oms = new OverlappingMarkerSpiderfier(service.map);
     service.updateLocation();
     service.addMarkers();
-    // Rerenders markers on bound change
-    // service.bounds = service.map.getBounds();
-    // google.maps.event.addListener(service.map,'bounds_changed', function(){
-    //   clearTimeout(timeout);
-    //   timeout = setTimeout(function () {
-    //     service.bounds = service.map.getBounds();
-    //     service.addMarkers(service.bounds.toUrlValue());
-    //   }, 500);
-    // });
   };
 
-  service.clearMarkers = function(){
-    for (var i = 0; i < service.markers.length; i++) {
-      service.markers[i].setMap(null);
-    }
-  };
-
-  service.updateLocation = $rootScope.updatelocation = function(){
-    navigator.geolocation.getCurrentPosition(
-    function (position) {
+  service.updateLocation = $rootScope.updateLocation = function(){
+    navigator.geolocation.getCurrentPosition(function (position) {
+      console.log("this is getting called!");
       service.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       service.map.setZoom(16);
       service.map.setCenter(service.center);
     });
   };
 
+  service.infoboxOptions = {
+    disableAutoPan: false,
+    maxWidth: 150,
+    pixelOffset: new google.maps.Size(-140, 0),
+    zIndex: null,
+    boxStyle: {
+      background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
+      opacity: 0.85,
+      width: "280px"
+    },
+    closeBoxMargin: "12px 4px 2px 2px",
+    closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+    infoBoxClearance: new google.maps.Size(1, 1)
+  };
+
+  service.mcOptions = {gridSize: 5, maxZoom: 15};
+
+  service.createMarker = function(i){
+    return new google.maps.Marker({
+      position: new google.maps.LatLng($rootScope.posts[i].loc.coordinates[1], $rootScope.posts[i].loc.coordinates[0]),
+      map: service.map
+    })
+  };
+
   service.addMarkers = function(coords){
-    if(service.markers){
-      service.clearMarkers();
-    }
     $http.get('/items')
     .success(function(data, status, headers, config){
       console.log("The items have been retrieved from the database", data);
-      var barterItems = data,
-      length = barterItems.length;
-
       $rootScope.posts = data;
 
-      var infobox = new InfoBox({
-        disableAutoPan: false,
-        maxWidth: 150,
-        pixelOffset: new google.maps.Size(-140, 0),
-        zIndex: null,
-        boxStyle: {
-          background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
-          opacity: 0.85,
-          width: "280px"
-        },
-        closeBoxMargin: "12px 4px 2px 2px",
-        closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
-        infoBoxClearance: new google.maps.Size(1, 1)
-      });
+      var length = $rootScope.posts.length,
+      i, marker;
       service.markers = [];
-      var marker, i;
+
+      var infobox = new InfoBox(service.infoboxOptions);
+
       for(i = 0; i < length; i++){
-        marker = new google.maps.Marker({
-          position: new google.maps.LatLng(barterItems[i].loc.coordinates[1], barterItems[i].loc.coordinates[0]),
-          map: service.map
-        });
+        marker = service.createMarker(i);
         service.markers.push(marker);
         service.oms.addMarker(marker);
-        service.addInfoBox(marker, i, barterItems, infobox);
+        google.maps.event.addListener(marker, 'mouseover', function() {
+          if( marker._omsData === undefined ){
+            google.maps.event.trigger(marker,'click');
+          }
+        });
+        service.setInfoBoxContent(marker, i, infobox);
       }
-      var mcOptions = {gridSize: 5, maxZoom: 15};
-      var mc = new MarkerClusterer(service.map, service.markers, mcOptions);
-    })
-    .error(function(data, status, headers, config){
-      console.log("adding markers failed");
-    });
-  };
-
-  service.addInfoBox = function(marker, i, barterItems, infobox){
-    google.maps.event.addListener(marker, 'mouseover', function() {
-      if( marker._omsData === undefined ){
-        google.maps.event.trigger(marker,'click');
-      }
-    });
-    google.maps.event.addListener(marker, 'mouseup', function() {
-      var content = '<div class="infobox"><img src="'+barterItems[i].image+'"/>'+
-        '<h2 id="itemName">Item Name: '+barterItems[i].itemName+'</h2>'+
-        '<h2 id="description">Description: '+barterItems[i].description+'</h2>'+
-        '<h2 id="condition">Condition: '+ barterItems[i].condition+'</h2>'+
-        '<h2 id="name">Contact: '+barterItems[i].name+'</h2>'+
-        '<h2 id="fbId">'+barterItems[i].fbId+'</h2>'+
-        '<h2 id="_id">'+barterItems[i]._id+'</h2>'+
-        '<button id="barterButton">Barter</button></div>';
-
-      infobox.open(service.map, marker);
-      infobox.setContent(content);
-
       google.maps.event.addListener(infobox, 'domready', function() {
         document.getElementById("barterButton").addEventListener("click", function(e) {
           $rootScope.recipient = {};
@@ -117,12 +86,35 @@ angular.module('barterApp')
           $rootScope.recipient.name = document.getElementById("name").textContent.split(": ")[1];
           $rootScope.recipient.fbId = document.getElementById("fbId").textContent;
           $rootScope.recipient._id = document.getElementById("_id").textContent;
-          console.log("recipient is:"+$rootScope.recipient);
+          console.log($rootScope.recipient);
           $rootScope.displayNewConversation();
           $rootScope.$digest();
         });
       });
+      var mc = new MarkerClusterer(service.map, service.markers, service.mcOptions);
+    })
+    .error(function(data, status, headers, config){
+      console.log("adding markers failed");
     });
   };
+
+  service.infoboxContent = function(i){
+    return '<div class="infobox"><img src="'+$rootScope.posts[i].image+'"/>'+
+           '<h2 id="itemName">Item Name: '+$rootScope.posts[i].itemName+'</h2>'+
+           '<h2 id="description">Description: '+$rootScope.posts[i].description+'</h2>'+
+           '<h2 id="condition">Condition: '+ $rootScope.posts[i].condition+'</h2>'+
+           '<h2 id="name">Contact: '+$rootScope.posts[i].name+'</h2>'+
+           '<h2 id="fbId">'+$rootScope.posts[i].fbId+'</h2>'+
+           '<h2 id="_id">'+$rootScope.posts[i]._id+'</h2>'+
+           '<button id="barterButton">Barter</button></div>';
+  };
+
+  service.setInfoBoxContent = function(marker, i, infobox) {
+    google.maps.event.addListener(marker, 'mouseup', function() {
+      infobox.open(service.map, marker);
+      infobox.setContent(service.infoboxContent(i));
+    });
+  };
+
   return service;
 });

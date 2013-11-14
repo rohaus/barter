@@ -22,7 +22,9 @@ angular.module('barterApp')
   $scope.newConversationDisplay = false;
 
   $rootScope.displayNewConversation = function(){
-    $scope.newConversationDisplay = !$scope.newConversationDisplay;
+    if(!$scope.newConversationDisplay){
+      $scope.newConversationDisplay = true;
+    }
   };
 
   $scope.sendNewConversation = function(recipient){
