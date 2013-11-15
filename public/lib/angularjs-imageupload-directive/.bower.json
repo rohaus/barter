@@ -1,0 +1,24 @@
+{
+  "name": "angularjs-imageupload-directive",
+  "description": "imageupload Directive for AngularJS",
+  "main": "public/javascripts/imageupload.js",
+  "ignore": [
+    "**/.*",
+    "app.js",
+    "demo.html",
+    "package.json"
+  ],
+  "dependencies": {
+    "angularjs-unstable": "~1.1.4"
+  },
+  "homepage": "https://github.com/Mischi/angularjs-imageupload-directive",
+  "_release": "140e569be3",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "140e569be3ff005f44dc670ef0263a72e5f8ac12"
+  },
+  "_source": "git://github.com/Mischi/angularjs-imageupload-directive.git",
+  "_target": "*",
+  "_originalSource": "angularjs-imageupload-directive"
+}
