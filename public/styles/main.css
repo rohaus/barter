@@ -13,7 +13,7 @@ body {
 }
 #map-canvas {
   height: 39em;
-  width: 42em;
+  width: 48em;
   float: left;
   border: 5px solid #000;
 }
@@ -41,7 +41,7 @@ body {
 .postsContainer {
   padding: 5px;
   overflow: auto;
-  height: 29.05em;
+  height: 28em;
 }
 .post,
 .conversationContainer {
@@ -144,7 +144,8 @@ button:active {
   box-shadow: inset 0 1px rgba(0,0,0,0.05);
 }
 .postForm,
-.conversations {
+.conversations,
+.login {
   width: 350px;
   border: 5px solid #000;
   -webkit-border-radius: 20px;
@@ -163,13 +164,16 @@ button:active {
   width: 200px;
 }
 .conversationsContainer {
-  height: 32.1em;
+  height: 31em;
   overflow: auto;
 }
 .conversationContainer {
+  display: block;
   text-align: left;
+  height: 11em;
+  width: 29em;
   background-color: #7fbe6b;
-  margin: 5px;
+  margin: 5px auto;
   border: 4px solid #6f853a;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -177,7 +181,32 @@ button:active {
 }
 .conversationContainer button {
   display: none;
+  margin: 5px;
 }
 .conversationContainer:hover button {
   display: inherit;
+}
+.date {
+  font-size: 12px;
+}
+.postDescription {
+  display: inline-block;
+}
+.postDescription:nth-child(2) {
+  width: 16em;
+  height: 10em;
+  overflow: auto;
+}
+input[type='text'] {
+  line-height: 1.688rem;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  vertical-align: top;
+  outline: none;
 }

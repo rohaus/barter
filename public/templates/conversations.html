@@ -8,27 +8,36 @@
   <button ng-click="loopPosts(notMatch, match)">Your Requests</button>
   <section class="conversationsContainer">
     <div class="conversationContainer" ng-repeat="post in posts | orderBy:'createdAt':true" ng-show="post.show">
-      <img src={{post.image}}></img>
-      {{post.itemName}}
-      <button ng-click="deletePost(post, posts)">Delete Post</button>
-      <div class="conversation" ng-repeat="conversation in post.conversations | orderBy:'createdAt':true" ng-show="conversation.show">
-        <div>
-          <h4 ng-click="expand(conversation)">Topic: {{post.itemName}}</h4>
-          <button ng-show="conversation.expand" ng-click="deleteConversation(conversation, post)">Delete Conversation</button>
-          <button ng-show="conversation.expand" ng-click="respondToBarter(conversation, 'acceptBarter')">Accept Barter</button>
-          <button ng-show="conversation.expand" ng-click="respondToBarter(conversation, 'rejectBarter')">Reject Barter</button>
-          <div class="messageContainer">
-            <div class="messages" ng-repeat="message in conversation.messages | orderBy:'sentAt':false" ng-show="conversation.expand">
-              <p>{{message.from}}: {{message.message}}</p>
-              <p>Sent: {{message.sentAt | date:'MM/dd/yyyy @ h:mma'}}</p>
+      <div class="postDescription">
+        <img src={{post.image}}></img>
+      </div>
+      <div class="postDescription testing">
+        <p><span class="underline">Item Name</span>: {{post.itemName}}</p>
+        <p><span class="underline">Description</span>: {{post.description}}</p>
+        <p><span class="underline">Condition</span>:  {{post.condition}}</p>
+        <p><span class="underline">Contact</span> {{post.name}}</p>
+        <button ng-click="deletePost(post, posts)">Delete Post</button>
+        <div class="conversation" ng-repeat="conversation in post.conversations | orderBy:'createdAt':true" ng-show="conversation.show">
+          <div>
+            <hr/>
+            <h4><span class="underline">Message</span>:</h4>
+            <h4 ng-click="expand(conversation)">Topic: {{post.itemName}}</h4>
+            <button ng-show="conversation.expand" ng-click="respondToBarter(conversation, 'acceptBarter')">Accept Barter</button>
+            <button ng-show="conversation.expand" ng-click="respondToBarter(conversation, 'rejectBarter')">Reject Barter</button>
+            <button ng-show="conversation.expand" ng-click="deleteConversation(conversation, post)">Delete Conversation</button>
+            <div class="messageContainer">
+              <div class="messages" ng-repeat="message in conversation.messages | orderBy:'sentAt':false" ng-show="conversation.expand">
+                <p><span class="underline">{{message.from}}</span>: {{message.message}}</p>
+                <p class="date"><span class="underline">Sent</span>: {{message.sentAt | date:'MM/dd/yyyy @ h:mma'}}</p>
+              </div>
             </div>
           </div>
+          <form ng-show="conversation.expand" ng-submit="sendMessage(conversation)">
+            <input type="text" ng-model="conversation.reply" placeholder="Type a message!"></input>
+            <button>Send</button>
+            {{replyMessage}}
+          </form>
         </div>
-        <form ng-show="conversation.expand" ng-submit="sendMessage(conversation)">
-          <input type="text" ng-model="conversation.reply" placeholder="Type a message!"></input>
-          <button>Send</button>
-          {{replyMessage}}
-        </form>
       </div>
     </div>
   </section>

@@ -23,7 +23,7 @@ body
 
 #map-canvas
   height 39em
-  width 42em
+  width 48em
   float left
   border 5px solid black
 
@@ -50,7 +50,7 @@ body
 .postsContainer
   padding 5px
   overflow auto
-  height 29.05em
+  height 28em
 
 .post, .conversationContainer
   text-align left
@@ -72,6 +72,7 @@ body
 .post h2
   line-height 15px
   font-size 13px
+
 .postText
   width 280px
   height 110px
@@ -130,7 +131,7 @@ button:active
   background-color #3f4041
   box-shadow inset 0 1px rgba(0,0,0,0.05)
 
-.postForm, .conversations
+.postForm, .conversations, .login
   width 350px
   border 5px solid black
   border-radius 20px
@@ -146,17 +147,48 @@ button:active
     width 200px
 
 .conversationsContainer
-  height 32.1em
+  height 31em
   overflow auto
 
 .conversationContainer
+  display block
   text-align left
+  height 11em
+  width 29em
   background-color #7FBE6B
-  margin 5px
+  margin 5px auto
   border 4px solid #6F853A
   border-radius 10px
   button
     display none
+    margin 5px
 
 .conversationContainer:hover button
   display inherit
+
+.date
+  font-size 12px
+
+.postDescription
+  display inline-block
+
+.postDescription:nth-child(2)
+  width 16em
+  height 10em
+  overflow auto
+
+
+input[type='text']
+  line-height 1.688rem
+  font-size 0.875rem
+  box-sizing border-box
+  background-clip padding-box
+  padding 0
+  margin 0
+  font inherit
+  color inherit
+  background transparent
+  vertical-align top
+  outline none
+
+
