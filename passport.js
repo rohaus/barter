@@ -1,10 +1,10 @@
 module.exports = function(passport, FacebookStrategy, FbUsers){
-  var keys = require('./keys');
+  // var keys = require('./keys');
   // Authentication Strategy
   passport.use(new FacebookStrategy({
-    clientID: keys.clientID,
-    clientSecret: keys.clientSecret,
-    callbackURL: keys.URL
+    clientID: FB_CLIENT_ID || keys.clientID,
+    clientSecret: FB_CLIENT_SECRET || keys.clientSecret,
+    callbackURL: FB_URL || keys.URL
   },
   function (accessToken, refreshToken, profile, done){
     FbUsers.findOne({fbId : profile.id}, function (err, oldUser){

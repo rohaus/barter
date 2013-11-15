@@ -2,8 +2,8 @@ module.exports = function(passport){
   var express = require('express'),
   path = require('path'),
   hbs = require('hbs'),
-  stylus = require('stylus'),
-  keys = require('./keys');
+  // keys = require('./keys'),
+  stylus = require('stylus');
 
   var compile = function(str, path) {
     return stylus(str)
@@ -18,7 +18,7 @@ module.exports = function(passport){
   app.use(stylus.middleware({ src: __dirname + '/public', compile: compile }));
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.cookieParser());
-  app.use(express.session({ secret: keys.secret }));
+  app.use(express.session({ secret: SESSION_SECRET || keys.secret }));
   app.use(express.bodyParser());
   app.use(express.logger('dev'));
   app.use(passport.initialize());
