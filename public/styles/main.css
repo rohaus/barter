@@ -210,3 +210,24 @@ input[type='text'] {
   vertical-align: top;
   outline: none;
 }
+#modalMask {
+  z-index: 10;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: #000;
+  opacity: 0.8;
+}
+#modal {
+  z-index: 11;
+  height: 200px;
+  width: 200px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -100px;
+  background-color: #fff;
+}
