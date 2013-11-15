@@ -113,10 +113,4 @@ angular.module('barterApp')
       }
     }
   };
-
-  $rootScope.modalShow = false;
-  $rootScope.displayModal = function(){
-    console.log("displayModal is being called");
-    $scope.modalShow = !$scope.modalShow;
-  };
 });

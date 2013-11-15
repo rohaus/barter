@@ -61,4 +61,9 @@ angular.module('barterApp')
     return true;
   };
 
+  $rootScope.modalShow = false;
+  $rootScope.toggleModal = function(){
+    console.log("displayModal is being called");
+    $scope.modalShow = !$scope.modalShow;
+  };
 });
