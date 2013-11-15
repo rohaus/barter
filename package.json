@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "postinstall": "./node_modules/bower/bin/bower install"
   },
   "engines": {
     "node": ">=0.8.0"
@@ -15,9 +15,6 @@
     "passport": "~0.1.17",
     "passport-facebook": "~1.0.1",
     "stylus": "~0.40.2",
-    "bower": "0.6.x"
-  },
-  "scripts": {
-    "postinstall": "./node_modules/bower/bin/bower install"
+    "bower": "~1.2.7"
   }
 }
