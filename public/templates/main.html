@@ -2,11 +2,13 @@
 </section>
 <section class="sidebar">
   <h1><a class="barterLogo" href="#">Barter</a></h1>
-  <a href="#" ng-click="logout()">Logout</a>
-  <h4>Take a look in your area:</h4>
-  <button ng-click="postRedirect()">Post an item!</button>
   <button ng-click="updateLocation()">Find me!</button>
+  <button ng-click="postRedirect()">Post an item!</button>
   <button ng-click="convRedirect()">View messages!</button>
+  <a href="#" ng-click="logout()">
+    <button>Logout</button>
+  </a>
+  <h4>Take a look in your area:</h4>
   <input type="text" placeholder="Search posts!" autofocus="autofocus" ng-model="searchText"></input>
   <section class="postsContainer">
     <div class="searchPosts" ng-repeat="post in posts | filter:search">
@@ -18,7 +20,7 @@
           <h2 id="itemName"><span class="underline">Item Name</span>: {{post.itemName}}</h2>
           <h2 id="description"><span class="underline">Description</span>: {{post.description}}</h2>
           <h2 id="condition"><span class="underline">Condition</span>:  {{post.condition}}</h2>
-          <h2 id="name"><span class="underline">Contact</span>: {{post.name}}</h2>
+          <h2 id="name"><span class="underline">Contact</span> {{post.name}}</h2>
         </div>
       </section>
     </div>
