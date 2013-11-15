@@ -136,3 +136,14 @@ button:active {
   -webkit-box-shadow: inset 0 1px rgba(0,0,0,0.05);
   box-shadow: inset 0 1px rgba(0,0,0,0.05);
 }
+.postForm {
+  width: 350px;
+  border: 5px solid #000;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+  padding: 20px;
+  margin: auto;
+  text-align: center;
+  background-color: #dadada;
+}
