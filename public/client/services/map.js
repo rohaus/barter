@@ -38,7 +38,7 @@ angular.module('barterApp')
 
     service.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
     service.oms = new OverlappingMarkerSpiderfier(service.map);
-    service.updateLocation();
+    setTimeout(service.updateLocation, 2000);
     service.addMarkers();
     service.map.setOptions({styles: service.styles});
   };
@@ -89,6 +89,7 @@ angular.module('barterApp')
 
       for(i = 0; i < length; i++){
         marker = service.createMarker(i);
+        $rootScope.posts[i].__gm_id = marker.__gm_id;
         service.markers.push(marker);
         service.oms.addMarker(marker);
         google.maps.event.addListener(marker, 'mouseover', function() {
@@ -135,6 +136,21 @@ angular.module('barterApp')
       infobox.open(service.map, marker);
       infobox.setContent(service.infoboxContent(i));
     });
+  };
+
+  service.trigger = function(gm_id){
+    for (var i = 0; i < service.markers.length; i++) {
+      var marker = service.markers[i];
+        debugger;
+      if(marker.__gm_id === gm_id){
+        service.center = new google.maps.LatLng(marker.position.ob,marker.position.pb);
+        service.map.setCenter(service.center);
+        service.map.setZoom(16);
+        google.maps.event.trigger(marker,'mouseup');
+        $rootScope.$digest();
+        break;
+      }
+    }
   };
 
   return service;

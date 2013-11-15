@@ -66,4 +66,8 @@ angular.module('barterApp')
     console.log("displayModal is being called");
     $scope.modalShow = !$scope.modalShow;
   };
+
+  $rootScope.zoomInPost = function(post){
+    MapService.trigger(post.__gm_id);
+  };
 });
