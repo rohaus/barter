@@ -29,16 +29,15 @@ module.exports = function(passport, FacebookStrategy, FbUsers){
         });
       }
     });
-  }
-));
+  }));
 
-// Serialized and deserialized methods when got from session
-passport.serializeUser(function (user, done) {
-  done(null, user);
-});
+  // Serialized and deserialized methods when got from session
+  passport.serializeUser(function (user, done) {
+    done(null, user);
+  });
 
-passport.deserializeUser(function (user, done) {
-  done(null, user);
-});
+  passport.deserializeUser(function (user, done) {
+    done(null, user);
+  });
 
 };
