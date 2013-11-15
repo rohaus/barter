@@ -2,14 +2,21 @@ module.exports = function(passport){
   var express = require('express'),
   path = require('path'),
   hbs = require('hbs'),
-  // keys = require('./keys'),
-  stylus = require('stylus');
+  stylus = require('stylus'),
+  keys;
 
   var compile = function(str, path) {
     return stylus(str)
       .set('filename', path);
   };
 
+  var env = process.env['NODE_ENV'] || 'development';
+
+  if(env === "production"){
+    keys = require('./productionKeys')[env];
+  }else{
+    keys = require('./keys')[env];
+  }
   // Config
   var app = express();
   var port = process.env.PORT || 9000;
@@ -18,7 +25,7 @@ module.exports = function(passport){
   app.use(stylus.middleware({ src: __dirname + '/public', compile: compile }));
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.cookieParser());
-  app.use(express.session({ secret: SESSION_SECRET || keys.secret }));
+  app.use(express.session({ secret: keys.secret }));
   app.use(express.bodyParser());
   app.use(express.logger('dev'));
   app.use(passport.initialize());

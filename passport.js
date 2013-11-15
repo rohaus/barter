@@ -1,10 +1,19 @@
 module.exports = function(passport, FacebookStrategy, FbUsers){
-  // var keys = require('./keys');
+  var keys;
+
+  var env = process.env['NODE_ENV'] || 'development';
+
+  if(env === "production"){
+    keys = require('./productionKeys')[env];
+  }else{
+    keys = require('./keys')[env];
+  }
+
   // Authentication Strategy
   passport.use(new FacebookStrategy({
-    clientID: FB_CLIENT_ID || keys.clientID,
-    clientSecret: FB_CLIENT_SECRET || keys.clientSecret,
-    callbackURL: FB_URL || keys.URL
+    clientID: keys.clientID,
+    clientSecret: keys.clientSecret,
+    callbackURL: keys.URL
   },
   function (accessToken, refreshToken, profile, done){
     FbUsers.findOne({fbId : profile.id}, function (err, oldUser){
