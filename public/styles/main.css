@@ -1,39 +1,77 @@
+@import url("http://fonts.googleapis.com/css?family=Poiret+One");
 body {
-  background: #fafafa;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin: 0;
+  background: #3a6f85;
+  font-family: 'Poiret One';
   color: #333;
-}
-.box {
-  margin: 50px auto 0 auto;
-  width: 600px;
-  font-size: 18px;
   font-weight: 200;
   line-height: 30px;
-  background-color: #eee;
-  border-radius: 6px;
-  padding: 50px;
-  text-align: center;
+  font-size: 18px;
 }
-.box h1 {
-  font-size: 60px;
-  line-height: 1;
-  letter-spacing: -1px;
-  margin: auto;
-}
-.post,
-.login {
-  width: 300px;
+.container {
+  padding: 10px;
 }
 #map-canvas {
-  height: 500px;
+  height: 39em;
+  width: 42em;
+  float: left;
+  border: 5px solid #000;
 }
-.post input[type='text'] {
-  margin: auto;
-  display: block;
+.barterLogo {
+  color: #000;
+  text-decoration: none;
+  font-family: 'Sonsie One', cursive;
+  font-size: 90px;
 }
-.infobox img,
-.posts img {
-  width: 200px;
+.sidebar {
+  height: 38em;
+  width: 25em;
+  float: right;
+  border: 5px solid #000;
+  padding: 10px;
+  background-color: #dadada;
+  text-align: center;
+}
+.postsContainer {
+  bottom: 0;
+  left: 0;
+  padding: 5px;
+  overflow: auto;
+  height: 25em;
+}
+.post {
+  text-align: left;
+  background-color: #7fbe6b;
+  margin: 5px;
+  border: 4px solid #6f853a;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  overflow: auto;
+}
+.post div {
+  display: inline-block;
+  vertical-align: middle;
+}
+.post img {
+  width: 100px;
+  margin: 10px 5px 5px 5px;
+  border: 2px solid #000;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  border-radius: 20px;
+}
+.post h2 {
+  line-height: 15px;
+  font-size: 13px;
+}
+.post .postText {
+  width: 280px;
+  height: 100px;
+  overflow: auto;
+}
+.post:hover {
+  background-color: #ebf9fb;
 }
 .infobox {
   border: 2px solid #000;
@@ -42,6 +80,7 @@ body {
   color: #fff;
   font-family: Arial, Helvetica, sans-serif;
   font-size: 12px;
+  text-align: center;
   padding: 0.5em 1em;
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
@@ -50,12 +89,19 @@ body {
   -webkit-box-shadow: 0 0 8px #000;
   box-shadow: 0 0 8px #000;
 }
+.infobox img {
+  border: 2px solid #47e;
+  -webkit-border-radius: 200px;
+  -moz-border-radius: 200px;
+  border-radius: 200px;
+  width: 200px;
+}
 #fbId,
 #_id,
 .gm-style-cc,
-img[src*="https //maps.gstatic.com/mapfiles/api-3/images/google_white2_hdpi.png"] {
+img[src*="https://maps.gstatic.com/mapfiles/api-3/images/google_white2_hdpi.png"] {
   display: none;
 }
-.searchPosts img {
-  width: 100px;
+.underline {
+  text-decoration: underline;
 }

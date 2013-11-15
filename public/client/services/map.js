@@ -2,6 +2,28 @@ angular.module('barterApp')
 .factory('MapService', function($http, $rootScope) {
   var service = {};
 
+  service.styles = [
+    {
+      stylers: [
+        { hue: "#00ffe6" },
+        { saturation: -20 }
+      ]
+    },{
+      featureType: "road",
+      elementType: "geometry",
+      stylers: [
+        { lightness: 100 },
+        { visibility: "simplified" }
+      ]
+    },{
+      featureType: "road",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
+    }
+  ];
+
   service.initialize = function(){
     service.zoom = 11;
     service.center = new google.maps.LatLng(37.7837749,-122.4167);
@@ -18,6 +40,7 @@ angular.module('barterApp')
     service.oms = new OverlappingMarkerSpiderfier(service.map);
     service.updateLocation();
     service.addMarkers();
+    service.map.setOptions({styles: service.styles});
   };
 
   service.updateLocation = $rootScope.updateLocation = function(){
