@@ -59,7 +59,6 @@ angular.module('barterApp')
     zIndex: null,
     boxStyle: {
       background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
-      opacity: 0.85,
       width: "280px"
     },
     closeBoxMargin: "12px 4px 2px 2px",

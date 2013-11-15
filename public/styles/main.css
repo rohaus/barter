@@ -32,14 +32,19 @@ body {
   background-color: #dadada;
   text-align: center;
 }
+.sidebar h4 {
+  margin: 15px 0;
+}
+.sidebar h4 input {
+  width: 180px;
+}
 .postsContainer {
-  bottom: 0;
-  left: 0;
   padding: 5px;
   overflow: auto;
-  height: 27em;
+  height: 29.05em;
 }
-.post {
+.post,
+.conversationContainer {
   text-align: left;
   background-color: #7fbe6b;
   margin: 5px;
@@ -49,11 +54,8 @@ body {
   border-radius: 10px;
   overflow: auto;
 }
-.post div {
-  display: inline-block;
-  vertical-align: middle;
-}
-.post img {
+.post img,
+.conversationContainer img {
   width: 100px;
   margin: 10px 5px 5px 5px;
   border: 2px solid #000;
@@ -61,11 +63,15 @@ body {
   -moz-border-radius: 20px;
   border-radius: 20px;
 }
+.post div {
+  display: inline-block;
+  vertical-align: middle;
+}
 .post h2 {
   line-height: 15px;
   font-size: 13px;
 }
-.post .postText {
+.postText {
   width: 280px;
   height: 110px;
   overflow: auto;
@@ -106,8 +112,9 @@ img[src*="https://maps.gstatic.com/mapfiles/api-3/images/google_white2_hdpi.png"
   text-decoration: underline;
 }
 button {
+  font-family: 'Poiret One';
   padding: 0 0.563rem;
-  font-size: 12px;
+  font-size: 15px;
   line-height: 1.313rem;
   letter-spacing: 0;
   color: #c6c8c8;
@@ -136,7 +143,8 @@ button:active {
   -webkit-box-shadow: inset 0 1px rgba(0,0,0,0.05);
   box-shadow: inset 0 1px rgba(0,0,0,0.05);
 }
-.postForm {
+.postForm,
+.conversations {
   width: 350px;
   border: 5px solid #000;
   -webkit-border-radius: 20px;
@@ -146,4 +154,30 @@ button:active {
   margin: auto;
   text-align: center;
   background-color: #dadada;
+}
+.conversations {
+  height: 37em;
+  width: 34em;
+}
+.conversations img {
+  width: 200px;
+}
+.conversationsContainer {
+  height: 32.1em;
+  overflow: auto;
+}
+.conversationContainer {
+  text-align: left;
+  background-color: #7fbe6b;
+  margin: 5px;
+  border: 4px solid #6f853a;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+.conversationContainer button {
+  display: none;
+}
+.conversationContainer:hover button {
+  display: inherit;
 }
