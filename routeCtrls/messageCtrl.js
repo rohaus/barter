@@ -10,7 +10,7 @@ var handleError = function(statusCode){
 var messages = function (req, res, next){
   Post.find({}, function(err, messages){
     if (err) { handleError(500); }
-    res.send(201, messages);
+    res.send(200, messages);
   });
 };
 
@@ -65,7 +65,7 @@ var deleteConversation = function(req, res, next){
     post.save(function (err) {
       if (err) { handleError(500); }
       console.log('the sub-doc was removed');
-      res.send(201);
+      res.send(204);
     });
   });
 };

@@ -21,7 +21,7 @@ var acceptBarter = function(req, res, next){
       }
       post.save(function(err){
         if (err) { handleError(500); }
-        res.send(201);
+        res.send(204);
       });
     });
   });
@@ -39,7 +39,7 @@ var rejectBarter = function(req, res, next){
     }
     post.save(function(err){
       if (err) { handleError(500); }
-      res.send(201);
+      res.send(204);
     });
   });
 };

@@ -93,7 +93,9 @@ angular.module('barterApp')
         service.markers.push(marker);
         service.oms.addMarker(marker);
         google.maps.event.addListener(marker, 'mouseover', function() {
+          console.log("mouseover is being called");
           if( marker._omsData === undefined ){
+            console.log("mouseover then marker is triggered with click");
             google.maps.event.trigger(marker,'click');
           }
         });
@@ -141,7 +143,6 @@ angular.module('barterApp')
   service.trigger = function(gm_id){
     for (var i = 0; i < service.markers.length; i++) {
       var marker = service.markers[i];
-        debugger;
       if(marker.__gm_id === gm_id){
         service.center = new google.maps.LatLng(marker.position.ob,marker.position.pb);
         service.map.setCenter(service.center);
