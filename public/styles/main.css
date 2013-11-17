@@ -25,7 +25,7 @@ body {
 }
 .sidebar {
   height: 39em;
-  width: 25em;
+  width: 30%;
   float: left;
   border: 5px solid #000;
   padding: 20px;
@@ -37,12 +37,12 @@ body {
   margin: 15px 0;
 }
 .sidebar h4 input {
-  width: 180px;
+  width: 40%;
 }
 .postsContainer {
   padding: 5px;
   overflow: auto;
-  height: 29em;
+  height: 70%;
 }
 .post,
 .conversationContainer {
@@ -57,25 +57,25 @@ body {
 }
 .post img,
 .conversationContainer img {
-  width: 100px;
+  width: 30%;
   margin: 10px 5px 5px 5px;
   border: 2px solid #000;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
   border-radius: 20px;
+  vertical-align: top;
 }
 .post div {
   display: inline-block;
-  vertical-align: middle;
 }
 .post h2 {
   line-height: 15px;
   font-size: 13px;
 }
 .postText {
-  width: 280px;
-  height: 110px;
+  width: 63%;
   overflow: auto;
+  margin-top: 0;
 }
 .post:hover {
   background-color: #ebf9fb;
