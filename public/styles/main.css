@@ -17,6 +17,11 @@ body {
   padding: 20px;
   margin: 20px 5px 20px 0;
 }
+.spinner {
+  position: relative;
+  left: -36%;
+  bottom: 37em;
+}
 .barterLogo {
   color: #000;
   text-decoration: none;

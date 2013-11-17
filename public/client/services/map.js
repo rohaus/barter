@@ -44,11 +44,14 @@ angular.module('barterApp')
   };
 
   service.updateLocation = $rootScope.updateLocation = function(){
+    $rootScope.spinnerToggle();
     navigator.geolocation.getCurrentPosition(function (position) {
       console.log("this is getting called!");
       service.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       service.map.setZoom(16);
       service.map.setCenter(service.center);
+      $rootScope.spinnerToggle();
+      $rootScope.$digest();
     });
   };
 
@@ -103,6 +106,7 @@ angular.module('barterApp')
       }
       google.maps.event.addListener(infobox, 'domready', function() {
         document.getElementById("barterButton").addEventListener("click", function(e) {
+          $rootScope.spinnerToggle();
           $rootScope.recipient = {};
           $rootScope.recipient.itemName = document.getElementById("itemName").textContent.split(": ")[1];
           $rootScope.recipient.description = document.getElementById("description").textContent.split(": ")[1];
@@ -113,9 +117,11 @@ angular.module('barterApp')
           console.log($rootScope.recipient);
           $rootScope.toggleModal();
           $rootScope.$digest();
+          $rootScope.spinnerToggle();
         });
       });
       var mc = new MarkerClusterer(service.map, service.markers, service.mcOptions);
+    $rootScope.spinnerToggle();
     })
     .error(function(data, status, headers, config){
       console.log("adding markers failed");
@@ -135,8 +141,10 @@ angular.module('barterApp')
 
   service.setInfoBoxContent = function(marker, i, infobox) {
     google.maps.event.addListener(marker, 'mouseup', function() {
+      $rootScope.spinnerToggle();
       infobox.open(service.map, marker);
       infobox.setContent(service.infoboxContent(i));
+      $rootScope.spinnerToggle();
     });
   };
 
@@ -148,6 +156,7 @@ angular.module('barterApp')
         service.map.setCenter(service.center);
         service.map.setZoom(16);
         google.maps.event.trigger(marker,'mouseup');
+        $rootScope.spinnerToggle();
         $rootScope.$digest();
         break;
       }

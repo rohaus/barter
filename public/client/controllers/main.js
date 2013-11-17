@@ -1,6 +1,7 @@
 angular.module('barterApp')
 .controller('MapCtrl', function ($scope, $location, $http, $rootScope, MapService){
   $scope.initialize = function(){
+    $rootScope.spinnerToggle();
     MapService.initialize();
   };
 
@@ -68,6 +69,12 @@ angular.module('barterApp')
   };
 
   $rootScope.zoomInPost = function(post){
+    $rootScope.spinnerToggle();
     MapService.trigger(post.__gm_id);
+  };
+
+  $rootScope.spinnerDisplay = false;
+  $rootScope.spinnerToggle = function(){
+    $rootScope.spinnerDisplay = !$rootScope.spinnerDisplay;
   };
 });
