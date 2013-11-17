@@ -70,7 +70,7 @@ describe('Tests', function(){
   describe('Post Controls for invalid users', function(){
     describe('/post route', function(){
       it('should not post an item in the database', function(done){
-        agent.post('/post')
+        agent.post('http://barter-app.herokuapp.com/post')
         .send(post1)
         .end(function(err, res){
           should.not.exist(err);
@@ -82,7 +82,7 @@ describe('Tests', function(){
 
     describe('/items route', function(){
       it('should not retrieve items in the database', function(done){
-        agent.get('/items')
+        agent.get('http://barter-app.herokuapp.com/items')
         .end(function(err, res){
           should.not.exist(err);
           res.status.should.equal(401);
@@ -93,7 +93,7 @@ describe('Tests', function(){
 
     describe('/deletePost route', function(){
       it('should not delete a post in the database', function(done){
-        agent.post('/post')
+        agent.post('http://barter-app.herokuapp.com/post')
         .send(post1)
         .end(function(err, res){
           should.not.exist(err);
@@ -107,7 +107,7 @@ describe('Tests', function(){
   describe('Message Controls for invalid users', function(){
     describe('/messages route', function(){
       it('should not retrieve the posts', function(done){
-        agent.get('/messages')
+        agent.get('http://barter-app.herokuapp.com/messages')
         .end(function(err, res){
           should.not.exist(err);
           res.status.should.equal(401);
@@ -118,7 +118,7 @@ describe('Tests', function(){
 
     describe('/sendNewConversation route', function(){
       it('should not append a conversation in an existing post', function(done){
-        agent.post('/sendNewConversation')
+        agent.post('http://barter-app.herokuapp.com/sendNewConversation')
         .send(conversation1)
         .end(function(err, res){
           should.not.exist(err);
@@ -128,7 +128,7 @@ describe('Tests', function(){
       });
 
       it('should not append a conversation in the correct post when multiple posts exists', function(done){
-        agent.post('/sendNewConversation')
+        agent.post('http://barter-app.herokuapp.com/sendNewConversation')
         .send(conversation1)
         .end(function(err, res){
           should.not.exist(err);
@@ -138,7 +138,7 @@ describe('Tests', function(){
       });
 
       it('should not append multiple conversations the correct post when multiple posts exists', function(done){
-        agent.post('/sendNewConversation')
+        agent.post('http://barter-app.herokuapp.com/sendNewConversation')
         .send(conversation1)
         .send(conversation2)
         .end(function(err, res){
@@ -151,7 +151,7 @@ describe('Tests', function(){
 
     describe('/sendMessage route', function(){
       it('should not append a message in the correct conversation', function(done){
-        agent.post('/sendMessage')
+        agent.post('http://barter-app.herokuapp.com/sendMessage')
         .send(message1)
         .end(function(err, res){
           should.not.exist(err);
@@ -161,7 +161,7 @@ describe('Tests', function(){
       });
 
       it('should not append two messages in the correct conversation', function(done){
-        agent.post('/sendMessage')
+        agent.post('http://barter-app.herokuapp.com/sendMessage')
         .send(message1)
         .send(message2)
         .end(function(err, res){
@@ -172,7 +172,7 @@ describe('Tests', function(){
       });
 
       it('should not append multiple messages from both users in the conversation', function(done){
-        agent.post('/sendMessage')
+        agent.post('http://barter-app.herokuapp.com/sendMessage')
         .send(message3)
         .send(message2)
         .end(function(err, res){
@@ -185,7 +185,7 @@ describe('Tests', function(){
 
     describe('/deleteConversation route', function(){
       it('should not delete a conversation', function(done){
-        agent.post('/deleteConversation')
+        agent.post('http://barter-app.herokuapp.com/deleteConversation')
         .send(conversation1)
         .end(function(err, res){
           should.not.exist(err);
@@ -195,7 +195,7 @@ describe('Tests', function(){
       });
 
       it('should not delete a conversation when multiple exist', function(done){
-        agent.post('/deleteConversation')
+        agent.post('http://barter-app.herokuapp.com/deleteConversation')
         .send(conversation1)
         .end(function(err, res){
           should.not.exist(err);
@@ -209,7 +209,7 @@ describe('Tests', function(){
   describe('Barter Request Controls for invalid users', function(){
     describe('/acceptBarter route', function(){
       it('should not allow you to accept your own barter posting', function(done){
-        agent.post('/acceptBarter')
+        agent.post('http://barter-app.herokuapp.com/acceptBarter')
         .send(conversation1)
         .end(function(err, res){
           should.not.exist(err);
@@ -219,7 +219,7 @@ describe('Tests', function(){
       });
 
       it('should not accept a barter request from someone else', function(done){
-        agent.post('/acceptBarter')
+        agent.post('http://barter-app.herokuapp.com/acceptBarter')
         .send(conversation1)
         .end(function(err, res){
           should.not.exist(err);
@@ -231,7 +231,7 @@ describe('Tests', function(){
 
     describe('/rejectBarter route', function(){
       it('should not allow you to reject your own barter posting', function(done){
-        agent.post('/rejectBarter')
+        agent.post('http://barter-app.herokuapp.com/rejectBarter')
         .send(conversation1)
         .end(function(err, res){
           should.not.exist(err);
@@ -241,7 +241,7 @@ describe('Tests', function(){
       });
 
       it('should not reject a barter request from someone else', function(done){
-        agent.post('/rejectBarter')
+        agent.post('http://barter-app.herokuapp.com/rejectBarter')
         .send(conversation1)
         .end(function(err, res){
           should.not.exist(err);
