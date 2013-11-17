@@ -15,7 +15,7 @@ body {
   float: left;
   border: 5px solid #000;
   padding: 20px;
-  margin: 20px 0;
+  margin: 20px 5px 20px 0;
 }
 .barterLogo {
   color: #000;
@@ -26,7 +26,7 @@ body {
 .sidebar {
   height: 39em;
   width: 25em;
-  float: right;
+  float: left;
   border: 5px solid #000;
   padding: 20px;
   margin: 20px 0;
