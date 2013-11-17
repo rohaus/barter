@@ -1,6 +1,8 @@
 angular.module('barterApp')
 .controller('PostCtrl', function($scope, $location, $http, $rootScope){
   $scope.postImage = function(image){
+    console.log("post image is being called");
+    $scope.disabled = true;
     var postToDatabase = function(location){
       $scope.data = {
         fbId: $rootScope.fbId,
@@ -15,10 +17,12 @@ angular.module('barterApp')
       $http.post('/post', $scope.data)
       .success(function(data, status, headers, config){
         console.log("SUCCESS!");
+        console.log("image was submitted");
         $location.path('/');
       })
       .error(function(data, status){
         console.log("ERROR :(");
+        $scope.disabled = false;
       });
     };
 

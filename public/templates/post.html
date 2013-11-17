@@ -19,7 +19,7 @@
       <p ng-show="image">Is this correct?</p>
       <img ng-show="image" ng-src="{{image.resized.dataURL}}"/>
     </div>
-    <button>Submit</button>
+    <button ng-disabled="disabled">Submit</button>
     <button type="reset">Clear</button>
   </form>
 <div>
