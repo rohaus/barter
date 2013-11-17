@@ -8,10 +8,8 @@
   <button ng-click="loopPosts(notMatch, match)">Your Requests</button>
   <section class="conversationsContainer">
     <div class="conversationContainer" ng-repeat="post in posts | orderBy:'createdAt':true" ng-show="post.show">
+      <img src={{post.image}}></img>
       <div class="postDescription">
-        <img src={{post.image}}></img>
-      </div>
-      <div class="postDescription testing">
         <p><span class="underline">Item Name</span>: {{post.itemName}}</p>
         <p><span class="underline">Description</span>: {{post.description}}</p>
         <p><span class="underline">Condition</span>:  {{post.condition}}</p>

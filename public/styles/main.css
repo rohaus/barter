@@ -53,7 +53,7 @@ body {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
-  overflow: auto;
+  overflow: hidden;
 }
 .post img,
 .conversationContainer img {
@@ -74,6 +74,7 @@ body {
 }
 .postText {
   width: 63%;
+  height: 7em;
   overflow: auto;
   margin-top: 0;
 }
@@ -171,7 +172,7 @@ button:active {
 .conversationContainer {
   display: block;
   text-align: left;
-  height: 11em;
+  height: 30%;
   width: 29em;
   background-color: #7fbe6b;
   margin: 5px auto;
@@ -179,10 +180,15 @@ button:active {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
+  overflow: hidden;
 }
 .conversationContainer button {
   display: none;
   margin: 5px;
+}
+.conversationContainer img {
+  vertical-align: top;
+  width: 30%;
 }
 .conversationContainer:hover button {
   display: inherit;
@@ -192,11 +198,9 @@ button:active {
 }
 .postDescription {
   display: inline-block;
-}
-.postDescription:nth-child(2) {
-  width: 16em;
-  height: 10em;
   overflow: auto;
+  height: 100%;
+  width: 65%;
 }
 input[type='text'] {
   line-height: 1.688rem;
