@@ -108,7 +108,7 @@ angular.module('barterApp')
       var post = $scope.posts[i];
       post.show = false;
       if(post.fbId !== $rootScope.fbId){
-        for(var j = 0; i < post.conversations.length; i++){
+        for(var j = 0; j < post.conversations.length; j++){
           var conversation = post.conversations[j];
           if(conversation.requestingUser.fbId.toString() === $rootScope.fbId){
             post.show = conversation.show = true;
@@ -120,13 +120,27 @@ angular.module('barterApp')
     }
   };
 
-  $scope.loopPostsAndConvs = function(postComplete, postNotComplete, convComplete, convNotComplete){
+  $scope.completed = function(){
     for (var i = 0; i < $scope.posts.length; i++){
       var post = $scope.posts[i];
-      post.show = (post.completed) ? postComplete : postNotComplete;
-      for (var j = 0; j < post.conversations.length; j++){
-        var conversation = post.conversations[j];
-        conversation.show = (conversation.accepted !== null) ? convComplete : convNotComplete;
+      if(!post.completed){
+        post.show = false;
+      }else{
+        if(post.fbId === $rootScope.fbId){
+          post.show = true;
+          for(var j = 0; j < post.conversations.length; j++){
+            post.conversations[j].show = true;
+          }
+        }else{
+          for(var k = 0; k < post.conversations.length; k++){
+            var conversation = post.conversations[k];
+            if(conversation.requestingUser.fbId.toString() === $rootScope.fbId){
+              post.show = conversation.show = true;
+            }else{
+              conversation.show = false;
+            }
+          }
+        }
       }
     }
   };

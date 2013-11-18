@@ -2,7 +2,7 @@
   <h1><a href="#" class="barterLogo">Barter</a></h1>
   <button ng-click="yourPosts()">Your Posts</button>
   <button ng-click="requests()"> Your Requests</button>
-  <button ng-click="loopPostsAndConvs(match, notMatch, match, notMatch)">Completed</button>
+  <button ng-click="completed()">Completed</button>
   <input class="searchDashboard" type="text" placeholder="Search posts!" autofocus="autofocus" ng-model="searchDashboard"></input>
   <section class="conversationsContainer">
     <div class="conversationContainer" ng-repeat="post in posts | filter:search | orderBy:'createdAt':true" ng-show="post.show">
