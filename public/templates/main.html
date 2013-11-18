@@ -33,7 +33,8 @@
     <p><span class="underline">To</span>: {{recipient.name}}</p>
     <p><span class="underline">Item Name</span>: {{recipient.itemName}}</p>
     <p><span class="underline">Message</span>:</p>
-    <input type="text" ng-model="newConversation" placeholder="What did you want to say?" ng-required="true"></input>
+    <input class="postMessage" type="text" ng-model="newConversation" placeholder="What did you want to say?" ng-required="true"></input>
     <button>Send Message</button>
   </form>
+  <img class="cross" src="../styles/cross.png" ng-click="togglePostModal()"></img>
 </div>
