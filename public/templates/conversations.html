@@ -20,17 +20,9 @@
         <div class="conversation" ng-repeat="conversation in post.conversations | orderBy:'createdAt':true" ng-show="conversation.show">
           <div>
             <hr/>
-            <h4><span class="underline">Message</span>:</h4>
+            <h4><span class="underline">Conversation</span>:</h4>
             <h4 ng-click="expand(conversation)">Topic: {{post.itemName}}</h4>
-            <button ng-show="conversation.expand" ng-click="respondToBarter(conversation, 'acceptBarter')">Accept Barter</button>
-            <button ng-show="conversation.expand" ng-click="respondToBarter(conversation, 'rejectBarter')">Reject Barter</button>
-            <button ng-show="conversation.expand" ng-click="deleteConversation(conversation, post)">Delete Conversation</button>
-            <div class="messageContainer">
-              <div class="messages" ng-repeat="message in conversation.messages | orderBy:'sentAt':false" ng-show="conversation.expand">
-                <p><span class="underline">{{message.from}}</span>: {{message.message}}</p>
-                <p class="date"><span class="underline">Sent</span>: {{message.sentAt | date:'MM/dd/yyyy @ h:mma'}}</p>
-              </div>
-            </div>
+            <button ng-click="toggleMessageModal()">View Conversation!</button>
           </div>
           <form ng-show="conversation.expand" ng-submit="sendMessage(conversation)">
             <input type="text" ng-model="conversation.reply" placeholder="Type a message!"></input>
@@ -43,5 +35,14 @@
   </section>
   <div ng-click="toggleMessageModal()" class="modalMask" ng-show="messageModalShow"></div>
   <div class="modal" ng-show="messageModalShow">
+    <button ng-click="respondToBarter(conversation, 'acceptBarter')">Accept Barter</button>
+    <button ng-click="respondToBarter(conversation, 'rejectBarter')">Reject Barter</button>
+    <button ng-click="deleteConversation(conversation, post)">Delete Conversation</button>
+    <div class="messageContainer">
+      <div class="messages" ng-repeat="message in conversation.messages | orderBy:'sentAt':false" >
+        <p><span class="underline">{{message.from}}</span>: {{message.message}}</p>
+        <p class="date"><span class="underline">Sent</span>: {{message.sentAt | date:'MM/dd/yyyy @ h:mma'}}</p>
+      </div>
+    </div>
   </div>
 </div>
