@@ -168,6 +168,7 @@ angular.module('barterApp')
     if(conversation){
       $rootScope.setConversationModal(conversation, post);
     }
+    $scope.displayButton();
   };
 
   $rootScope.setConversationModal = function(conversation, post){
@@ -175,4 +176,13 @@ angular.module('barterApp')
     $rootScope.modalPost = post;
   };
 
+  $scope.displayButton = function(){
+    if(!$rootScope.modalPost.completed){
+      if($rootScope.modalPost.fbId === $rootScope.fbId){
+        $scope.button = true;
+        return;
+      }
+      $scope.button = false;
+    }
+  };
 });
