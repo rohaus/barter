@@ -162,7 +162,7 @@ button:active {
 .postForm,
 .conversations,
 .login {
-  width: 350px;
+  width: 26em;
   border: 5px solid #000;
   padding: 20px;
   margin: auto;
@@ -173,9 +173,6 @@ button:active {
   height: 39em;
   width: 34em;
   overflow: hidden;
-}
-.conversations img {
-  width: 200px;
 }
 .conversationsContainer {
   padding: 1em;
@@ -254,14 +251,13 @@ input[type='text'] {
 .modal {
   z-index: 11;
   height: 10em;
-  width: 300px;
+  width: 18em;
   position: fixed;
   top: 50%;
   left: 50%;
   text-align: left;
   padding: 20px;
-  margin-top: -100px;
-  margin-left: -100px;
+  margin: -9em 0 0 -9em;
   border: 5px solid #000;
   background-color: #dadada;
 }
@@ -271,6 +267,7 @@ input[type='text'] {
   width: 50%;
   top: 20%;
   left: 30%;
+  margin: -100px 0 0 -100px;
 }
 .deletePost {
   display: inline-block;
