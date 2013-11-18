@@ -34,14 +34,12 @@
     <button ng-click="deleteConversation(modalConversation, post)">Delete Conversation</button>
     <div class="messageContainer">
       <div class="messages" ng-repeat="message in modalConversation.messages | orderBy:'sentAt':false" >
-        <p><span class="underline">{{message.from}}</span>: {{message.message}}</p>
-        <p class="date"><span class="underline">Sent</span>: {{message.sentAt | date:'MM/dd/yyyy @ h:mma'}}</p>
+        <p><span class="underline">{{message.from}}</span>:<span class="date"> ({{message.sentAt | date:'MM/dd @ h:mma'}})</span> {{message.message}}</p>
       </div>
-      <form ng-submit="sendMessage(modalConversation)">
-        <input type="text" ng-model="modalConversation.reply" placeholder="Type a message!"></input>
-        <button>Send</button>
-        {{replyMessage}}
-      </form>
     </div>
+    <form ng-submit="sendMessage(modalConversation)">
+      <input class="replyInput" type="text" ng-model="modalConversation.reply" placeholder="Type a message!"></input>
+      <button>Send</button>
+    </form>
   </div>
 </div>
