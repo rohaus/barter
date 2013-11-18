@@ -301,6 +301,13 @@ img.check {
   right: 0;
   top: 0;
 }
+img.thumb {
+  width: 20px;
+  border: none;
+  position: relative;
+  right: 0;
+  margin: 0;
+}
 .postMessage {
   width: 100%;
 }
