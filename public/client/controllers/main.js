@@ -42,6 +42,7 @@ angular.module('barterApp')
     .success(function(data, status, headers, config){
       console.log("SUCCESS!");
       $scope.newConversation = '';
+      $scope.togglePostModal();
     })
     .error(function(data, status){
       console.log("ERROR :(");
