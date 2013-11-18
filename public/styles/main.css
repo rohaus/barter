@@ -272,3 +272,10 @@ input[type='text'] {
 .replyInput {
   width: 90%;
 }
+img.cross {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
