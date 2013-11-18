@@ -44,6 +44,7 @@ angular.module('barterApp')
     $http.post('/deleteConversation', $scope.data)
     .success(function(data, status, headers, config){
       console.log("Success deleting conversation");
+      $scope.toggleConversationModal();
       var length = post.conversations.length;
       for(var i = 0; i < length; i++){
         if (post.conversations[i]._id === $scope.data._id){
@@ -87,6 +88,7 @@ angular.module('barterApp')
     $http.post('/'+type, $scope.data)
     .success(function(data, status, headers, config){
       console.log("post to "+type+" accepted");
+      $scope.toggleConversationModal();
     })
     .error(function(data, status, headers, config){
       console.log("post to "+type+" rejected");
@@ -160,15 +162,16 @@ angular.module('barterApp')
   };
 
   $rootScope.conversationModalShow = false;
-  $rootScope.toggleConversationModal = function(conversation){
+  $rootScope.toggleConversationModal = function(conversation, post){
     $scope.conversationModalShow = !$scope.conversationModalShow;
     if(conversation){
-      $rootScope.setConversationModal(conversation);
+      $rootScope.setConversationModal(conversation, post);
     }
   };
 
-  $rootScope.setConversationModal = function(conversation){
+  $rootScope.setConversationModal = function(conversation, post){
     $rootScope.modalConversation = conversation;
+    $rootScope.modalPost = post;
   };
 
 });

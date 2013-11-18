@@ -19,7 +19,7 @@
           <hr/>
           <p><span class="underline">Conversation with</span>: {{conversation.requestingUser.name}} </p>
           <p><span class="underline">Topic</span>: {{post.itemName}}</p>
-          <button ng-click="toggleConversationModal(conversation)">View Conversation</button>
+          <button ng-click="toggleConversationModal(conversation, post)">View Conversation</button>
         </div>
       </div>
     </div>
@@ -29,7 +29,7 @@
     <h2>Conversation with: {{modalConversation.requestingUser.name}}</h2>
     <button ng-click="respondToBarter(modalConversation, 'acceptBarter')">Accept Barter</button>
     <button ng-click="respondToBarter(modalConversation, 'rejectBarter')">Reject Barter</button>
-    <button ng-click="deleteConversation(modalConversation, post)">Delete Conversation</button>
+    <button ng-click="deleteConversation(modalConversation, modalPost)">Delete Conversation</button>
     <div class="messageContainer">
       <div class="messages" ng-repeat="message in modalConversation.messages | orderBy:'sentAt':false" >
         <p><span class="underline">{{message.from}}</span>:<span class="date"> ({{message.sentAt | date:'MM/dd @ h:mma'}})</span> {{message.message}}</p>
