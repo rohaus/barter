@@ -21,28 +21,28 @@
           <div>
             <hr/>
             <h4><span class="underline">Conversation</span>:</h4>
-            <h4 ng-click="expand(conversation)">Topic: {{post.itemName}}</h4>
-            <button ng-click="toggleConversationModal()">View Conversation!</button>
+            <h4>Topic: {{post.itemName}}</h4>
+            <button ng-click="toggleConversationModal(conversation)">View Conversation!</button>
           </div>
-          <form ng-show="conversation.expand" ng-submit="sendMessage(conversation)">
-            <input type="text" ng-model="conversation.reply" placeholder="Type a message!"></input>
-            <button>Send</button>
-            {{replyMessage}}
-          </form>
         </div>
       </div>
     </div>
   </section>
   <div ng-click="toggleConversationModal()" class="modalMask" ng-show="conversationModalShow"></div>
   <div class="modal" ng-show="conversationModalShow">
-    <button ng-click="respondToBarter(conversation, 'acceptBarter')">Accept Barter</button>
-    <button ng-click="respondToBarter(conversation, 'rejectBarter')">Reject Barter</button>
-    <button ng-click="deleteConversation(conversation, post)">Delete Conversation</button>
+    <button ng-click="respondToBarter(modalConversation, 'acceptBarter')">Accept Barter</button>
+    <button ng-click="respondToBarter(modalConversation, 'rejectBarter')">Reject Barter</button>
+    <button ng-click="deleteConversation(modalConversation, post)">Delete Conversation</button>
     <div class="messageContainer">
-      <div class="messages" ng-repeat="message in conversation.messages | orderBy:'sentAt':false" >
+      <div class="messages" ng-repeat="message in modalConversation.messages | orderBy:'sentAt':false" >
         <p><span class="underline">{{message.from}}</span>: {{message.message}}</p>
         <p class="date"><span class="underline">Sent</span>: {{message.sentAt | date:'MM/dd/yyyy @ h:mma'}}</p>
       </div>
+      <form ng-submit="sendMessage(modalConversation)">
+        <input type="text" ng-model="modalConversation.reply" placeholder="Type a message!"></input>
+        <button>Send</button>
+        {{replyMessage}}
+      </form>
     </div>
   </div>
 </div>

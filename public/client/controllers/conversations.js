@@ -115,12 +115,15 @@ angular.module('barterApp')
   };
 
   $rootScope.conversationModalShow = false;
-  $rootScope.toggleConversationModal = function(){
+  $rootScope.toggleConversationModal = function(conversation){
     $scope.conversationModalShow = !$scope.conversationModalShow;
+    if(conversation){
+      $rootScope.setConversationModal(conversation);
+    }
   };
 
-  $rootScope.setConversationModal = function(){
-
+  $rootScope.setConversationModal = function(conversation){
+    $rootScope.modalConversation = conversation;
   };
 
 });
