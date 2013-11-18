@@ -27,7 +27,7 @@ angular.module('barterApp')
     .success(function(data, status, headers, config){
       console.log("Success fetching messages");
       $scope.posts = data;
-      $scope.loopPosts($scope.match, $scope.notMatch);
+      $scope.yourPosts();
     })
     .error(function(data, status, headers, config){
       console.log("Error fetching messages");
@@ -96,10 +96,10 @@ angular.module('barterApp')
   $scope.match = true;
   $scope.notMatch = false;
 
-  $scope.loopPosts = function(match, notMatch){
+  $scope.yourPosts = function(){
     for (var i = 0; i < $scope.posts.length; i++){
       var post = $scope.posts[i];
-      post.show = (post.fbId === $rootScope.fbId) ? match : notMatch;
+      post.show = (post.fbId === $rootScope.fbId) ? true : false;
     }
   };
 
