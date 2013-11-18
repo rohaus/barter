@@ -113,4 +113,10 @@ angular.module('barterApp')
       }
     }
   };
+
+  $rootScope.messageModalShow = false;
+  $rootScope.toggleMessageModal = function(){
+    $scope.messageModalShow = !$scope.messageModalShow;
+  };
+
 });
