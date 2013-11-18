@@ -1,11 +1,5 @@
 angular.module('barterApp')
 .controller('ConvCtrl', function($scope, $location, $http, $rootScope){
-  $scope.expand = function(element){
-    element = element || true;
-    element.expand = !element.expand;
-    $scope._id = element._id;
-  };
-
   $scope.sendMessage = function(conversation){
     $scope.data = {
       '_id': conversation._id,
@@ -33,7 +27,7 @@ angular.module('barterApp')
     .success(function(data, status, headers, config){
       console.log("Success fetching messages");
       $scope.posts = data;
-      $scope.loopPostsAndConvs(true, true, true, true);
+      $scope.loopPosts($scope.match, $scope.notMatch);
     })
     .error(function(data, status, headers, config){
       console.log("Error fetching messages");
