@@ -103,6 +103,21 @@ angular.module('barterApp')
     }
   };
 
+  $scope.requests = function(){
+    for (var i = 0; i < $scope.posts.length; i++){
+      var post = $scope.posts[i];
+      post.show = false;
+      if(post.fbId !== $rootScope.fbId){
+        for(var j = 0; i < post.conversations.length; i++){
+          var conversation = post.conversations[j];
+          if(conversation.requestingUser.fbId.toString() === $rootScope.fbId){
+            post.show = conversation.show = true;
+          }
+        }
+      }
+    }
+  };
+
   $scope.loopPostsAndConvs = function(postComplete, postNotComplete, convComplete, convNotComplete){
     for (var i = 0; i < $scope.posts.length; i++){
       var post = $scope.posts[i];
