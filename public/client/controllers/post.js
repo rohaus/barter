@@ -2,7 +2,7 @@ angular.module('barterApp')
 .controller('PostCtrl', function($scope, $location, $http, $rootScope){
   $scope.postImage = function(image){
     console.log("post image is being called");
-    $rootScope.spinnerToggle();
+    $scope.spinnerToggle();
     $scope.disabled = true;
     var postToDatabase = function(location){
       $scope.data = {
@@ -19,7 +19,7 @@ angular.module('barterApp')
       .success(function(data, status, headers, config){
         console.log("SUCCESS!");
         console.log("image was submitted");
-        $rootScope.spinnerToggle();
+        $scope.spinnerToggle();
         $location.path('/');
       })
       .error(function(data, status){
@@ -35,5 +35,9 @@ angular.module('barterApp')
       };
       postToDatabase(location);
     });
+  };
+  $scope.postSpinnerDisplay = false;
+  $scope.spinnerToggle = function(){
+    $scope.postSpinnerDisplay = !$scope.postSpinnerDisplay;
   };
 });
