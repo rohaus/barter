@@ -185,8 +185,10 @@ button:active {
   overflow: hidden;
 }
 .conversationContainer button {
-  display: none;
   margin: 5px;
+}
+.conversationContainer .deletePost {
+  display: none;
 }
 .imageContainer {
   display: inline-block;
@@ -198,7 +200,7 @@ button:active {
 .imageContainer img {
   width: 78%;
 }
-.conversationContainer:hover button {
+.conversationContainer:hover .deletePost {
   display: inherit;
 }
 .date {

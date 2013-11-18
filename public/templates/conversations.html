@@ -18,12 +18,10 @@
         <p><span class="underline">Condition</span>:  {{post.condition}}</p>
         <p><span class="underline">Contact</span> {{post.name}}</p>
         <div class="conversation" ng-repeat="conversation in post.conversations | orderBy:'createdAt':true" ng-show="conversation.show">
-          <div>
-            <hr/>
-            <h4><span class="underline">Conversation</span>:</h4>
-            <h4>Topic: {{post.itemName}}</h4>
-            <button ng-click="toggleConversationModal(conversation)">View Conversation!</button>
-          </div>
+          <hr/>
+          <p><span class="underline">Conversation with</span>: {{conversation.requestingUser.name}} </p>
+          <p><span class="underline">Topic</span>: {{post.itemName}}</p>
+          <button ng-click="toggleConversationModal(conversation)">View Conversation</button>
         </div>
       </div>
     </div>
