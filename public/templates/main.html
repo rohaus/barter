@@ -27,8 +27,8 @@
   </section>
   <img class="spinner" src="../styles/ajax-loader.gif" ng-show="spinnerDisplay"/>
 </section>
-<div ng-click="togglePostModal()" id="modalMask" ng-show="postModalShow"></div>
-<div id="modal" ng-show="postModalShow">
+<div ng-click="togglePostModal()" class="modalMask" ng-show="postModalShow"></div>
+<div class="modal" ng-show="postModalShow">
   <form ng-submit="sendNewConversation(recipient)">
     <p><span class="underline">To</span>: {{recipient.name}}</p>
     <p><span class="underline">Item Name</span>: {{recipient.itemName}}</p>

@@ -226,7 +226,7 @@ input[type='text'] {
   vertical-align: top;
   outline: none;
 }
-#modalMask {
+.modalMask {
   z-index: 10;
   position: fixed;
   height: 100%;
@@ -236,7 +236,7 @@ input[type='text'] {
   background: #000;
   opacity: 0.8;
 }
-#modal {
+.modal {
   z-index: 11;
   height: 10em;
   width: 300px;
