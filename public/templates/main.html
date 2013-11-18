@@ -1,7 +1,10 @@
 <section id="map-canvas" data-ng-init="initialize()">
 </section>
 <section class="sidebar">
-  <h1><a class="barterLogo" href="#">Barter</a></h1>
+  <img class="spinner" src="../styles/ajax-loader.gif" ng-show="spinnerDisplay"/>
+  <h1>
+    <a class="barterLogo" href="#">Barter</a>
+  </h1>
   <button ng-click="updateLocation()">Search Nearby</button>
   <button ng-click="postRedirect()">Post an item</button>
   <button ng-click="convRedirect()">Dashboard</button>
@@ -26,7 +29,6 @@
       </section>
     </div>
   </section>
-  <img class="spinner" src="../styles/ajax-loader.gif" ng-show="spinnerDisplay"/>
 </section>
 <div ng-click="togglePostModal()" class="modalMask" ng-show="postModalShow"></div>
 <div class="modal" ng-show="postModalShow">
