@@ -162,7 +162,7 @@ button:active {
 .postForm,
 .conversations,
 .login {
-  width: 26em;
+  width: 24em;
   border: 5px solid #000;
   padding: 20px;
   margin: auto;
