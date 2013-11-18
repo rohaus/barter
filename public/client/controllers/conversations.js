@@ -41,6 +41,9 @@ angular.module('barterApp')
   };
 
   $scope.deleteConversation = function(conversation, post){
+    if(!confirm("Are you sure you want to delete the conversation?")){
+      return;
+    }
     $scope.data = {
       _id: conversation._id
     };
@@ -61,6 +64,9 @@ angular.module('barterApp')
   };
 
   $scope.deletePost = function(post, posts){
+    if(!confirm("Are you sure you want to delete the post?")){
+      return;
+    }
     $scope.data = {
       _id: post._id
     };
