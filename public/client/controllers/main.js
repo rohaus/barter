@@ -32,6 +32,7 @@ angular.module('barterApp')
     if(recipient.fbId === $rootScope.fbId){
       alert("Cannot trade with yourself");
       $rootScope.togglePostModal();
+      $scope.newConversation = '';
       return;
     }
     $scope.data = {
