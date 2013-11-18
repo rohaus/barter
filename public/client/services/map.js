@@ -115,7 +115,7 @@ angular.module('barterApp')
           $rootScope.recipient.fbId = document.getElementById("fbId").textContent;
           $rootScope.recipient._id = document.getElementById("_id").textContent;
           console.log($rootScope.recipient);
-          $rootScope.toggleModal();
+          $rootScope.togglePostModal();
           $rootScope.$digest();
           $rootScope.spinnerToggle();
         });

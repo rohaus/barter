@@ -62,10 +62,9 @@ angular.module('barterApp')
     return true;
   };
 
-  $rootScope.modalShow = false;
-  $rootScope.toggleModal = function(){
-    console.log("displayModal is being called");
-    $scope.modalShow = !$scope.modalShow;
+  $rootScope.postModalShow = false;
+  $rootScope.togglePostModal = function(){
+    $scope.postModalShow = !$scope.postModalShow;
   };
 
   $rootScope.zoomInPost = function(post){
