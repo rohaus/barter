@@ -112,6 +112,8 @@ angular.module('barterApp')
           var conversation = post.conversations[j];
           if(conversation.requestingUser.fbId.toString() === $rootScope.fbId){
             post.show = conversation.show = true;
+          }else{
+            conversation.show = false;
           }
         }
       }
