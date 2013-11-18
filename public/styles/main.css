@@ -224,6 +224,9 @@ button:active {
   height: 100%;
   width: 65%;
 }
+.postDescription p {
+  margin: 10px 0;
+}
 input[type='text'] {
   line-height: 1.688rem;
   font-size: 0.875rem;
