@@ -6,8 +6,9 @@
   <button ng-click="loopPostsAndConvs(match, notMatch, match, notMatch)">Completed</button>
   <button ng-click="loopPosts(match, notMatch)">Your Posts</button>
   <button ng-click="loopPosts(notMatch, match)">Your Requests</button>
+  <input class="searchDashboard" type="text" placeholder="Search posts!" autofocus="autofocus" ng-model="searchDashboard"></input>
   <section class="conversationsContainer">
-    <div class="conversationContainer" ng-repeat="post in posts | orderBy:'createdAt':true" ng-show="post.show">
+    <div class="conversationContainer" ng-repeat="post in posts | filter:search | orderBy:'createdAt':true" ng-show="post.show">
       <div class="imageContainer">
         <img src={{post.image}}></img>
         <button class="deletePost" ng-click="deletePost(post, posts)">Delete Post</button>

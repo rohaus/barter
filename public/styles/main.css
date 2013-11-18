@@ -161,8 +161,9 @@ button:active {
   background-color: #dadada;
 }
 .conversations {
-  height: 37em;
+  height: 39em;
   width: 34em;
+  overflow: hidden;
 }
 .conversations img {
   width: 200px;
@@ -284,4 +285,7 @@ img.cross {
 }
 #fileupload-resize-area {
   display: none;
+}
+.searchDashboard {
+  width: 90%;
 }

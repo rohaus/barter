@@ -120,6 +120,20 @@ angular.module('barterApp')
     }
   };
 
+  $scope.search = function (post){
+    if($scope.searchDashboard){
+      var searchDashboard = $scope.searchDashboard.toLowerCase();
+      if (post.itemName.toLowerCase().indexOf(searchDashboard)!=-1 ||
+        post.description.toLowerCase().indexOf(searchDashboard)!=-1 ||
+        post.condition.toLowerCase().indexOf(searchDashboard)!=-1 ||
+        post.name.toLowerCase().indexOf(searchDashboard)!=-1) {
+      return true;
+      }
+      return false;
+    }
+    return true;
+  };
+
   $rootScope.conversationModalShow = false;
   $rootScope.toggleConversationModal = function(conversation){
     $scope.conversationModalShow = !$scope.conversationModalShow;
