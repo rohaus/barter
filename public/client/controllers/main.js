@@ -10,7 +10,7 @@ angular.module('barterApp')
   };
 
   $scope.convRedirect = function(){
-    $location.path('/conversations');
+    $location.path('/dashboard');
   };
 
   $scope.logout = function(){
