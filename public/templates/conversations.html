@@ -7,14 +7,16 @@
   <section class="conversationsContainer">
     <div class="conversationContainer" ng-repeat="post in posts | filter:search | orderBy:'createdAt':true" ng-show="post.show">
       <div class="imageContainer">
-        <img src={{post.image}}></img>
+        <img src={{post.image}} />
         <button class="deletePost" ng-click="deletePost(post, posts)">Delete Post</button>
       </div>
       <div class="postDescription">
+        <img ng-show="!post.completed" class="check" src="../styles/checkbox-unchecked.png" />
+        <img ng-show="post.completed" class="check" src="../styles/checkbox-checked.png" />
         <p><span class="underline">Item Name</span>: {{post.itemName}}</p>
         <p><span class="underline">Description</span>: {{post.description}}</p>
         <p><span class="underline">Condition</span>:  {{post.condition}}</p>
-        <p><span class="underline">Contact</span> {{post.name}}</p>
+        <p><span class="underline">Contact</span>: {{post.name}}</p>
         <p id="date"><span class="underline">Created</span>: {{post.createdAt | date:'MM/dd @ h:mma'}}</p>
         <div class="conversation" ng-repeat="conversation in post.conversations | orderBy:'createdAt':true">
           <hr/>
@@ -39,6 +41,6 @@
       <input class="replyInput" type="text" ng-model="modalConversation.reply" placeholder="Type a message!"></input>
       <button>Send</button>
     </form>
-    <img class="cross" src="../styles/cross.png" ng-click="toggleConversationModal()"></img>
+    <img class="cross" src="../styles/cross.png" ng-click="toggleConversationModal()" />
   </div>
 </div>
