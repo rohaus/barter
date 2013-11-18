@@ -191,9 +191,15 @@ button:active {
   display: none;
   margin: 5px;
 }
-.conversationContainer img {
+.imageContainer {
+  display: inline-block;
   vertical-align: top;
+  text-align: center;
+  height: 95%;
   width: 30%;
+}
+.imageContainer img {
+  width: 78%;
 }
 .conversationContainer:hover button {
   display: inherit;
@@ -243,4 +249,7 @@ input[type='text'] {
   margin-left: -100px;
   border: 5px solid #000;
   background-color: #dadada;
+}
+.deletePost {
+  display: inline-block;
 }
