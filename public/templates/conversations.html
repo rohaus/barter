@@ -29,7 +29,8 @@
     </div>
   </section>
   <div ng-click="toggleConversationModal()" class="modalMask" ng-show="conversationModalShow"></div>
-  <div class="modal" ng-show="conversationModalShow">
+  <div class="modal conversationModal" ng-show="conversationModalShow">
+    <h2>Conversation with: {{modalConversation.requestingUser.name}}</h2>
     <button ng-click="respondToBarter(modalConversation, 'acceptBarter')">Accept Barter</button>
     <button ng-click="respondToBarter(modalConversation, 'rejectBarter')">Reject Barter</button>
     <button ng-click="deleteConversation(modalConversation, post)">Delete Conversation</button>

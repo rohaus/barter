@@ -250,6 +250,16 @@ input[type='text'] {
   border: 5px solid #000;
   background-color: #dadada;
 }
+.conversationModal {
+  height: 70%;
+  width: 50%;
+  top: 20%;
+  left: 30%;
+}
 .deletePost {
   display: inline-block;
+}
+.messageContainer {
+  overflow: auto;
+  height: 80%;
 }
