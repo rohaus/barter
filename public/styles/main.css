@@ -177,6 +177,7 @@ button:active {
   height: 30%;
   width: 29em;
   background-color: #7fbe6b;
+  padding-bottom: 10px;
   margin: 5px auto;
   border: 4px solid #6f853a;
   -webkit-border-radius: 10px;
