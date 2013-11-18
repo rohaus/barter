@@ -90,18 +90,20 @@ angular.module('barterApp')
       var infobox = new InfoBox(service.infoboxOptions);
 
       for(i = 0; i < length; i++){
-        marker = service.createMarker(i);
-        $rootScope.posts[i].__gm_id = marker.__gm_id;
-        service.markers.push(marker);
-        service.oms.addMarker(marker);
-        google.maps.event.addListener(marker, 'mouseover', function() {
-          console.log("mouseover is being called");
-          if( marker._omsData === undefined ){
-            console.log("mouseover then marker is triggered with click");
-            google.maps.event.trigger(marker,'click');
-          }
-        });
-        service.setInfoBoxContent(marker, i, infobox);
+        if(!$rootScope.posts[i].completed){
+          marker = service.createMarker(i);
+          $rootScope.posts[i].__gm_id = marker.__gm_id;
+          service.markers.push(marker);
+          service.oms.addMarker(marker);
+          google.maps.event.addListener(marker, 'mouseover', function() {
+            console.log("mouseover is being called");
+            if( marker._omsData === undefined ){
+              console.log("mouseover then marker is triggered with click");
+              google.maps.event.trigger(marker,'click');
+            }
+          });
+          service.setInfoBoxContent(marker, i, infobox);
+        }
       }
       google.maps.event.addListener(infobox, 'domready', function() {
         document.getElementById("barterButton").addEventListener("click", function(e) {
