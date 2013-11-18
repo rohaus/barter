@@ -81,13 +81,14 @@ angular.module('barterApp')
     });
   };
 
-  $scope.respondToBarter = function(conversation, type){
+  $scope.respondToBarter = function(conversation, post, type){
     $scope.data = {
       _id: conversation._id
     };
     $http.post('/'+type, $scope.data)
     .success(function(data, status, headers, config){
       console.log("post to "+type+" accepted");
+      post.completed = true;
       $scope.toggleConversationModal();
     })
     .error(function(data, status, headers, config){
