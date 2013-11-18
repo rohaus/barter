@@ -282,3 +282,6 @@ img.cross {
 .postMessage {
   width: 100%;
 }
+#fileupload-resize-area {
+  display: none;
+}
