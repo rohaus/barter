@@ -158,7 +158,6 @@ angular.module('barterApp')
         service.map.setZoom(16);
         google.maps.event.trigger(marker,'mouseup');
         $rootScope.spinnerToggle();
-        $rootScope.$digest();
         break;
       }
     }
