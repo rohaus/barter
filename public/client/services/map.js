@@ -5,7 +5,7 @@ angular.module('barterApp')
   service.styles = [
     {
       stylers: [
-        { hue: "#00ffe6" },
+        { hue: "#6699cc" },
         { saturation: -20 }
       ]
     },{
@@ -38,7 +38,6 @@ angular.module('barterApp')
 
     service.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
     service.oms = new OverlappingMarkerSpiderfier(service.map);
-    setTimeout(service.updateLocation, 2000);
     service.addMarkers();
     service.map.setOptions({styles: service.styles});
   };
