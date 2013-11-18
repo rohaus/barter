@@ -22,7 +22,7 @@
             <hr/>
             <h4><span class="underline">Conversation</span>:</h4>
             <h4 ng-click="expand(conversation)">Topic: {{post.itemName}}</h4>
-            <button ng-click="toggleMessageModal()">View Conversation!</button>
+            <button ng-click="toggleConversationModal()">View Conversation!</button>
           </div>
           <form ng-show="conversation.expand" ng-submit="sendMessage(conversation)">
             <input type="text" ng-model="conversation.reply" placeholder="Type a message!"></input>
@@ -33,8 +33,8 @@
       </div>
     </div>
   </section>
-  <div ng-click="toggleMessageModal()" class="modalMask" ng-show="messageModalShow"></div>
-  <div class="modal" ng-show="messageModalShow">
+  <div ng-click="toggleConversationModal()" class="modalMask" ng-show="conversationModalShow"></div>
+  <div class="modal" ng-show="conversationModalShow">
     <button ng-click="respondToBarter(conversation, 'acceptBarter')">Accept Barter</button>
     <button ng-click="respondToBarter(conversation, 'rejectBarter')">Reject Barter</button>
     <button ng-click="deleteConversation(conversation, post)">Delete Conversation</button>

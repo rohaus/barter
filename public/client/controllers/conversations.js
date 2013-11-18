@@ -114,9 +114,13 @@ angular.module('barterApp')
     }
   };
 
-  $rootScope.messageModalShow = false;
-  $rootScope.toggleMessageModal = function(){
-    $scope.messageModalShow = !$scope.messageModalShow;
+  $rootScope.conversationModalShow = false;
+  $rootScope.toggleConversationModal = function(){
+    $scope.conversationModalShow = !$scope.conversationModalShow;
+  };
+
+  $rootScope.setConversationModal = function(){
+
   };
 
 });
