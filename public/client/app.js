@@ -59,7 +59,8 @@ angular.module('barterApp', ['imageupload', 'ngRoute'])
     }
   })
   .when('/login', {
-    templateUrl: '/templates/login.html'
+    templateUrl: '/templates/login.html',
+    controller: 'MapCtrl'
   })
   .otherwise({
     redirectTo: '/'
