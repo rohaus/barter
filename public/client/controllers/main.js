@@ -1,9 +1,5 @@
 angular.module('barterApp')
 .controller('MapCtrl', function ($scope, $location, $http, $rootScope, MapService){
-  $scope.loginInitialize = function(){
-    MapService.initialize();
-  };
-
   $scope.initialize = function(){
     $rootScope.spinnerToggle();
     MapService.initialize();
