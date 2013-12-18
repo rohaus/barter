@@ -28,7 +28,7 @@ angular.module('barterApp', ['imageupload', 'ngRoute'])
         // Error: check the error status to get only the 401
         function(response){
           if (response.status === 401) {
-            console.log("it was intercepted and there was a 401 status");
+            console.log('it was intercepted and there was a 401 status');
             $location.path('/login');
           return $q.reject(response);
           }

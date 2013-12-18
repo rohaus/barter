@@ -5,21 +5,21 @@ angular.module('barterApp')
   service.styles = [
     {
       stylers: [
-        { hue: "#6699cc" },
+        { hue: '#6699cc' },
         { saturation: -20 }
       ]
     },{
-      featureType: "road",
-      elementType: "geometry",
+      featureType: 'road',
+      elementType: 'geometry',
       stylers: [
         { lightness: 100 },
-        { visibility: "simplified" }
+        { visibility: 'simplified' }
       ]
     },{
-      featureType: "road",
-      elementType: "labels",
+      featureType: 'road',
+      elementType: 'labels',
       stylers: [
-        { visibility: "off" }
+        { visibility: 'off' }
       ]
     }
   ];
@@ -36,7 +36,7 @@ angular.module('barterApp')
       mapTypeId: service.mapTypeId
     };
 
-    service.map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+    service.map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
     service.oms = new OverlappingMarkerSpiderfier(service.map);
     service.addMarkers();
     service.map.setOptions({styles: service.styles});
@@ -45,7 +45,7 @@ angular.module('barterApp')
   service.updateLocation = $rootScope.updateLocation = function(){
     $rootScope.spinnerToggle();
     navigator.geolocation.getCurrentPosition(function (position) {
-      console.log("this is getting called!");
+      console.log('this is getting called!');
       service.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       service.map.setZoom(16);
       service.map.setCenter(service.center);
@@ -60,11 +60,11 @@ angular.module('barterApp')
     pixelOffset: new google.maps.Size(-140, 0),
     zIndex: null,
     boxStyle: {
-      background: "url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat",
-      width: "280px"
+      background: 'url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat',
+      width: '280px'
     },
-    closeBoxMargin: "12px 4px 2px 2px",
-    closeBoxURL: "http://www.google.com/intl/en_us/mapfiles/close.gif",
+    closeBoxMargin: '12px 4px 2px 2px',
+    closeBoxURL: 'http://www.google.com/intl/en_us/mapfiles/close.gif',
     infoBoxClearance: new google.maps.Size(1, 1)
   };
 
@@ -80,7 +80,7 @@ angular.module('barterApp')
   service.addMarkers = function(coords){
     $http.get('/items')
     .success(function(data, status, headers, config){
-      console.log("The items have been retrieved from the database", data);
+      console.log('The items have been retrieved from the database', data);
       $rootScope.posts = data;
 
       var length = $rootScope.posts.length,
@@ -96,9 +96,9 @@ angular.module('barterApp')
           service.markers.push(marker);
           service.oms.addMarker(marker);
           google.maps.event.addListener(marker, 'mouseover', function() {
-            console.log("mouseover is being called");
+            console.log('mouseover is being called');
             if( marker._omsData === undefined ){
-              console.log("mouseover then marker is triggered with click");
+              console.log('mouseover then marker is triggered with click');
               google.maps.event.trigger(marker,'click');
             }
           });
@@ -106,15 +106,15 @@ angular.module('barterApp')
         }
       }
       google.maps.event.addListener(infobox, 'domready', function() {
-        document.getElementById("barterButton").addEventListener("click", function(e) {
+        document.getElementById('barterButton').addEventListener('click', function(e) {
           $rootScope.spinnerToggle();
           $rootScope.recipient = {};
-          $rootScope.recipient.itemName = document.getElementById("itemName").textContent.split(": ")[1];
-          $rootScope.recipient.description = document.getElementById("description").textContent.split(": ")[1];
-          $rootScope.recipient.condition = document.getElementById("condition").textContent.split(": ")[1];
-          $rootScope.recipient.name = document.getElementById("name").textContent.split(": ")[1];
-          $rootScope.recipient.fbId = document.getElementById("fbId").textContent;
-          $rootScope.recipient._id = document.getElementById("_id").textContent;
+          $rootScope.recipient.itemName = document.getElementById('itemName').textContent.split(': ')[1];
+          $rootScope.recipient.description = document.getElementById('description').textContent.split(': ')[1];
+          $rootScope.recipient.condition = document.getElementById('condition').textContent.split(': ')[1];
+          $rootScope.recipient.name = document.getElementById('name').textContent.split(': ')[1];
+          $rootScope.recipient.fbId = document.getElementById('fbId').textContent;
+          $rootScope.recipient._id = document.getElementById('_id').textContent;
           console.log($rootScope.recipient);
           $rootScope.togglePostModal();
           $rootScope.$digest();
@@ -125,7 +125,7 @@ angular.module('barterApp')
     $rootScope.spinnerToggle();
     })
     .error(function(data, status, headers, config){
-      console.log("adding markers failed");
+      console.log('adding markers failed');
     });
   };
 

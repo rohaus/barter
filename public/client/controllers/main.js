@@ -16,7 +16,7 @@ angular.module('barterApp')
   $scope.logout = function(){
     $http.get('/logout')
     .success(function(data, status, headers, config){
-      console.log("Attempting to logout");
+      console.log('Attempting to logout');
     });
   };
 
@@ -30,7 +30,7 @@ angular.module('barterApp')
 
   $scope.sendNewConversation = function(recipient){
     if(recipient.fbId === $rootScope.fbId){
-      alert("Cannot trade with yourself");
+      alert('Cannot trade with yourself');
       $rootScope.togglePostModal();
       $scope.newConversation = '';
       return;
@@ -46,12 +46,12 @@ angular.module('barterApp')
     };
     $http.post('/sendNewConversation', $scope.data)
     .success(function(data, status, headers, config){
-      console.log("SUCCESS!");
+      console.log('SUCCESS!');
       $scope.newConversation = '';
       $scope.togglePostModal();
     })
     .error(function(data, status){
-      console.log("ERROR :(");
+      console.log('ERROR :(');
     });
   };
 

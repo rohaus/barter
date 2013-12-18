@@ -1,7 +1,7 @@
 angular.module('barterApp')
 .controller('PostCtrl', function($scope, $location, $http, $rootScope){
   $scope.postImage = function(image){
-    console.log("post image is being called");
+    console.log('post image is being called');
     $scope.spinnerToggle();
     $scope.disabled = true;
     var postToDatabase = function(location){
@@ -17,13 +17,13 @@ angular.module('barterApp')
 
       $http.post('/post', $scope.data)
       .success(function(data, status, headers, config){
-        console.log("SUCCESS!");
-        console.log("image was submitted");
+        console.log('SUCCESS!');
+        console.log('image was submitted');
         $scope.spinnerToggle();
         $location.path('/');
       })
       .error(function(data, status){
-        console.log("ERROR :(");
+        console.log('ERROR :(');
         $scope.disabled = false;
       });
     };

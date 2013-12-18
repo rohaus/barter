@@ -8,7 +8,7 @@ angular.module('barterApp')
     };
     $http.post('/sendMessage', $scope.data)
     .success(function(data, status, headers, config){
-      console.log("Message sent");
+      console.log('Message sent');
       conversation.reply = '';
       var time = new Date();
       conversation.messages.push({
@@ -18,24 +18,24 @@ angular.module('barterApp')
       });
     })
     .error(function(data, status){
-      console.log("Error sending message");
+      console.log('Error sending message');
     });
   };
 
   $scope.renderMessages = function(){
     $http.get('/messages')
     .success(function(data, status, headers, config){
-      console.log("Success fetching messages");
+      console.log('Success fetching messages');
       $scope.posts = data;
       $scope.yourPosts();
     })
     .error(function(data, status, headers, config){
-      console.log("Error fetching messages");
+      console.log('Error fetching messages');
     });
   };
 
   $scope.deleteConversation = function(conversation, post){
-    if(!confirm("Are you sure you want to delete the conversation?")){
+    if(!confirm('Are you sure you want to delete the conversation?')){
       return;
     }
     $scope.data = {
@@ -43,7 +43,7 @@ angular.module('barterApp')
     };
     $http.post('/deleteConversation', $scope.data)
     .success(function(data, status, headers, config){
-      console.log("Success deleting conversation");
+      console.log('Success deleting conversation');
       $scope.toggleConversationModal();
       var length = post.conversations.length;
       for(var i = 0; i < length; i++){
@@ -54,12 +54,12 @@ angular.module('barterApp')
       }
     })
     .error(function(data, status, headers, config){
-      console.log("Error deleting conversation");
+      console.log('Error deleting conversation');
     });
   };
 
   $scope.deletePost = function(post, posts){
-    if(!confirm("Are you sure you want to delete the post?")){
+    if(!confirm('Are you sure you want to delete the post?')){
       return;
     }
     $scope.data = {
@@ -67,7 +67,7 @@ angular.module('barterApp')
     };
     $http.post('/deletePost', $scope.data)
     .success(function(data, status, headers, config){
-      console.log("Post deleted");
+      console.log('Post deleted');
       var length = posts.length;
       for (var i = 0; i < length; i++){
         if (posts[i]._id === $scope.data._id){
@@ -77,7 +77,7 @@ angular.module('barterApp')
       }
     })
     .error(function(data, status, headers, config){
-      console.log("Error deleting post");
+      console.log('Error deleting post');
     });
   };
 
@@ -87,12 +87,12 @@ angular.module('barterApp')
     };
     $http.post('/'+type, $scope.data)
     .success(function(data, status, headers, config){
-      console.log("post to "+type+" accepted");
+      console.log('post to '+type+' accepted');
       post.completed = true;
       $scope.toggleConversationModal();
     })
     .error(function(data, status, headers, config){
-      console.log("post to "+type+" rejected");
+      console.log('post to '+type+' rejected');
     });
   };
 

@@ -59,7 +59,7 @@ var sendMessage = function(req, res, next){
 // };
 
 var deleteConversation = function(req, res, next){
-  Post.findOne({"conversations._id": req.body._id}, function(err, post){
+  Post.findOne({'conversations._id': req.body._id}, function(err, post){
     if (err) { handleError(500); }
     var conversation = post.conversations.id(req.body._id).remove();
     post.save(function (err) {

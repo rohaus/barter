@@ -2,8 +2,8 @@ module.exports = function(passport, FacebookStrategy, FbUsers){
   var keys;
 
   var env = process.env['NODE_ENV'] || 'development';
-  console.log("ENV used is",env);
-  if(env === "production"){
+  console.log('ENV used is',env);
+  if(env === 'production'){
     keys = require('./productionKeys')[env];
   }else{
     keys = require('./keys')[env];
