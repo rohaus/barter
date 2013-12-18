@@ -1,6 +1,6 @@
-var Post = require('../database/schema/post').Post,
-    Conversation = require('../database/schema/conversation').Conversation,
-    Message = require('../database/schema/message').Message;
+var Post = require('../models/post').Post,
+    Conversation = require('../models/conversation').Conversation,
+    Message = require('../models/message').Message;
 
 var handleError = function(statusCode){
   console.log(err);

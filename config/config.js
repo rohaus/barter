@@ -20,10 +20,11 @@ module.exports = function(passport){
   // Config
   var app = express();
   var port = process.env.PORT || 9000;
+  app.set('views', __dirname + '/../app/views');
   app.set('view engine', 'html');
   app.engine('html', hbs.__express);
-  app.use(stylus.middleware({ src: __dirname + '/public', compile: compile }));
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(stylus.middleware({ src: __dirname + '/../public', compile: compile }));
+  app.use(express.static(path.join(__dirname, '/../public')));
   app.use(express.cookieParser());
   app.use(express.session({ secret: keys.secret }));
   app.use(express.bodyParser());

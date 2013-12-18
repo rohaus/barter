@@ -5,9 +5,9 @@ var mongoose = require('mongoose'),
 var env = process.env['NODE_ENV'] || 'development';
 
 if(env === "production"){
-  keys = require('../productionKeys')[env];
+  keys = require('./productionKeys')[env];
 }else{
-  keys = require('../keys')[env];
+  keys = require('./keys')[env];
 }
 
 mongoose.connect(keys.DB);

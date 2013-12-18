@@ -1,8 +1,8 @@
 module.exports = function(app, passport, db){
-  var loginCtrl = require('./routeCtrls/loginCtrl'),
-  barterCtrl = require('./routeCtrls/barterCtrl'),
-  postCtrl = require('./routeCtrls/postCtrl'),
-  messageCtrl = require('./routeCtrls/messageCtrl');
+  var loginCtrl = require('../app/controllers/loginCtrl'),
+  barterCtrl = require('../app/controllers/barterCtrl'),
+  postCtrl = require('../app/controllers/postCtrl'),
+  messageCtrl = require('../app/controllers/messageCtrl');
 
   var auth = function (req, res, next){
     !req.isAuthenticated() ? res.send(401) : next();
