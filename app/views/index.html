@@ -7,23 +7,28 @@
   </head>
   <body ng-app='barterApp'>
     <a href='http://hackreactor.com'>
-      <img style='position: fixed; z-index: 100; top: 0; right: 0; border: 0; height: 100px'
-      src='http://i.imgur.com/x86kKmF.png'
-      alt='Built at Hack Reactor'>
+      <img style='position: fixed; z-index: 100; top: 0; right: 0; border: 0;' src='http://i.imgur.com/x86kKmF.png' alt='Built at Hack Reactor'>
     </a>
     <div class='container' ng-view></div>
+      <!-- Google Maps -->
+      <script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?sensor=false'></script>
+      <script type='text/javascript' src='http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js'></script>
+
+      <!-- Libraries -->
       <script src='lib/angular/angular.js'></script>
       <script src='lib/angular-route/angular-route.js'></script>
       <script src='lib/angularjs-imageupload-directive/public/javascripts/imageupload.js'></script>
       <script src='lib/markerclusterer/markerclusterer.js'></script>
-      <script type='text/javascript' src='https://maps.googleapis.com/maps/api/js?sensor=false'></script>
-      <script type='text/javascript' src='http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js'></script>
       <script src='lib/OverlappingMarkerSpiderfier/oms.min.js'></script>
-      <script src='client/app.js'></script>
-      <script src='client/services/map.js'></script>
-      <script src='client/controllers/main.js'></script>
-      <script src='client/controllers/post.js'></script>
-      <script src='client/controllers/conversations.js'></script>
+
+      <!-- App -->
+      <script src='app.js'></script>
+      <script src='services/map.js'></script>
+      <script src='controllers/main.js'></script>
+      <script src='controllers/post.js'></script>
+      <script src='controllers/conversations.js'></script>
+
+      <!-- Google Analytics -->
       <script>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
