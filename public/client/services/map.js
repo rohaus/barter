@@ -60,7 +60,7 @@ angular.module('barterApp')
     pixelOffset: new google.maps.Size(-140, 0),
     zIndex: null,
     boxStyle: {
-      background: 'url('http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif') no-repeat',
+      background: 'url("http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/examples/tipbox.gif") no-repeat',
       width: '280px'
     },
     closeBoxMargin: '12px 4px 2px 2px',
