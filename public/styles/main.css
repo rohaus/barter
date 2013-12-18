@@ -328,3 +328,10 @@ img.thumb {
   width: 1080px;
   margin: 0 auto;
 }
+.corner {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  border: 0;
+}
