@@ -1,26 +1,26 @@
-<div class="box postForm">
-  <h1><a href="#" class="barterLogo">Barter</a></h1>
-  <form ng-submit="postImage()">
+<div class='box postForm'>
+  <h1><a href='#' class='barterLogo'>Barter</a></h1>
+  <form ng-submit='postImage()'>
     <div>
       <p>What's it called?</p>
-      <input type="text" ng-model="itemName" ng-required="true" autofocus="autofocus"></input>
+      <input type='text' ng-model='itemName' ng-required='true' autofocus='autofocus'></input>
     </div>
     <div>
       <p>Tell us about it.</p>
-      <input type="text" ng-model="description" ng-required="true"></input>
+      <input type='text' ng-model='description' ng-required='true'></input>
     </div>
     <div>
       <p>What's the condition?</p>
-      <input type="text" ng-model="condition" ng-required="true"></input>
+      <input type='text' ng-model='condition' ng-required='true'></input>
     </div>
     <div>
       <p>Upload an image!</p>
-      <input type="file" accept="image/*" image="image" resize-max-height="300" resize-max-width="250" resize-quality="0.7" ng-required="true"/>
-      <p ng-show="image">Is this correct?</p>
-      <img ng-show="image" ng-src="{{image.resized.dataURL}}"/>
+      <input type='file' accept='image/*' image='image' resize-max-height='300' resize-max-width='250' resize-quality='0.7' ng-required='true'/>
+      <p ng-show='image'>Is this correct?</p>
+      <img ng-show='image' ng-src='{{image.resized.dataURL}}'/>
     </div>
-    <button ng-disabled="disabled">Submit</button>
-    <button type="reset">Clear</button>
+    <button ng-disabled='disabled'>Submit</button>
+    <button type='reset'>Clear</button>
   </form>
-  <img ng-show="postSpinnerDisplay" src="../styles/images/ajax-loader.gif"/>
+  <img ng-show='postSpinnerDisplay' src='../styles/images/ajax-loader.gif'/>
 <div>

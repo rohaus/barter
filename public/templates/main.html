@@ -1,45 +1,45 @@
-<section class="wrapper">
-  <section id="map-canvas" data-ng-init="initialize()">
+<section class='wrapper'>
+  <section id='map-canvas' data-ng-init='initialize()'>
   </section>
-  <section class="sidebar">
-    <img class="spinner" src="../styles/images/ajax-loader.gif" ng-show="spinnerDisplay"/>
+  <section class='sidebar'>
+    <img class='spinner' src='../styles/images/ajax-loader.gif' ng-show='spinnerDisplay'/>
     <h1>
-      <a class="barterLogo" href="#">Barter</a>
+      <a class='barterLogo' href='#'>Barter</a>
     </h1>
-    <button ng-click="updateLocation()">Search Nearby</button>
-    <button ng-click="postRedirect()">Post an item</button>
-    <button ng-click="convRedirect()">Dashboard</button>
-    <a href="#" ng-click="logout()">
+    <button ng-click='updateLocation()'>Search Nearby</button>
+    <button ng-click='postRedirect()'>Post an item</button>
+    <button ng-click='convRedirect()'>Dashboard</button>
+    <a href='#' ng-click='logout()'>
       <button>Logout</button>
     </a>
     <h4>
       Take a look in your area:
-      <input type="text" placeholder="Search posts!" autofocus="autofocus" ng-model="searchText"></input>
+      <input type='text' placeholder='Search posts!' autofocus='autofocus' ng-model='searchText'></input>
     </h4>
-    <section class="postsContainer">
-      <div class="searchPosts" ng-repeat="post in posts | filter:search | orderBy:'createdAt':true" ng-show="!post.completed">
-        <section ng-click="zoomInPost(post)" class="post">
-          <img src="{{post.image}}"/>
-          <div class="postText">
-            <h2 id="itemName"><span class="underline">Item Name</span>: {{post.itemName}}</h2>
-            <h2 id="description"><span class="underline">Description</span>: {{post.description}}</h2>
-            <h2 id="condition"><span class="underline">Condition</span>: {{post.condition}}</h2>
-            <h2 id="name"><span class="underline">Contact</span>: {{post.name}}</h2>
-            <h2 id="date"><span class="underline">Created</span>: {{post.createdAt | date:'MM/dd @ h:mma'}}</h2>
+    <section class='postsContainer'>
+      <div class='searchPosts' ng-repeat='post in posts | filter:search | orderBy:"createdAt":true' ng-show='!post.completed'>
+        <section ng-click='zoomInPost(post)' class='post'>
+          <img src='{{post.image}}'/>
+          <div class='postText'>
+            <h2 id='itemName'><span class='underline'>Item Name</span>: {{post.itemName}}</h2>
+            <h2 id='description'><span class='underline'>Description</span>: {{post.description}}</h2>
+            <h2 id='condition'><span class='underline'>Condition</span>: {{post.condition}}</h2>
+            <h2 id='name'><span class='underline'>Contact</span>: {{post.name}}</h2>
+            <h2 id='date'><span class='underline'>Created</span>: {{post.createdAt | date:'MM/dd @ h:mma'}}</h2>
           </div>
         </section>
       </div>
     </section>
   </section>
-  <div ng-click="togglePostModal()" class="modalMask" ng-show="postModalShow"></div>
-  <div class="modal" ng-show="postModalShow">
-    <form ng-submit="sendNewConversation(recipient)">
-      <p><span class="underline">To</span>: {{recipient.name}}</p>
-      <p><span class="underline">Item Name</span>: {{recipient.itemName}}</p>
-      <p><span class="underline">Message</span>:</p>
-      <input class="postMessage" type="text" ng-model="newConversation" placeholder="What did you want to say?" ng-required="true"></input>
+  <div ng-click='togglePostModal()' class='modalMask' ng-show='postModalShow'></div>
+  <div class='modal' ng-show='postModalShow'>
+    <form ng-submit='sendNewConversation(recipient)'>
+      <p><span class='underline'>To</span>: {{recipient.name}}</p>
+      <p><span class='underline'>Item Name</span>: {{recipient.itemName}}</p>
+      <p><span class='underline'>Message</span>:</p>
+      <input class='postMessage' type='text' ng-model='newConversation' placeholder='What did you want to say?' ng-required='true'></input>
       <button>Send Message</button>
     </form>
-    <img class="cross" src="../styles/images/cross.png" ng-click="togglePostModal()"/>
+    <img class='cross' src='../styles/images/cross.png' ng-click='togglePostModal()'/>
   </div>
 </section>
