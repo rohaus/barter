@@ -21,7 +21,7 @@ module.exports = function(passport){
   var app = express();
   var port = process.env.PORT || 9000;
   app.set('views', __dirname + '/../app/views');
-  app.set('view engine', 'html');
+  app.set('view engine', 'jade');
   app.engine('html', hbs.__express);
   app.use(stylus.middleware({ src: __dirname + '/../public', compile: compile }));
   app.use(express.static(path.join(__dirname, '/../public')));

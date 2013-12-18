@@ -1,0 +1,36 @@
+doctype 5
+html(lang="en")
+  head
+    meta(charset='utf-8')
+    title= Barter
+    link(rel='stylesheet' href='styles/main.css')
+  body(ng-app='barterApp')
+    a(href='http://hackreactor.com')
+      img.corner(src='http://i.imgur.com/x86kKmF.png' alt='Built at Hack Reactor')
+    div.container(ng-view)
+      //- Google Maps
+      script(type='text/javascript' src='https://maps.googleapis.com/maps/api/js?sensor=false')
+      script(type='text/javascript' src='http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js')
+
+      //- Libraries
+      script(src='lib/angular/angular.js')
+      script(src='lib/angular-route/angular-route.js')
+      script(src='lib/angularjs-imageupload-directive/public/javascripts/imageupload.js')
+      script(src='lib/markerclusterer/markerclusterer.js')
+      script(src='lib/OverlappingMarkerSpiderfier/oms.min.js')
+
+      //- App
+      script(src='app.js')
+      script(src='services/map.js')
+      script(src='controllers/main.js')
+      script(src='controllers/post.js')
+      script(src='controllers/conversations.js')
+
+      //- Google Analytics
+      script.
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-45802800-1', 'barter-app.herokuapp.com');
+        ga('send', 'pageview');
