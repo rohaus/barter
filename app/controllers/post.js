@@ -7,7 +7,7 @@ var handleError = function(statusCode){
   res.send(statusCode);
 };
 
-var items = function(req, res, next){
+var posts = function(req, res, next){
   Post.find({}, function(err, posts){
     if (err) { handleError(500); }
     res.send(200, posts);
@@ -39,7 +39,7 @@ var deletePost = function(req, res, next){
 };
 
 module.exports = {
-  items: items,
+  posts: posts,
   post: postItem,
   deletePost: deletePost
 };

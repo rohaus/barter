@@ -78,7 +78,7 @@ angular.module('barterApp')
   };
 
   service.addMarkers = function(coords){
-    $http.get('/items')
+    $http.get('/posts')
     .success(function(data, status, headers, config){
       console.log('The items have been retrieved from the database', data);
       $rootScope.posts = data;

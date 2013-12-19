@@ -6,7 +6,7 @@ angular.module('barterApp')
       'message': conversation.reply,
       'from': $rootScope.name
     };
-    $http.post('/sendMessage', $scope.data)
+    $http.post('/message', $scope.data)
     .success(function(data, status, headers, config){
       console.log('Message sent');
       conversation.reply = '';
@@ -41,7 +41,7 @@ angular.module('barterApp')
     $scope.data = {
       _id: conversation._id
     };
-    $http.post('/deleteConversation', $scope.data)
+    $http.delete('/conversation', $scope.data)
     .success(function(data, status, headers, config){
       console.log('Success deleting conversation');
       $scope.toggleConversationModal();
@@ -65,7 +65,7 @@ angular.module('barterApp')
     $scope.data = {
       _id: post._id
     };
-    $http.post('/deletePost', $scope.data)
+    $http.delete('/post', $scope.data)
     .success(function(data, status, headers, config){
       console.log('Post deleted');
       var length = posts.length;
@@ -85,7 +85,7 @@ angular.module('barterApp')
     $scope.data = {
       _id: conversation._id
     };
-    $http.post('/'+type, $scope.data)
+    $http.put('/'+type, $scope.data)
     .success(function(data, status, headers, config){
       console.log('post to '+type+' accepted');
       post.completed = true;

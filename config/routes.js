@@ -1,8 +1,8 @@
 module.exports = function(app, passport, db){
-  var loginCtrl = require('../app/controllers/loginCtrl'),
-  barterCtrl = require('../app/controllers/barterCtrl'),
-  postCtrl = require('../app/controllers/postCtrl'),
-  messageCtrl = require('../app/controllers/messageCtrl');
+  var loginCtrl = require('../app/controllers/login'),
+  barterCtrl = require('../app/controllers/barter'),
+  postCtrl = require('../app/controllers/post'),
+  messageCtrl = require('../app/controllers/message');
 
   var auth = function (req, res, next){
     !req.isAuthenticated() ? res.send(401) : next();
@@ -19,18 +19,18 @@ module.exports = function(app, passport, db){
   }));
 
   // Post Controls
-  app.get('/items', auth, postCtrl.items);
+  app.get('/posts', auth, postCtrl.posts);
   app.post('/post', auth, postCtrl.post);
-  app.post('/deletePost', auth, postCtrl.deletePost);
+  app.delete('/post', auth, postCtrl.deletePost);
 
   // Message Controls
   app.get('/messages', auth, messageCtrl.messages);
-  app.post('/sendNewConversation', auth, messageCtrl.sendNewConversation);
-  app.post('/sendMessage', auth, messageCtrl.sendMessage);
-  // app.post('/deleteMessage', auth, messageCtrl.deleteMessage);
-  app.post('/deleteConversation', auth,messageCtrl.deleteConversation);
+  app.post('/conversation', auth, messageCtrl.sendNewConversation);
+  app.post('/message', auth, messageCtrl.sendMessage);
+  // app.delete('/message', auth, messageCtrl.deleteMessage);
+  app.delete('/conversation', auth,messageCtrl.deleteConversation);
 
   // Barter Request Controls
-  app.post('/acceptBarter', auth, barterCtrl.acceptBarter);
-  app.post('/rejectBarter', auth, barterCtrl.rejectBarter);
+  app.put('/barter/accept', auth, barterCtrl.acceptBarter);
+  app.put('/barter/reject', auth, barterCtrl.rejectBarter);
 };
