@@ -82,6 +82,9 @@ angular.module('barterApp')
     $http.put('/barter/' + type + '/' + conversation._id)
     .success(function(data, status, headers, config){
       console.log('post to /barter/' + type + ' accepted');
+      if(type === 'accept'){
+        conversation.accepted = true;
+      }
       post.completed = true;
       $scope.toggleConversationModal();
     })
