@@ -9,12 +9,12 @@ html(lang="en")
       img.corner(src='http://i.imgur.com/x86kKmF.png' alt='Built at Hack Reactor')
     div.container(ng-view)
       //- Google Maps
-      script(type='text/javascript' src='https://maps.googleapis.com/maps/api/js?sensor=false')
-      script(type='text/javascript' src='http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js')
+      script(src='https://maps.googleapis.com/maps/api/js?sensor=false')
+      script(src='http://google-maps-utility-library-v3.googlecode.com/svn/trunk/infobox/src/infobox.js')
 
       //- Libraries
-      script(src='lib/angular/angular.js')
-      script(src='lib/angular-route/angular-route.js')
+      script(src='lib/angular/angular.min.js')
+      script(src='lib/angular-route/angular-route.min.js')
       script(src='lib/angularjs-imageupload-directive/public/javascripts/imageupload.js')
       script(src='lib/markerclusterer/markerclusterer.js')
       script(src='lib/OverlappingMarkerSpiderfier/oms.min.js')
