@@ -178,6 +178,8 @@ angular.module('barterApp')
         return;
       }
       $scope.button = false;
+    }else{
+      $scope.button = false;
     }
   };
 });
