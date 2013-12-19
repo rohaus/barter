@@ -1,20 +1,21 @@
 // Database connection
 var mongoose = require('mongoose'),
-    keys;
+    env = process.env['NODE_ENV'] || 'development',
+    keys, db;
 
-var env = process.env['NODE_ENV'] || 'development';
+// Determine if keys are based on production or development
+keys = (env === 'production') ? require('./productionKeys')[env] : require('./keys')[env];
 
-if(env === 'production'){
-  keys = require('./productionKeys')[env];
-}else{
-  keys = require('./keys')[env];
-}
-
+// Mongoose conncetion
 mongoose.connect(keys.DB);
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function callback () {
+db = mongoose.connection;
+
+// Notify if connection was successful
+db.once('open', function(){
   console.log('Database connected!');
 });
+
+// Notify if conncetion errored
+db.on('error', console.error.bind(console, 'connection error:'));
 
 module.exports = db;
