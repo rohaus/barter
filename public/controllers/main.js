@@ -44,7 +44,7 @@ angular.module('barterApp')
       'from': $rootScope.name,
       '_id': recipient._id
     };
-    $http.post('/sendNewConversation', $scope.data)
+    $http.post('/conversation', $scope.data)
     .success(function(data, status, headers, config){
       console.log('SUCCESS!');
       $scope.newConversation = '';
