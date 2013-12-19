@@ -18,7 +18,7 @@
     "superagent": "~0.15.7",
     "should": "~2.1.0"
   },
-  "devDependencies":{
+  "devDependencies": {
     "bower": "~1.2.7"
   }
 }

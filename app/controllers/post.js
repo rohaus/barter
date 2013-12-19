@@ -32,7 +32,7 @@ var postItem = function(req, res, next){
 };
 
 var deletePost = function(req, res, next){
-  Post.findByIdAndRemove(req.body._id, function(err){
+  Post.findByIdAndRemove(req.params.id, function(err){
     if (err) { handleError(500); }
     res.send(204);
   });

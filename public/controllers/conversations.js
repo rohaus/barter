@@ -41,13 +41,13 @@ angular.module('barterApp')
     $scope.data = {
       _id: conversation._id
     };
-    $http.delete('/conversation', $scope.data)
+    $http.delete('/conversation/' + conversation._id)
     .success(function(data, status, headers, config){
       console.log('Success deleting conversation');
       $scope.toggleConversationModal();
       var length = post.conversations.length;
       for(var i = 0; i < length; i++){
-        if (post.conversations[i]._id === $scope.data._id){
+        if (post.conversations[i]._id === conversation._id){
           post.conversations.splice(i,1);
           break;
         }
@@ -62,15 +62,12 @@ angular.module('barterApp')
     if(!confirm('Are you sure you want to delete the post?')){
       return;
     }
-    $scope.data = {
-      _id: post._id
-    };
-    $http.delete('/post', $scope.data)
+    $http.delete('/post/' + post._id)
     .success(function(data, status, headers, config){
       console.log('Post deleted');
       var length = posts.length;
       for (var i = 0; i < length; i++){
-        if (posts[i]._id === $scope.data._id){
+        if (posts[i]._id === post._id){
           posts.splice(i,1);
           break;
         }
@@ -82,17 +79,14 @@ angular.module('barterApp')
   };
 
   $scope.respondToBarter = function(conversation, post, type){
-    $scope.data = {
-      _id: conversation._id
-    };
-    $http.put('/'+type, $scope.data)
+    $http.put('/barter/' + type + '/' + conversation._id)
     .success(function(data, status, headers, config){
-      console.log('post to '+type+' accepted');
+      console.log('post to /barter/' + type + ' accepted');
       post.completed = true;
       $scope.toggleConversationModal();
     })
     .error(function(data, status, headers, config){
-      console.log('post to '+type+' rejected');
+      console.log('post to /barter/' + type + ' rejected');
     });
   };
 

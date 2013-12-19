@@ -21,16 +21,16 @@ module.exports = function(app, passport, db){
   // Post Controls
   app.get('/posts', auth, postCtrl.posts);
   app.post('/post', auth, postCtrl.post);
-  app.delete('/post', auth, postCtrl.deletePost);
+  app.delete('/post/:id', auth, postCtrl.deletePost);
 
   // Message Controls
   app.get('/messages', auth, messageCtrl.messages);
   app.post('/conversation', auth, messageCtrl.sendNewConversation);
   app.post('/message', auth, messageCtrl.sendMessage);
-  // app.delete('/message', auth, messageCtrl.deleteMessage);
-  app.delete('/conversation', auth,messageCtrl.deleteConversation);
+  // app.delete('/message/:id', auth, messageCtrl.deleteMessage);
+  app.delete('/conversation/:id', auth,messageCtrl.deleteConversation);
 
   // Barter Request Controls
-  app.put('/barter/accept', auth, barterCtrl.acceptBarter);
-  app.put('/barter/reject', auth, barterCtrl.rejectBarter);
+  app.put('/barter/accept/:id', auth, barterCtrl.acceptBarter);
+  app.put('/barter/reject/:id', auth, barterCtrl.rejectBarter);
 };
