@@ -1,46 +1,51 @@
 var Post = require('../models/post').Post,
     Conversation = require('../models/conversation').Conversation,
-    Message = require('../models/message').Message;
+    Message = require('../models/message').Message,
+    _ = require('lodash');
 
-var handleError = function(statusCode){
-  console.log(err);
-  res.send(statusCode);
+// Utility function to handle error if there is an error
+var handleError = function(err, statusCode){
+  if(err){
+    console.log(err);
+    res.send(statusCode);
+  }
 };
 
-var acceptBarter = function(req, res, next){
-  Post.update({'conversations._id': req.params.id}, {$set: {'completed': true}}, function(err){
-    if (err) { handleError(500); }
-    Post.findOne({'conversations._id': req.params.id}, function(err, post){
-      if (err) { handleError(500); }
-      for(var i = 0; i < post.conversations.length; i++){
-        var conversation = post.conversations[i];
-        if(conversation._id.equals(req.params.id)){
-          post.conversations[i].accepted = true;
-          break;
-        }
-      }
-      post.save(function(err){
-        if (err) { handleError(500); }
-        res.send(204);
-      });
+// Utility function to update conversation
+var updateConversation = function(req, post, status){
+  _.each(post.conversations, function(conversation){
+    if(conversation._id.equals(req.params.id)){
+      conversation.accepted = status;
+      return;
+    }
+  });
+};
+
+// General update barter trade status (accepted or rejcted)
+// Find the correct barter and update the status
+var updateBarter = function(req, res, err, status){
+  handleError(err, 500);
+  Post.findOne({'conversations._id': req.params.id}, function(err, post){
+    handleError(err, 500);
+    updateConversation(req, post, status);
+    post.save(function(err){
+      handleError(err, 500);
+      res.send(204);
     });
   });
 };
 
+// Set barter request to accepted
+var acceptBarter = function(req, res, next){
+  Post.update({'conversations._id': req.params.id}, {$set: {'completed': true}}, function(err){
+    updateBarter(req, res, err, true);
+  });
+};
+
+// Set barter request to rejected
 var rejectBarter = function(req, res, next){
   Post.findOne({'conversations._id': req.params.id}, function(err, post){
-    if (err) { handleError(500); }
-    for(var i = 0; i < post.conversations.length; i++){
-      var conversation = post.conversations[i];
-      if(conversation._id.equals(req.params.id)){
-        post.conversations[i].accepted = false;
-        break;
-      }
-    }
-    post.save(function(err){
-      if (err) { handleError(500); }
-      res.send(204);
-    });
+    updateBarter(req, res, err, false);
   });
 };
 
