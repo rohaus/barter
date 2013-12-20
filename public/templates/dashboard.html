@@ -11,8 +11,8 @@
         <button class='deletePost' ng-click='deletePost(post, posts)'>Delete Post</button>
       </div>
       <div class='postDescription'>
-        <img ng-show='!post.completed' class='check' src='../styles/images/checkbox-unchecked.png' />
-        <img ng-show='post.completed' class='check' src='../styles/images/checkbox-checked.png' />
+        <img ng-show='!post.completed' class='check' src='/styles/images/checkbox-unchecked.png' />
+        <img ng-show='post.completed' class='check' src='/styles/images/checkbox-checked.png' />
         <p><span class='underline'>Item Name</span>: {{post.itemName}}</p>
         <p><span class='underline'>Description</span>: {{post.description}}</p>
         <p><span class='underline'>Condition</span>:  {{post.condition}}</p>
@@ -22,8 +22,8 @@
           <hr/>
           <p>
             <span class='underline'>Conversation with</span>: {{conversation.requestingUser.name}}
-            <img ng-show='post.completed && conversation.accepted' class='thumb' src='../styles/images/thumbs-up.png' />
-            <img ng-show='conversation.accepted === false' class='thumb' src='../styles/images/thumbs-down.png' />
+            <img ng-show='post.completed && conversation.accepted' class='thumb' src='/styles/images/thumbs-up.png' />
+            <img ng-show='conversation.accepted === false' class='thumb' src='/styles/images/thumbs-down.png' />
           </p>
           <button ng-click='toggleConversationModal(conversation, post)'>View Conversation</button>
         </div>
@@ -45,6 +45,6 @@
       <input class='replyInput' type='text' ng-model='modalConversation.reply' placeholder='Type a message!'></input>
       <button>Send</button>
     </form>
-    <img class='cross' src='../styles/images/cross.png' ng-click='toggleConversationModal()' />
+    <img class='cross' src='/styles/images/cross.png' ng-click='toggleConversationModal()' />
   </div>
 </div>
