@@ -265,7 +265,7 @@ img.thumb {
   right: 0;
   border: 0;
 }
-.imageContainer img {
+.imageContainer > img {
   width: 78%;
 }
 .spinner {
