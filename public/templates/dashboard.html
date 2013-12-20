@@ -23,7 +23,7 @@
           <p>
             <span class='underline'>Conversation with</span>: {{conversation.requestingUser.name}}
             <img ng-show='post.completed && conversation.accepted' class='thumb' src='../styles/images/thumbs-up.png' />
-            <img ng-show='post.completed && !conversation.accepted' class='thumb' src='../styles/images/thumbs-down.png' />
+            <img ng-show='conversation.accepted === false' class='thumb' src='../styles/images/thumbs-down.png' />
           </p>
           <button ng-click='toggleConversationModal(conversation, post)'>View Conversation</button>
         </div>
