@@ -5,7 +5,7 @@ var index = function (req, res, next) {
 
 // Check if user is logged in
 var loggedIn = function (req, res) {
-  res.send(req.isAuthenticated() ? req.user : '0');
+  res.send(req.isAuthenticated() ? req.user : '401');
 };
 
 // Logs the user out and redirects to landing page
