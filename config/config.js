@@ -1,21 +1,18 @@
 module.exports = function(passport){
   var express = require('express'),
-  path = require('path'),
-  stylus = require('stylus'),
-  keys;
+      path = require('path'),
+      stylus = require('stylus'),
+      env = process.env['NODE_ENV'] || 'development',
+      keys;
 
+  // Set environment
+  keys = (env === 'production') ? require('./productionKeys')[env] : require('./keys')[env];
+
+  // Middleware used to compile stylus
   var compile = function(str, path) {
-    return stylus(str)
-      .set('filename', path);
+    return stylus(str).set('filename', path);
   };
 
-  var env = process.env['NODE_ENV'] || 'development';
-
-  if(env === 'production'){
-    keys = require('./productionKeys')[env];
-  }else{
-    keys = require('./keys')[env];
-  }
   // Config
   var app = express();
   var port = process.env.PORT || 9000;
@@ -32,5 +29,6 @@ module.exports = function(passport){
   app.listen(port, function() {
     console.log('Listening on ' + port);
   });
+
   return app;
 };
