@@ -21,12 +21,12 @@ angular.module('barterApp', ['imageupload', 'ngRoute'])
     };
   });
 
+  // Make an AJAX call to check if the user is logged in
+  // If authenticated set rootScope name and fbId
+  // Else redirect to login
   var checkLoggedIn = function($q, $http, $location, $rootScope){
     var deferred = $q.defer();
-    // Make an AJAX call to check if the user is logged in
     $http.get('/loggedIn').success(function(res){
-      // If authenticated set rootScope name and fbId
-      // Else redirect to login
       if(res !== '401'){
         $rootScope.name = res.name;
         $rootScope.fbId = res.fbId;
@@ -39,27 +39,26 @@ angular.module('barterApp', ['imageupload', 'ngRoute'])
     return deferred.promise;
   };
 
+  // Object of functions to resolve before rendering template
+  var resolve = {
+    loggedin: checkLoggedIn
+  };
+
   $routeProvider
   .when('/', {
     templateUrl: '/templates/main.html',
     controller: 'MapCtrl',
-    resolve: {
-      loggedin: checkLoggedIn
-    }
+    resolve: resolve
   })
   .when('/post', {
     templateUrl: '/templates/post.html',
     controller: 'PostCtrl',
-    resolve: {
-      loggedin: checkLoggedIn
-    }
+    resolve: resolve
   })
   .when('/dashboard', {
     templateUrl: '/templates/dashboard.html',
     controller: 'ConvCtrl',
-    resolve: {
-      loggedin: checkLoggedIn
-    }
+    resolve: resolve
   })
   .when('/login', {
     templateUrl: '/templates/login.html',
