@@ -1,27 +1,27 @@
 angular.module('barterApp', ['imageupload', 'ngRoute'])
 .config(function($httpProvider, $locationProvider, $routeProvider){
+
   // Success callback, just return the response
   var success = function(response){
     return response;
   };
 
-  // Error callback, check the error status to get only the 401
-  var error = function(response){
-    if(response.status === 401){
-      console.log('it was intercepted and there was a 401 status');
-      $location.path('/login');
-    return $q.reject(response);
-    }
-  };
-
   // Intercept all http requests and verify the user is authenticated
-  $httpProvider.responseInterceptors.push(function(){
+  // On success return the response
+  // On error redirect to the login page
+  $httpProvider.responseInterceptors.push(function($q, $location){
     return function(promise){
-      return promise.then(success, error);
+      return promise.then(success, function(response){
+        if(response.status === 401){
+          console.log('it was intercepted and there was a 401 status');
+          $location.path('/login');
+          return $q.reject(response);
+        }
+      });
     };
   });
 
-  var checkLoggedIn = function(){
+  var checkLoggedIn = function($q, $http, $location, $rootScope){
     var deferred = $q.defer();
     // Make an AJAX call to check if the user is logged in
     $http.get('/loggedIn').success(function(res){
@@ -30,9 +30,9 @@ angular.module('barterApp', ['imageupload', 'ngRoute'])
       if(res !== '401'){
         $rootScope.name = res.name;
         $rootScope.fbId = res.fbId;
-        $timeout(deferred.resolve, 0);
+        deferred.resolve();
       }else{
-        $timeout(function(){deferred.reject();}, 0);
+        deferred.reject();
         $location.path('/login');
       }
     });
