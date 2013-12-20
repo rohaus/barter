@@ -1,19 +1,18 @@
 var Post = require('../models/post').Post,
     Conversation = require('../models/conversation').Conversation,
-    Message = require('../models/message').Message;
+    Message = require('../models/message').Message,
+    utils = require('../utils'),
+    _ = require('lodash');
 
-var handleError = function(statusCode){
-  console.log(err);
-  res.send(statusCode);
-};
-
+// Send back all posts
 var posts = function(req, res, next){
   Post.find({}, function(err, posts){
-    if (err) { handleError(500); }
+    utils.handleError(err, 500);
     res.send(200, posts);
   });
 };
 
+// Create post and save it to the database
 var postItem = function(req, res, next){
   var post = new Post({
     'fbId': req.body.fbId,
@@ -24,16 +23,13 @@ var postItem = function(req, res, next){
     'loc': { type: 'Point', coordinates: [req.body.location[1], req.body.location[0]]},
     'image': req.body.image.dataURL
   });
-
-  post.save(function (err, post){
-    if (err) { handleError(500); }
-    res.send(201);
-  });
+  utils.saveChanges(res, post, 201, 500);
 };
 
+// Delete post from the database
 var deletePost = function(req, res, next){
   Post.findByIdAndRemove(req.params.id, function(err){
-    if (err) { handleError(500); }
+    utils.handleError(err, 500);
     res.send(204);
   });
 };
