@@ -4,6 +4,7 @@ module.exports = function(app, passport, db){
   postCtrl = require('../app/controllers/post'),
   messageCtrl = require('../app/controllers/message');
 
+  // Middleware used to determine if the user is authenticated
   var auth = function (req, res, next){
     !req.isAuthenticated() ? res.send(401) : next();
   };
