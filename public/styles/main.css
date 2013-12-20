@@ -4,37 +4,104 @@
   width: 7px;
 }
 ::-webkit-scrollbar-thumb {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
   border-radius: 4px;
   background-color: rgba(0,0,0,0.2);
   -webkit-box-shadow: 0 0 1px rgba(255,255,255,0.5);
 }
-body {
+button {
+  font-family: 'Poiret One';
+  padding: 0 0.563rem;
+  font-size: 15px;
+  line-height: 1.313rem;
+  letter-spacing: 0;
+  color: #c6c8c8;
+  text-shadow: 0 -1px rgba(0,0,0,0.69);
+  vertical-align: top;
+  background-color: #595b5b;
+  -webkit-box-shadow: inset 0 1px #737373;
+  box-shadow: inset 0 1px #737373;
+  border: 1px solid #333434;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+}
+button:hover {
+  background-color: #626465;
+}
+button:focus {
+  border: 1px solid #0036ff;
+  -webkit-box-shadow: inset 0 1px rgba(255,255,255,0.36), 0 0 0 2px #6fb5f1;
+  box-shadow: inset 0 1px rgba(255,255,255,0.36), 0 0 0 2px #6fb5f1;
+  outline: 0;
+}
+button:active {
+  border: 1px solid #333434;
+  background-color: #3f4041;
+  -webkit-box-shadow: inset 0 1px rgba(0,0,0,0.05);
+  box-shadow: inset 0 1px rgba(0,0,0,0.05);
+}
+button.conversationContainer {
+  margin: 5px;
+}
+input[type='text'] {
+  line-height: 1.688rem;
+  font-size: 0.875rem;
+  box-sizing: border-box;
+  background-clip: padding-box;
+  padding: 0;
   margin: 0;
-  background: #3a6f85;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  vertical-align: top;
+  outline: none;
+}
+.replyInput {
+  width: 90%;
+}
+.searchDashboard {
+  width: 40%;
+}
+typography.styl,
+body {
   font-family: 'Poiret One';
   color: #333;
   font-weight: 200;
   line-height: 19px;
   font-size: 18px;
-  padding: 10px;
 }
-#map-canvas {
-  height: 39em;
-  width: 50%;
-  float: left;
-  border: 5px solid #000;
-  padding: 20px;
-  margin: 20px 5px 20px 0;
+.login {
+  line-height: 25px;
 }
-.spinner {
-  position: absolute;
-  left: 2em;
-}
-.barterLogo {
+.logo {
   color: #000;
   text-decoration: none;
   font-family: 'Poiret One';
   font-size: 90px;
+}
+.post h2 {
+  line-height: 15px;
+  font-size: 13px;
+}
+.date {
+  font-size: 12px;
+}
+.underline {
+  text-decoration: underline;
+}
+.messageContainer {
+  line-height: 13px;
+}
+.wrapper {
+  width: 1080px;
+  margin: 0 auto;
+}
+body {
+  margin: 0;
+  background: #3a6f85;
+  padding: 10px;
 }
 .sidebar {
   height: 39em;
@@ -82,10 +149,6 @@ body {
 .post div {
   display: inline-block;
 }
-.post h2 {
-  line-height: 15px;
-  font-size: 13px;
-}
 .postText {
   width: 63%;
   height: 7em;
@@ -94,6 +157,140 @@ body {
 }
 .post:hover {
   background-color: #ebf9fb;
+}
+.conversationsContainer {
+  padding: 1em;
+  height: 31em;
+  overflow: auto;
+}
+.imageContainer {
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  height: 95%;
+  width: 30%;
+}
+.conversationContainer {
+  display: block;
+  text-align: left;
+  height: 30%;
+  width: 29em;
+  background-color: #7fbe6b;
+  padding-bottom: 10px;
+  margin: 5px auto;
+  border: 4px solid #6f853a;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.conversationContainer .deletePost {
+  display: none;
+}
+.conversationContainer:hover .deletePost {
+  display: inherit;
+}
+.postForm,
+.conversations {
+  width: 23em;
+  border: 5px solid #000;
+  padding: 20px;
+  margin: auto;
+  text-align: center;
+  background-color: #dadada;
+}
+.conversations {
+  height: 39em;
+  width: 34em;
+  overflow: hidden;
+}
+.postDescription {
+  position: relative;
+  display: inline-block;
+  overflow: auto;
+  height: 100%;
+  width: 65%;
+}
+.postDescription p {
+  margin: 10px 0;
+}
+.deletePost {
+  display: inline-block;
+}
+.messageContainer {
+  text-align: left;
+  overflow: auto;
+  height: 75%;
+  border: 1px solid #000;
+  margin: 5px;
+  padding: 5px;
+}
+.postMessage {
+  width: 100%;
+}
+#fileupload-resize-area {
+  display: none;
+}
+.login {
+  height: 39em;
+  z-index: -1;
+  margin: 5px;
+  width: 30%;
+}
+img.cross {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+img.check {
+  width: 20px;
+  border: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+img.thumb {
+  width: 20px;
+  border: none;
+  position: relative;
+  right: 0;
+  margin: 0;
+}
+.corner {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  border: 0;
+}
+.imageContainer img {
+  width: 78%;
+}
+.spinner {
+  position: absolute;
+  left: 2em;
+}
+#map-canvas {
+  height: 39em;
+  width: 50%;
+  float: left;
+  border: 5px solid #000;
+  padding: 20px;
+  margin: 20px 5px 20px 0;
+}
+#fbId,
+#_id,
+.gm-style-cc,
+img[src*='https://maps.gstatic.com/mapfiles/api-3/images/google_white2_hdpi.png'] {
+  display: none;
+}
+#map-canvas.login {
+  height: 39em;
+  width: 50%;
+  z-index: -1;
+  margin: 5px;
 }
 .infobox {
   border: 2px solid #000;
@@ -117,125 +314,6 @@ body {
   -moz-border-radius: 200px;
   border-radius: 200px;
   width: 200px;
-}
-#fbId,
-#_id,
-.gm-style-cc,
-img[src*="https://maps.gstatic.com/mapfiles/api-3/images/google_white2_hdpi.png"] {
-  display: none;
-}
-.underline {
-  text-decoration: underline;
-}
-button {
-  font-family: 'Poiret One';
-  padding: 0 0.563rem;
-  font-size: 15px;
-  line-height: 1.313rem;
-  letter-spacing: 0;
-  color: #c6c8c8;
-  text-shadow: 0 -1px rgba(0,0,0,0.69);
-  vertical-align: top;
-  background-color: #595b5b;
-  -webkit-box-shadow: inset 0 1px #737373;
-  box-shadow: inset 0 1px #737373;
-  border: 1px solid #333434;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-}
-button:hover {
-  background-color: #626465;
-}
-button:focus {
-  border: 1px solid #0036ff;
-  -webkit-box-shadow: inset 0 1px rgba(255,255,255,0.36), 0 0 0 2px #6fb5f1;
-  box-shadow: inset 0 1px rgba(255,255,255,0.36), 0 0 0 2px #6fb5f1;
-  outline: 0;
-}
-button:active {
-  border: 1px solid #333434;
-  background-color: #3f4041;
-  -webkit-box-shadow: inset 0 1px rgba(0,0,0,0.05);
-  box-shadow: inset 0 1px rgba(0,0,0,0.05);
-}
-.postForm,
-.conversations {
-  width: 23em;
-  border: 5px solid #000;
-  padding: 20px;
-  margin: auto;
-  text-align: center;
-  background-color: #dadada;
-}
-.conversations {
-  height: 39em;
-  width: 34em;
-  overflow: hidden;
-}
-.conversationsContainer {
-  padding: 1em;
-  height: 31em;
-  overflow: auto;
-}
-.conversationContainer {
-  display: block;
-  text-align: left;
-  height: 30%;
-  width: 29em;
-  background-color: #7fbe6b;
-  padding-bottom: 10px;
-  margin: 5px auto;
-  border: 4px solid #6f853a;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-.conversationContainer button {
-  margin: 5px;
-}
-.conversationContainer .deletePost {
-  display: none;
-}
-.imageContainer {
-  display: inline-block;
-  vertical-align: top;
-  text-align: center;
-  height: 95%;
-  width: 30%;
-}
-.imageContainer img {
-  width: 78%;
-}
-.conversationContainer:hover .deletePost {
-  display: inherit;
-}
-.date {
-  font-size: 12px;
-}
-.postDescription {
-  position: relative;
-  display: inline-block;
-  overflow: auto;
-  height: 100%;
-  width: 65%;
-}
-.postDescription p {
-  margin: 10px 0;
-}
-input[type='text'] {
-  line-height: 1.688rem;
-  font-size: 0.875rem;
-  box-sizing: border-box;
-  background-clip: padding-box;
-  padding: 0;
-  margin: 0;
-  font: inherit;
-  color: inherit;
-  background: transparent;
-  vertical-align: top;
-  outline: none;
 }
 .modalMask {
   z-index: 10;
@@ -267,71 +345,4 @@ input[type='text'] {
   top: 20%;
   left: 30%;
   margin: -100px 0 0 -100px;
-}
-.deletePost {
-  display: inline-block;
-}
-.messageContainer {
-  line-height: 13px;
-  text-align: left;
-  overflow: auto;
-  height: 75%;
-  border: 1px solid #000;
-  margin: 5px;
-  padding: 5px;
-}
-.replyInput {
-  width: 90%;
-}
-img.cross {
-  width: 25px;
-  height: 25px;
-  position: absolute;
-  left: 0;
-  top: 0;
-}
-img.check {
-  width: 20px;
-  border: none;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-img.thumb {
-  width: 20px;
-  border: none;
-  position: relative;
-  right: 0;
-  margin: 0;
-}
-.postMessage {
-  width: 100%;
-}
-#fileupload-resize-area {
-  display: none;
-}
-.searchDashboard {
-  width: 40%;
-}
-#map-canvas.login,
-.login {
-  height: 39em;
-  width: 50%;
-  z-index: -1;
-  margin: 5px;
-}
-.login {
-  width: 30%;
-  line-height: 25px;
-}
-.wrapper {
-  width: 1080px;
-  margin: 0 auto;
-}
-.corner {
-  position: fixed;
-  z-index: 100;
-  top: 0;
-  right: 0;
-  border: 0;
 }
