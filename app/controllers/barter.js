@@ -1,18 +1,11 @@
 var Post = require('../models/post').Post,
     Conversation = require('../models/conversation').Conversation,
     Message = require('../models/message').Message,
+    utils = require('../utils'),
     _ = require('lodash');
 
-// Utility function to handle error if there is an error
-var handleError = function(err, statusCode){
-  if(err){
-    console.log(err);
-    res.send(statusCode);
-  }
-};
-
-// Utility function to update conversation
-var updateConversation = function(req, post, status){
+//  Function to find and update conversation
+var changeBarterStatus = function(req, post, status){
   _.each(post.conversations, function(conversation){
     if(conversation._id.equals(req.params.id)){
       conversation.accepted = status;
@@ -24,14 +17,11 @@ var updateConversation = function(req, post, status){
 // General update barter trade status (accepted or rejcted)
 // Find the correct barter and update the status
 var updateBarter = function(req, res, err, status){
-  handleError(err, 500);
+  utils.handleError(err, 500);
   Post.findOne({'conversations._id': req.params.id}, function(err, post){
-    handleError(err, 500);
-    updateConversation(req, post, status);
-    post.save(function(err){
-      handleError(err, 500);
-      res.send(204);
-    });
+    utils.handleError(err, 500);
+    changeBarterStatus(req, post, status);
+    utils.saveChanges(res, post, 204, 500);
   });
 };
 
