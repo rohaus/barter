@@ -23,7 +23,7 @@ angular.module('barterApp')
   };
 
   $scope.renderMessages = function(){
-    $http.get('/messages')
+    $http.get('/posts')
     .success(function(data, status, headers, config){
       console.log('Success fetching messages');
       $scope.posts = data;
@@ -171,13 +171,15 @@ angular.module('barterApp')
     $rootScope.modalPost = post;
   };
 
+  // Display button if the post is not complete and if you are are owner of the post
   $scope.displayButton = function(){
     if(!$rootScope.modalPost.completed){
-      if($rootScope.modalPost.fbId === $rootScope.fbId){
+      if($rootScope.modalPost.fbId === $rootScope.fbId && $rootScope.modalConversation.accepted === null){
         $scope.button = true;
         return;
+      }else{
+        $scope.button = false;
       }
-      $scope.button = false;
     }else{
       $scope.button = false;
     }
