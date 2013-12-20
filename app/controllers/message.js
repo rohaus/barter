@@ -42,7 +42,7 @@ var sendMessage = function(req, res, next){
   Post.findOne({'conversations._id': req.body._id}, function(err, post){
     utils.handleError(err, 500);
     addMessageToConversation(req, post, message);
-    saveChanges(res, post, 201, 500);
+    utils.saveChanges(res, post, 201, 500);
   });
 };
 
@@ -50,8 +50,8 @@ var sendMessage = function(req, res, next){
 var deleteConversation = function(req, res, next){
   Post.findOne({'conversations._id': req.params.id}, function(err, post){
     utils.handleError(err, 500);
-    var conversation = post.conversations.id(req.params.id).remove();
-    saveChanges(res, post, 204, 500);
+    post.conversations.id(req.params.id).remove();
+    utils.saveChanges(res, post, 204, 500);
   });
 };
 
