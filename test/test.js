@@ -105,17 +105,6 @@ describe('Tests', function(){
   });
 
   describe('Message Controls for invalid users', function(){
-    describe('/messages route', function(){
-      it('should not retrieve the posts', function(done){
-        agent.get('http://barter-app.herokuapp.com/messages')
-        .end(function(err, res){
-          should.not.exist(err);
-          res.status.should.equal(401);
-          done();
-        });
-      });
-    });
-
     describe('/sendNewConversation route', function(){
       it('should not append a conversation in an existing post', function(done){
         agent.post('http://barter-app.herokuapp.com/sendNewConversation')
