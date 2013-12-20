@@ -1,6 +1,7 @@
-var conversationSchema = require('./conversation').conversationSchema,
-mongoose = require('mongoose');
+var mongoose = require('mongoose');
+var conversationSchema = require('./conversation').conversationSchema;
 
+// Post schema has conversation schema as a subdocument
 var postSchema = new mongoose.Schema({
   'fbId': String,
   'name': String,
