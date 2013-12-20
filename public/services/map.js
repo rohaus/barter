@@ -45,7 +45,6 @@ angular.module('barterApp')
   service.updateLocation = $rootScope.updateLocation = function(){
     $rootScope.spinnerToggle();
     navigator.geolocation.getCurrentPosition(function (position) {
-      console.log('this is getting called!');
       service.center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
       service.map.setZoom(16);
       service.map.setCenter(service.center);
@@ -80,7 +79,6 @@ angular.module('barterApp')
   service.addMarkers = function(coords){
     $http.get('/posts')
     .success(function(data, status, headers, config){
-      console.log('The items have been retrieved from the database', data);
       $rootScope.posts = data;
 
       var length = $rootScope.posts.length,
@@ -96,9 +94,7 @@ angular.module('barterApp')
           service.markers.push(marker);
           service.oms.addMarker(marker);
           google.maps.event.addListener(marker, 'mouseover', function() {
-            console.log('mouseover is being called');
             if( marker._omsData === undefined ){
-              console.log('mouseover then marker is triggered with click');
               google.maps.event.trigger(marker,'click');
             }
           });
@@ -115,7 +111,6 @@ angular.module('barterApp')
           $rootScope.recipient.name = document.getElementById('name').textContent.split(': ')[1];
           $rootScope.recipient.fbId = document.getElementById('fbId').textContent;
           $rootScope.recipient._id = document.getElementById('_id').textContent;
-          console.log($rootScope.recipient);
           $rootScope.togglePostModal();
           $rootScope.$digest();
           $rootScope.spinnerToggle();
@@ -125,7 +120,6 @@ angular.module('barterApp')
     $rootScope.spinnerToggle();
     })
     .error(function(data, status, headers, config){
-      console.log('adding markers failed');
     });
   };
 
