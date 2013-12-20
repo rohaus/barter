@@ -1,41 +1,44 @@
 angular.module('barterApp', ['imageupload', 'ngRoute'])
 .config(function($httpProvider, $locationProvider, $routeProvider){
-  var checkLoggedIn = function($q, $timeout, $http, $location, $rootScope){
+  // Success callback, just return the response
+  var success = function(response){
+    return response;
+  };
+
+  // Error callback, check the error status to get only the 401
+  var error = function(response){
+    if(response.status === 401){
+      console.log('it was intercepted and there was a 401 status');
+      $location.path('/login');
+    return $q.reject(response);
+    }
+  };
+
+  // Intercept all http requests and verify the user is authenticated
+  $httpProvider.responseInterceptors.push(function(){
+    return function(promise){
+      return promise.then(success, error);
+    };
+  });
+
+  var checkLoggedIn = function(){
     var deferred = $q.defer();
     // Make an AJAX call to check if the user is logged in
-    $http.get('/loggedIn').success(function(user){
-      // Authenticated
-      if (user !== '0'){
-        $rootScope.name = user.name;
-        $rootScope.fbId = user.fbId;
+    $http.get('/loggedIn').success(function(res){
+      // If authenticated set rootScope name and fbId
+      // Else redirect to login
+      if(res !== '401'){
+        $rootScope.name = res.name;
+        $rootScope.fbId = res.fbId;
         $timeout(deferred.resolve, 0);
-      }
-      // Not Authenticated
-      else {
+      }else{
         $timeout(function(){deferred.reject();}, 0);
         $location.path('/login');
       }
     });
     return deferred.promise;
   };
-  $httpProvider.responseInterceptors.push(function($q, $location){
-    return function(promise){
-      return promise.then(
-        // Success: just return the response
-        function(response){
-          return response;
-        },
-        // Error: check the error status to get only the 401
-        function(response){
-          if (response.status === 401) {
-            console.log('it was intercepted and there was a 401 status');
-            $location.path('/login');
-          return $q.reject(response);
-          }
-        }
-      );
-    };
-  });
+
   $routeProvider
   .when('/', {
     templateUrl: '/templates/main.html',
