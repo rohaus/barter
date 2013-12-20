@@ -24,10 +24,8 @@ module.exports = function(app, passport, db){
   app.delete('/post/:id', auth, postCtrl.deletePost);
 
   // Message Controls
-  app.get('/messages', auth, messageCtrl.messages);
   app.post('/conversation', auth, messageCtrl.sendNewConversation);
   app.post('/message', auth, messageCtrl.sendMessage);
-  // app.delete('/message/:id', auth, messageCtrl.deleteMessage);
   app.delete('/conversation/:id', auth,messageCtrl.deleteConversation);
 
   // Barter Request Controls
