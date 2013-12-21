@@ -17,9 +17,7 @@
     "passport-facebook": "~1.0.1",
     "superagent": "~0.15.7",
     "should": "~2.1.0",
-    "lodash": "~2.4.1"
-  },
-  "devDependencies": {
+    "lodash": "~2.4.1",
     "bower": "~1.2.7"
   }
 }
