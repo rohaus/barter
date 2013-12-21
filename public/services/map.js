@@ -124,13 +124,13 @@ angular.module('barterApp')
   };
 
   service.infoboxContent = function(i){
-    return '<div class="infobox"><img src="'+$rootScope.posts[i].image+'"/>'+
-           '<h2 id="itemName">Item Name: '+$rootScope.posts[i].itemName+'</h2>'+
-           '<h2 id="description">Description: '+$rootScope.posts[i].description+'</h2>'+
-           '<h2 id="condition">Condition: '+ $rootScope.posts[i].condition+'</h2>'+
-           '<h2 id="name">Contact: '+$rootScope.posts[i].name+'</h2>'+
-           '<h2 id="fbId">'+$rootScope.posts[i].fbId+'</h2>'+
-           '<h2 id="_id">'+$rootScope.posts[i]._id+'</h2>'+
+    return '<div class="infobox"><img src="' + $rootScope.posts[i].image + '"/>' +
+           '<h2 id="itemName">Item Name: ' + $rootScope.posts[i].itemName + '</h2>' +
+           '<h2 id="description">Description: ' + $rootScope.posts[i].description + '</h2>' +
+           '<h2 id="condition">Condition: ' +  $rootScope.posts[i].condition + '</h2>' +
+           '<h2 id="name">Contact: ' + $rootScope.posts[i].name + '</h2>' +
+           '<h2 id="fbId">' + $rootScope.posts[i].fbId + '</h2>' +
+           '<h2 id="_id">' + $rootScope.posts[i]._id + '</h2>' +
            '<button id="barterButton">Barter</button></div>';
   };
 
