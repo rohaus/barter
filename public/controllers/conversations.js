@@ -144,17 +144,19 @@ angular.module('barterApp')
   };
 
   $scope.search = function (post){
+    var contains = function(search){
+      return _.contains(post.itemName.toLowerCase(), search) ||
+             _.contains(post.description.toLowerCase(), search) ||
+             _.contains(post.condition.toLowerCase(), search) ||
+             _.contains(post.name.toLowerCase(), search);
+    };
+
     if($scope.searchDashboard){
-      var searchDashboard = $scope.searchDashboard.toLowerCase();
-      if (post.itemName.toLowerCase().indexOf(searchDashboard)!=-1 ||
-        post.description.toLowerCase().indexOf(searchDashboard)!=-1 ||
-        post.condition.toLowerCase().indexOf(searchDashboard)!=-1 ||
-        post.name.toLowerCase().indexOf(searchDashboard)!=-1) {
+      var search = $scope.searchDashboard.toLowerCase();
+      return (contains(search)) ? true : false;
+    }else{
       return true;
-      }
-      return false;
     }
-    return true;
   };
 
   $rootScope.conversationModalShow = false;
