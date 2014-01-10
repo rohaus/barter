@@ -1,29 +1,77 @@
-barter
+Barter
 ======
 
 Barter is an interface that connects you to your community and allows you to trade items with other users and share the story behind them.
 
-Users are able to post items, as well as, geospatially browse through the posts.
-
-Barter provides a trade request and messaging system to assist in the bartering process.
-
-Barter uses Facebook authentication to log in and track users' posts.
-
 Barter is currently available at http://barter-app.herokuapp.com
 
-Screenshots:
-=====
+# Contents
 
-Coming soon...
+- [Usage](#usage)
+- [Development](#development)
+  - [Repo Organization](#repo-organization)
+  - [Technology Used](#the-technology)
+  - [Challenges](#challenges)
+  - [Author](#author)
 
-Tech Stack:
-=====
+# Usage
 
-Barter is built on with a MEAN stack (Mongo, Express, Angular, Node). Additional front end libaries that were used are angularjs-imageupload, markerclusterer, and OverlappingMarkerSpiderfier. On the back end, libaries used include mongoose, handlebars, passport, stylus, and bower.
+Users sign in using their Facebook accounts to log in.
 
-Challenges:
-=====
+They can post items and use the map to browse through the posts.
 
-Getting Google Maps to work efficiently with Angular was a significant issue. Connections between the two took some time because changes inside the map were not directly noticed by Angular; however, using $rootScope.$digest to update the views solved this issue.
+The dashboard is used to keep track of trade requests, messages, and posts.
 
-Another obstacle was to design for a fluid and intuitive user experience. This was accomplished by allowing instant search in the sidebar and by using two versions of clustering to simplify the geospatial search process.
+# Development
+
+## Repo Organization
+
+- app: server-side MVC
+  - controllers: controllers for API endpoints
+  - models: MongoDB schema
+  - views: HTML bootstrapper
+  -`utils.js`: contains utility functions used in multiple controllers
+- config: middleware setup, API, other server settings
+- public: client-side code
+  - controllers: angular controllers
+  - services: angular services
+  - styles: css stylesheet, stylus files, and images
+  - templates: angular views
+  - `app.js`: angular bootstrapper and router
+- test: server-side tests
+- `server.js`: starts the server
+
+## The Technology
+
+### Tech Stack:
+
+- **Angular.js**: client-side framework
+- **Lodash**: utility library
+- **Google Maps API**: map
+- **Marker Clusterer**: clustering library for Google Maps
+- **Overlapping Marker Spiderfier**: clustering library for Google Maps
+- **Nodes.js**: service-side app platform
+  - **Express.js**: server-side framework
+- **Mongoose.js**: MongoDB ORM
+- **Stylus**: CSS preprocessor
+- **Jade**: template engine
+- **Passport**: user authentication
+  - **Passport-Facebook: facebook user authentication
+- **Superagent**: light-weight progressive ajax API
+- **Should**: client-side HTTP request library
+
+### Dev Tools
+- **git**: version control magician
+- **npm**: package commander-in-chief for back-end libraries
+- **Bower**: package commander-in-chief for front-end libraries
+- **Heroku**: server
+
+## Challenges
+
+- Getting Google Maps to work efficiently with Angular was a significant issue. Connections between the two took some time because changes inside the map were not directly noticed by Angular; however, using $rootScope.$digest to update the views solved this issue.
+
+- Another obstacle was to design for a fluid and intuitive user experience. This was accomplished by allowing instant search in the sidebar and by using two versions of clustering to simplify the geospatial search process.
+
+## Author
+
+[Ryan Roxas](https://github.com/rohaus)
