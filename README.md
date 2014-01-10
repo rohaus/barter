@@ -5,7 +5,7 @@ Barter is an interface that connects you to your community and allows you to tra
 
 Barter is currently available at http://barter-app.herokuapp.com
 
-![home](http://imgur.com/a/BOii0#gquPOm9)
+![home](http://i.imgur.com/fqESTsL.png)
 
 # Contents
 
@@ -22,11 +22,11 @@ Users sign in using their Facebook accounts to log in.
 
 They can post items and use the map to browse through the posts.
 
-![map](http://imgur.com/a/BOii0#nnR4gEg)
+![map](http://i.imgur.com/fqESTsL.png)
 
 The dashboard is used to keep track of trade requests, messages, and posts.
 
-![dashbaord](http://imgur.com/a/BOii0#7kRsfFr)
+![dashbaord](http://i.imgur.com/7kRsfFr.png)
 
 # Development
 
