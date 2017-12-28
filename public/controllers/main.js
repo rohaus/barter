@@ -17,6 +17,7 @@ angular.module('barterApp')
     $http.get('/logout')
     .success(function(data, status, headers, config){
       console.log('Attempting to logout');
+          $location.path('/');
     });
   };
 
