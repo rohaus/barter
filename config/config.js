@@ -4,7 +4,6 @@ module.exports = function(passport){
       stylus = require('stylus'),
       env = process.env['NODE_ENV'] || 'development',
       keys;
-
   // Set environment
   keys = (env === 'production') ? require('./productionKeys')[env] : require('./keys')[env];
 
@@ -27,6 +26,7 @@ module.exports = function(passport){
   app.use(passport.initialize());
   app.use(passport.session());
   app.listen(port, function() {
+   
     console.log('Listening on ' + port);
   });
 
