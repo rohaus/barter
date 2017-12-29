@@ -7,11 +7,3 @@ var db = require('./config/database'),
 require('./config/passport')(passport, FacebookStrategy, FbUsers);
 require('./config/routes')(app, passport, db);
 
-//const  fb = require('./app/models').facebook;
-//FbUsers.create(
-//        {
-//            fbId: "test111",
-//            name: "test1ss"
-//        }
-//);
-

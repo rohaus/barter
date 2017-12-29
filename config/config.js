@@ -1,5 +1,4 @@
 module.exports = function(passport){
-	process.env.NODE_ENV = 'development';
   var express = require('express'),
       path = require('path'),
       stylus = require('stylus'),

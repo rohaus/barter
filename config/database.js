@@ -5,8 +5,6 @@ var mongoose = require('mongoose'),
  console.log("ENV is:"+env);
 // Determine if keys are based on production or development
 keys = (env === 'production') ? require('./productionKeys')[env] : require('./keys')[env];
-console.log("KEYs:"+JSON.stringify(keys));
-//console.log("ENV:"+process.env)
 // Mongoose conncetion
 mongoose.connect(keys.DB);
 db = mongoose.connection;
