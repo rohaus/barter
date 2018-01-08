@@ -8,7 +8,7 @@ module.exports = function(app, passport, db){
   var auth = function (req, res, next){
     !req.isAuthenticated() ? res.send(401) : next();
   };
-
+//    console.log(loginCtrl.index);
   // Login Routes
   app.get('/', loginCtrl.index);
   app.get('/loggedIn', loginCtrl.loggedIn);
@@ -23,6 +23,8 @@ module.exports = function(app, passport, db){
   app.get('/posts', auth, postCtrl.posts);
   app.post('/post', auth, postCtrl.post);
   app.delete('/post/:id', auth, postCtrl.deletePost);
+  //Update Post
+      app.post('/updatePost', auth, postCtrl.updatePost);
 
   // Message Controls
   app.post('/conversation', auth, messageCtrl.sendNewConversation);

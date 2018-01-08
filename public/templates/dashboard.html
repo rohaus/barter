@@ -4,6 +4,7 @@
   <button ng-click='requests()'> Your Requests</button>
   <button ng-click='completed()'>Completed</button>
   <input class='searchDashboard' type='text' placeholder='Search posts!' autofocus='autofocus' ng-model='searchDashboard'></input>
+   <h4 style="margin: 20px 0 0 0;">{{post_type}}</h4>
   <section class='conversationsContainer'>
     <div class='conversationContainer' ng-repeat='post in posts | filter:search | orderBy:"createdAt":true' ng-show='post.show'>
       <div class='imageContainer'>
@@ -18,33 +19,8 @@
         <p><span class='underline'>Condition</span>:  {{post.condition}}</p>
         <p><span class='underline'>Owner</span>: {{post.name}}</p>
         <p id='date'><span class='underline'>Created</span>: {{post.createdAt | date:'MM/dd @ h:mma'}}</p>
-        <div class='conversation' ng-repeat='conversation in post.conversations | orderBy:"createdAt":true'>
-          <hr/>
-          <p>
-            <span class='underline'>Conversation with</span>: {{conversation.requestingUser.name}}
-            <img ng-show='post.completed && conversation.accepted' class='thumb' src='/styles/images/thumbs-up.png' />
-            <img ng-show='conversation.accepted === false' class='thumb' src='/styles/images/thumbs-down.png' />
-          </p>
-          <button ng-click='toggleConversationModal(conversation, post)'>View Conversation</button>
-        </div>
+
       </div>
     </div>
   </section>
-  <div ng-click='toggleConversationModal()' class='modalMask' ng-show='conversationModalShow'></div>
-  <div class='modal conversationModal' ng-show='conversationModalShow'>
-    <h2>Conversation with: {{modalConversation.requestingUser.name}}</h2>
-    <button ng-show='button' ng-click='respondToBarter(modalConversation, modalPost, "accept")'>Accept Barter</button>
-    <button ng-show='button' ng-click='respondToBarter(modalConversation, modalPost, "reject")'>Reject Barter</button>
-    <button ng-click='deleteConversation(modalConversation, modalPost)'>Delete Conversation</button>
-    <div class='messageContainer'>
-      <div class='messages' ng-repeat='message in modalConversation.messages | orderBy:"sentAt":false' >
-        <p><span class='underline'>{{message.from}}</span>:<span class='date'> ({{message.sentAt | date:'MM/dd @ h:mma'}})</span> {{message.message}}</p>
-      </div>
-    </div>
-    <form ng-submit='sendMessage(modalConversation)'>
-      <input class='replyInput' type='text' ng-model='modalConversation.reply' placeholder='Type a message!'></input>
-      <button>Send</button>
-    </form>
-    <img class='cross' src='/styles/images/cross.png' ng-click='toggleConversationModal()' />
-  </div>
 </div>
