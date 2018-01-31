@@ -4,7 +4,6 @@ module.exports = function(passport){
       stylus = require('stylus'),
       env = process.env['NODE_ENV'] || 'development',
       keys;
-
   // Set environment
   keys = (env === 'production') ? require('./productionKeys')[env] : require('./keys')[env];
 
@@ -22,11 +21,14 @@ module.exports = function(passport){
   app.use(express.static(path.join(__dirname, '/../public')));
   app.use(express.cookieParser());
   app.use(express.session({ secret: keys.secret }));
+    app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
   app.use(express.bodyParser());
   app.use(express.logger('dev'));
   app.use(passport.initialize());
   app.use(passport.session());
   app.listen(port, function() {
+   
     console.log('Listening on ' + port);
   });
 

@@ -55,6 +55,11 @@ angular.module('barterApp', ['imageupload', 'ngRoute'])
     controller: 'PostCtrl',
     resolve: resolve
   })
+   .when('/postEdit/:id', {
+    templateUrl: '/templates/edit-post.html',
+    controller: 'PostCtrl',
+    resolve: resolve
+  })
   .when('/dashboard', {
     templateUrl: '/templates/dashboard.html',
     controller: 'ConvCtrl',
@@ -67,7 +72,7 @@ angular.module('barterApp', ['imageupload', 'ngRoute'])
   .otherwise({
     redirectTo: '/'
   });
-})
+}) 
 .run(function($rootScope, $http){
   $rootScope.logout = function(){
     $http.post('/auth/facebook');
